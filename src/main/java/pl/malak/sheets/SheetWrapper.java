@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import pl.malak.Field;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,10 +22,14 @@ public abstract class SheetWrapper {
 
     private Set<String> issues = new HashSet<>();
 
+    public SheetWrapper() {
+
+    }
+
     public SheetWrapper(Sheet sheet, SheetType sheetType) {
         this.sheet = sheet;
         this.sheetType = sheetType;
-        update();
+//        update();
     }
 
     public Set<String> getIssues() {
@@ -65,8 +70,16 @@ public abstract class SheetWrapper {
 
     protected String getCellText(Cell cell) {
         if (cell != null) {
-            cell.setCellType(Cell.CELL_TYPE_STRING);
-            return cell.getStringCellValue();
+            if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+                Date date = cell.getDateCellValue();
+                return String.format("%s-%s-%s", date.getYear() + 1900, date.getMonth(), date.getDate());
+            } else {
+                cell.setCellType(Cell.CELL_TYPE_STRING);
+                if (cell.toString().startsWith("DO ")) {
+                    return cell.toString().replaceAll("DO ", "");
+                }
+                return cell.toString();
+            }
         } else {
             return "";
         }

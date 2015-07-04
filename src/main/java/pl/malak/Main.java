@@ -3,22 +3,28 @@ package pl.malak;
 import pl.malak.dao.TestDao;
 import pl.malak.model.Test;
 import pl.malak.persistenceutil.PersistenceManager;
+import pl.malak.model.Pracodawca;
 
 import javax.persistence.EntityManager;
+import java.io.File;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
-//        File file = new File("WZÓR.xlsm");
-//        Report report = new Report();
-//        report.create(file);
-//        report.printEmployersWithEmployees();
+        File file = new File("WZÓR.xlsm");
+        Migration migration = new Migration();
+        migration.migrate(file);
+//        migration.printEmployersWithEmployees();
 
 
         EntityManager em = PersistenceManager.INSTANCE.getCustomEntityManager("192.168.1.102");
         em.getTransaction().begin();
+
+        for (Pracodawca employer : migration.getEmployers()) {
+            em.persist(employer);
+        }
 
         TestDao testDao = TestDao.getInstance(em);
 

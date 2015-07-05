@@ -6,6 +6,8 @@ import pl.malak.helpers.SheetHelper;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Michał Szpruta - szprutamich@gmail.com
@@ -52,6 +54,9 @@ public class Pracodawca {
 
     @Column(name = "odziezowka_uwagi")
     private String odziezowkaUwagi;
+
+    @OneToMany(mappedBy = "pracodawca")
+    protected Set<Zlecenie> zlecenia = new HashSet<>();
 
     public Pracodawca() {
     }
@@ -164,6 +169,18 @@ public class Pracodawca {
         this.odziezowkaUwagi = odziezowkaUwagi;
     }
 
+    public Set<Zlecenie> getZlecenia() {
+        return zlecenia;
+    }
+
+    public void addZlecenie(Zlecenie zlecenie) {
+        this.zlecenia.add(zlecenie);
+    }
+
+    public void setZlecenia(Set<Zlecenie> zlecenia) {
+        this.zlecenia = zlecenia;
+    }
+
     public void parse(Sheet sheet) {
         this.nazwa = getTextOrNull(SheetHelper.getCellText(sheet.getRow(Field.W_1.getValue()).getCell(Field.C.getValue())));
         this.teczka = getBoolean(SheetHelper.getCellText(sheet.getRow(Field.W_4.getValue()).getCell(Field.C.getValue())),
@@ -194,13 +211,13 @@ public class Pracodawca {
     }
 
     private boolean getBoolean(String columnJest, String columnBrak) {
-        return !columnBrak.trim().equalsIgnoreCase("BRAK") && columnJest.trim().equalsIgnoreCase("JEST");
+        return !columnBrak.trim().equalsIgnoreCase("BRAK") && (columnJest.trim().equalsIgnoreCase("JEST") || columnJest.trim().equalsIgnoreCase("TAK"));
     }
 
     private String getTextOrNull(String text) {
         if (text.isEmpty()) {
             return null;
         }
-        return "'" + text + "'";
+        return text;
     }
 }

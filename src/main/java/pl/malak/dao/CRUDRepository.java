@@ -1,6 +1,6 @@
 package pl.malak.dao;
 
-import pl.malak.model.Test;
+import pl.malak.model.Pracodawca;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -57,7 +57,7 @@ public class CRUDRepository<T> {
     public Long getTimeStamp() {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Timestamp> query = builder.createQuery(Timestamp.class);
-        query.from(Test.class);
+        query.from(Pracodawca.class);
         query.select(builder.currentTimestamp());
         TypedQuery<Timestamp> typedQuery = entityManager.createQuery(query);
         typedQuery.setMaxResults(1);
@@ -89,5 +89,21 @@ public class CRUDRepository<T> {
 
     public boolean notExists(Long entityId) {
         return !exists(entityId);
+    }
+
+    public List<T> loadAll() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> query = builder.createQuery(type);
+        Root<T> test = query.from(type);
+        query.select(test);
+        TypedQuery<T> typedQuery = entityManager.createQuery(query);
+        return typedQuery.getResultList();
+    }
+
+    public void deleteAll() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaDelete<T> query = builder.createCriteriaDelete(type);
+        query.from(type);
+        entityManager.createQuery(query).executeUpdate();
     }
 }

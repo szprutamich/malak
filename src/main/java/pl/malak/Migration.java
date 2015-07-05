@@ -3,7 +3,7 @@ package pl.malak;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import pl.malak.model.Pracodawca;
-import pl.malak.sheets.Commission;
+import pl.malak.model.Zlecenie;
 import pl.malak.sheets.Work;
 
 import java.io.File;
@@ -43,9 +43,10 @@ public class Migration {
         return employers.get(name);
     }
 
-    public void migrate(File file) {
+    public String migrate(File file) {
+        String error = "";
         long time = System.currentTimeMillis();
-        List<Commission> commissionList = new ArrayList<>();
+        Map<String, Zlecenie> zlecenia = new TreeMap<>();
         List<Work> workList = new ArrayList<>();
         try {
             Workbook wb = WorkbookFactory.create(file);
@@ -57,8 +58,8 @@ public class Migration {
                 Pracodawca employer;
                 switch (text) {
                     case "":
-                        Commission commission = new Commission(sheet);
-                        commissionList.add(commission);
+                        Zlecenie zlecenie = new Zlecenie(sheet);
+                        zlecenia.put(zlecenie.getNazwa(), zlecenie);
                         break;
                     case "CZĘŚĆ":
                         Work work = new Work(sheet);
@@ -74,18 +75,22 @@ public class Migration {
             e.printStackTrace();
         }
         Pracodawca employer;
-//        for (Commission commission : commissionList) {
-//            if (commission.getEmployerName() == null) {
-//                System.out.println(String.format("Arkusz %s jest nieprawidłowy", commission.getSheetName()));
-//            } else {
-//                employer = getEmployer(commission.getEmployerName());
-//                if (employer == null) {
-//                    employer = new Pracodawca(null);
-//                    addEmployer(commission.getEmployerName(), employer);
-//                }
-//                employer.addCommission(commission);
-//            }
-//        }
+        for (Zlecenie zlecenie : zlecenia.values()) {
+            if (zlecenie.getPracodawcaNazwa() == null) {
+                error += String.format("Arkusz %s jest nieprawidłowy\n", zlecenie.getSheetName());
+                System.out.println();
+            } else {
+                employer = getEmployer(zlecenie.getPracodawcaNazwa());
+                if (employer == null) {
+                    error += String.format("Arkusz pracodawcy nie istnieje: %s\n", zlecenie.getPracodawcaNazwa());
+                } else {
+                    System.out.println(String.format("Zlecenie: %s, pracodawca: %s jest ok", zlecenie.getNazwa(),
+                            zlecenie.getPracodawcaNazwa()));
+                    employer.addZlecenie(zlecenie);
+                    zlecenie.setPracodawca(employer);
+                }
+            }
+        }
 //        for (Work work : workList) {
 //            if (work.getEmployerName() == null) {
 //                System.out.println(String.format("Arkusz %s jest nieprawidłowy", work.getSheetName()));
@@ -99,80 +104,9 @@ public class Migration {
 //            }
 //        }
         System.out.println("Time: " + (System.currentTimeMillis() - time));
+
+        return error;
     }
-
-//    public void printEmployersWithEmployees() {
-//        Pracodawca employer;
-//        for (String employerName : employers.keySet()) {
-//            employer = getEmployer(employerName);
-//            System.out.println("-----------" + employerName + "-----------");
-//
-//            Collections.sort(employer.getWorkers());
-//            Collections.sort(employer.getCommissions());
-//
-//            if (!employer.getWorkers().isEmpty()) {
-//                System.out.println("-----------Umowy o pracę:");
-//            }
-//            for (Work work : employer.getWorkers()) {
-//                System.out.println(work.getEmployeeName());
-//            }
-//            if (!employer.getCommissions().isEmpty()) {
-//                System.out.println("-----------Umowy o zlecenia:");
-//            }
-//            for (Commission commission : employer.getCommissions()) {
-//                System.out.println(commission.getEmployeeName());
-//            }
-//            System.out.println("---------------------------------------------");
-//        }
-//    }
-
-//    public void printEmployerIssues() {
-//        Pracodawca employer;
-//        for (String employerName : employers.keySet()) {
-//            employer = getEmployer(employerName);
-//            System.out.println("-----------" + employerName + "-----------");
-//            if (employer.hasSheet()) {
-//                if (employer.getIssues().isEmpty()) {
-//                    System.out.println(String.format("%s w arkuszu %s nie ma problemów.", employerName,
-//                            employer.getSheetName()));
-//                } else {
-//                    System.out.println(String.format("Problemy %s w arkuszu %s:", employerName, employer.getSheetName()));
-//                    for (String issue : employer.getIssues()) {
-//                        System.out.println(issue);
-//                    }
-//                }
-//            }
-//
-//            Collections.sort(employer.getWorkers());
-//            Collections.sort(employer.getCommissions());
-//
-//            for (Work work : employer.getWorkers()) {
-//                String employeeName = work.getEmployeeName();
-//                String sheetName = work.getSheetName();
-//                if (work.getIssues().isEmpty()) {
-//                    System.out.println(String.format("%s w arkuszu %s nie ma problemów.", employeeName, sheetName));
-//                } else {
-//                    System.out.println(String.format("Problemy %s w arkuszu %s:", employeeName, sheetName));
-//                    for (String issue : work.getIssues()) {
-//                        System.out.println(issue);
-//                    }
-//                }
-//            }
-//            for (Commission commission : employer.getCommissions()) {
-//                String employeeName = commission.getEmployeeName();
-//                String sheetName = commission.getSheetName();
-//                if (commission.getIssues().isEmpty()) {
-//                    System.out.println(String.format("%s w arkuszu %s nie ma problemów.", employeeName, sheetName));
-//                } else {
-//                    System.out.println(String.format("Problemy %s w arkuszu %s:", employeeName, sheetName));
-//                    for (String issue : commission.getIssues()) {
-//                        System.out.println(issue);
-//                    }
-//                }
-//            }
-//            System.out.println("---------------------------------------------");
-//        }
-//    }
 
     public Collection<Pracodawca> getEmployers() {
         return employers.values();

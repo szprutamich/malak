@@ -1,9 +1,10 @@
 package pl.malak;
 
-import pl.malak.dao.TestDao;
-import pl.malak.model.Test;
-import pl.malak.persistenceutil.PersistenceManager;
+import pl.malak.dao.PracodawcaDao;
+import pl.malak.dao.ZlecenieDao;
 import pl.malak.model.Pracodawca;
+import pl.malak.model.Zlecenie;
+import pl.malak.persistenceutil.PersistenceManager;
 
 import javax.persistence.EntityManager;
 import java.io.File;
@@ -15,42 +16,31 @@ public class Main {
         System.out.println("Hello World!");
         File file = new File("WZÓR.xlsm");
         Migration migration = new Migration();
-        migration.migrate(file);
-//        migration.printEmployersWithEmployees();
-
+        String error = migration.migrate(file);
 
         EntityManager em = PersistenceManager.INSTANCE.getCustomEntityManager("192.168.1.102");
         em.getTransaction().begin();
 
+        PracodawcaDao pracodawcaDao = PracodawcaDao.getInstance(em);
+        ZlecenieDao zlecenieDao = ZlecenieDao.getInstance(em);
+        zlecenieDao.deleteAll();
+        pracodawcaDao.deleteAll();
         for (Pracodawca employer : migration.getEmployers()) {
-            em.persist(employer);
-        }
-
-        TestDao testDao = TestDao.getInstance(em);
-
-        Test test;
-        for (int i = 0; i < 10; i++) {
-            int index = i + 1;
-            test = new Test();
-            test.setText("test" + index);
-            testDao.create(test);
-            System.out.println("Newly inserted entity's id is: " + test.getId());
-        }
-
-        List<Test> tests = testDao.loadAll();
-
-        for (Test test1: tests) {
-            System.out.println(String.format("Test: %s, %s", test1.getId(), test1.getText()));
-
-            test1.setText(test1.getText() + " updated");
-
-            if (test1.getId() % 2 == 0) {
-                testDao.delete(test1);
+            pracodawcaDao.create(employer);
+            for (Zlecenie zlecenie : employer.getZlecenia()) {
+                if (zlecenie.getPracodawca() != null) {
+                    zlecenieDao.create(zlecenie);
+                }
             }
         }
-
         em.getTransaction().commit();
+
+        List<Zlecenie> zlecenieList = zlecenieDao.loadAll();
+
         em.close();
 
+        if (error.length() > 0) {
+            System.out.println(error);
+        }
     }
 }

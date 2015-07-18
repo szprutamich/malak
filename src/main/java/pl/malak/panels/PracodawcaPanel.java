@@ -1,8 +1,9 @@
-package pl.malak;
+package pl.malak.panels;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+import pl.malak.DateLabelFormatter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.util.Properties;
 /**
  * @author Michał Szpruta - szprutamich@gmail.com
  */
+@org.springframework.stereotype.Component
 public class PracodawcaPanel extends JPanel {
 
     private Boolean teczka;
@@ -34,7 +36,7 @@ public class PracodawcaPanel extends JPanel {
         setLayout(null);
         setBounds(margin, margin, panelWidth, panelHeight);
 
-        setBackground(Color.PINK);
+//        setBackground(Color.PINK);
 
         int x1 = 30;
         int y1 = 100;

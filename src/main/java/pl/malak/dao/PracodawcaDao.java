@@ -1,18 +1,9 @@
 package pl.malak.dao;
 
+import org.springframework.stereotype.Repository;
 import pl.malak.model.Pracodawca;
 
-import javax.persistence.EntityManager;
-
+@Repository
 public class PracodawcaDao extends CRUDRepository<Pracodawca> {
 
-    private static PracodawcaDao instance;
-
-    public static synchronized PracodawcaDao getInstance(EntityManager entityManager) {
-        if (instance == null) {
-            instance = new PracodawcaDao();
-        }
-        instance.entityManager = entityManager;
-        return instance;
-    }
 }

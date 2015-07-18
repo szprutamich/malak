@@ -3,6 +3,7 @@ package pl.malak.dao;
 import pl.malak.model.Pracodawca;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.lang.reflect.ParameterizedType;
@@ -15,6 +16,7 @@ public class CRUDRepository<T> {
 
     private final Class<T> type;
 
+    @PersistenceContext(unitName = "persistenceUnit")
     protected EntityManager entityManager;
 
     public CRUDRepository() {

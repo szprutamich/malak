@@ -1,8 +1,9 @@
 package pl.malak;
 
-import pl.malak.persistenceutil.PersistenceManager;
+import org.springframework.stereotype.Component;
+import pl.malak.panels.PracodawcaPanel;
 
-import javax.persistence.EntityManager;
+import javax.annotation.Resource;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,16 +11,14 @@ import java.awt.event.ActionListener;
 /**
  * @author Michał Szpruta - szprutamich@gmail.com
  */
+@Component
 public class MainFrame extends JFrame implements ActionListener {
 
     private static final String AUTHOR = "Autor: Michał Szpruta";
 
-    private EntityManager entityManager;
-
-    private JMenu[] menu = {new JMenu("Program"), new JMenu("Pomoc")};
     private JMenuItem[][] menuItems = {
             {
-                    new JMenuItem("Connect"),
+                    new JMenuItem("Widok pracodawcy"),
                     new JMenuItem("Logout"),
                     new JMenuItem("Exit")
             },
@@ -28,12 +27,12 @@ public class MainFrame extends JFrame implements ActionListener {
             }
     };
 
-    private PracodawcaPanel pracodawcaPanel = new PracodawcaPanel();
+    @Resource
+    private PracodawcaPanel pracodawcaPanel;
 
     public MainFrame() throws Exception {
         super();
         setBounds(200, 200, 690, 575);
-        add(pracodawcaPanel);
 
         setLayout(null);
 
@@ -44,6 +43,10 @@ public class MainFrame extends JFrame implements ActionListener {
 
         JMenuBar menuBar = new JMenuBar();
         for (int i = 0; i < menuItems.length; i++) {
+            JMenu[] menu = {
+                    new JMenu("Program"),
+                    new JMenu("Pomoc")
+            };
             for (int j = 0; j < menuItems[i].length; j++) {
                 menuItems[i][j].addActionListener(this);
                 menu[i].add(menuItems[i][j]);
@@ -57,20 +60,9 @@ public class MainFrame extends JFrame implements ActionListener {
         JMenuItem source = (JMenuItem) evt.getSource();
 
         if (source == menuItems[0][0]) {
-            try {
-                String url = displayInput("Podaj adres bazy danych");
-                if (url != null) {
-                    if (url.length() > 0) {
-                        entityManager = PersistenceManager.INSTANCE.getCustomEntityManager(url);
-                        displayMessage("Połączono");
-                    } else {
-                        displayMessage("Adres bazy jest pusty!");
-                    }
-                }
-            } catch (Exception e) {
-                displayMessage(e.getMessage());
-            }
+            add(pracodawcaPanel);
         } else if (source == menuItems[0][1]) {
+            remove(pracodawcaPanel);
         } else if (source == menuItems[0][2])
             System.exit(0);
         else if (source == menuItems[1][0]) {

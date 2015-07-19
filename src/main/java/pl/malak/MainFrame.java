@@ -22,7 +22,7 @@ public class MainFrame extends JFrame implements ActionListener {
             {
                     new JMenuItem("Przeglądaj pracodawców"),
                     new JMenuItem("Dodaj pracodawcę"),
-                    new JMenuItem("Exit")
+                    new JMenuItem("Zakończ")
             },
             {
                     new JMenuItem("Autor")
@@ -38,7 +38,7 @@ public class MainFrame extends JFrame implements ActionListener {
         setTitle("");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-        setMinimumSize(new Dimension(690, 575));
+        setMinimumSize(new Dimension(700, 600));
 
         JMenuBar menuBar = new JMenuBar();
         for (int i = 0; i < menuItems.length; i++) {

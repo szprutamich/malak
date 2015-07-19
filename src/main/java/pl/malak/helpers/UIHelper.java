@@ -1,8 +1,8 @@
 package pl.malak.helpers;
 
 
-import org.jdatepicker.DateModel;
 import org.jdatepicker.JDatePicker;
+import org.jdatepicker.impl.UtilDateModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,12 +27,9 @@ public class UIHelper {
 
     public static Date datePickerGetDate(JDatePicker datePicker) {
         Date date = null;
-        DateModel model = datePicker.getModel();
+        UtilDateModel model = (UtilDateModel) datePicker.getModel();
         if (model.isSelected()) {
-            date = new Date();
-            date.setYear(model.getYear() - 1900);
-            date.setMonth(model.getMonth());
-            date.setDate(model.getDay());
+            date = model.getValue();
         }
         return date;
     }

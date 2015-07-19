@@ -55,6 +55,10 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
     JComboBox<String> odziezowkaUwagi = new JComboBox<>(predefiniowaneUwagi);
     JDatePickerImpl datePicker = getJDatePicker();
     JButton zapisz = new JButton("Zapisz");
+    JButton przegladajPrace = new JButton("Przeglądaj umowy o pracę");
+    JButton dodajPrace = new JButton("Dodaj umowę o pracę");
+    JButton przegladajZlecenia = new JButton("Przeglądaj umowy zlecenia");
+    JButton dodajZlecenie = new JButton("Dodaj umowę zlecenie");
 
     public PracodawcaPanel() {
         super();
@@ -87,6 +91,8 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
     private void addListeners() {
         nazwa.addActionListener(this);
         zapisz.addActionListener(this);
+        przegladajPrace.addActionListener(this);
+        przegladajZlecenia.addActionListener(this);
     }
 
     private void layoutComponents() {
@@ -96,7 +102,7 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.PAGE_START;
         c.insets = new Insets(5, 15, 5, 15);
-        c.ipady = 12;
+        c.ipady = 10;
         c.weightx = 0.5;
 
         // wiersz 1
@@ -189,6 +195,28 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
         c.gridy = wiersz;
         c.weighty = 1.0;
         add(zapisz, c);
+
+        //wiersz 10
+        wiersz++;
+        c.gridwidth = 2;
+        c.gridx = 0;
+        c.gridy = wiersz;
+        add(przegladajPrace, c);
+
+        c.gridx = 2;
+        c.gridy = wiersz;
+        add(dodajPrace, c);
+
+        //wiersz 11
+        wiersz++;
+        c.gridwidth = 2;
+        c.gridx = 0;
+        c.gridy = wiersz;
+        add(przegladajZlecenia, c);
+
+        c.gridx = 2;
+        c.gridy = wiersz;
+        add(dodajZlecenie, c);
     }
 
     @Override
@@ -234,7 +262,16 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
                         UIHelper.getComboText(szkoleniaUwagi),
                         odziezowka.isSelected(),
                         UIHelper.getComboText(odziezowkaUwagi));
+                UIHelper.displayMessage(this, "Pracodawca został uaktualniony pomyślnie.");
             }
+        } else if (e.getSource() == przegladajZlecenia) {
+            UIHelper.displayMessage(this, "Nie zaimplementowane!");
+        } else if (e.getSource() == przegladajPrace) {
+            UIHelper.displayMessage(this, "Nie zaimplementowane!");
+        } else if (e.getSource() == dodajPrace) {
+            UIHelper.displayMessage(this, "Nie zaimplementowane!");
+        } else if (e.getSource() == dodajZlecenie) {
+            UIHelper.displayMessage(this, "Nie zaimplementowane!");
         }
     }
 
@@ -268,7 +305,7 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
             odziezowkaUwagi.setSelectedItem(pracodawca.getOdziezowkaUwagi());
             Date date = pracodawca.getSzkoleniaPracodawcyData();
             if (date != null) {
-                datePicker.getModel().setDate(date.getYear() + 1900, date.getMonth(), date.getDate());
+                ((UtilDateModel)datePicker.getModel()).setValue(date);
                 datePicker.getModel().setSelected(true);
             } else {
                 datePicker.getModel().setSelected(false);

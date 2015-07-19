@@ -6,6 +6,8 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
             <!-- This must be also here in persistence.xml -->
+            <property name="hibernate.connection.useUnicode" value="true" />
+            <property name="hibernate.connection.characterEncoding" value="UTF-8" />
             <property name="hibernate.dialect" value="${db.dialect}"/>
             <property name="hibernate.cache.use_second_level_cache" value="${hibernate.cache.use_second_level_cache}"/>
             <property name="hibernate.cache.use_query_cache" value="${hibernate.cache.use_query_cache}"/>

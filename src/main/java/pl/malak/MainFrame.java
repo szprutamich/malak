@@ -5,6 +5,7 @@ import pl.malak.panels.PracodawcaPanel;
 
 import javax.annotation.Resource;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -32,14 +33,11 @@ public class MainFrame extends JFrame implements ActionListener {
 
     public MainFrame() throws Exception {
         super();
-        setBounds(200, 200, 690, 575);
-
-        setLayout(null);
-
+        setLayout(new BorderLayout());
         setTitle("");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
         setVisible(true);
+        setMinimumSize(new Dimension(690, 575));
 
         JMenuBar menuBar = new JMenuBar();
         for (int i = 0; i < menuItems.length; i++) {
@@ -54,6 +52,7 @@ public class MainFrame extends JFrame implements ActionListener {
             menuBar.add(menu[i]);
         }
         setJMenuBar(menuBar);
+        revalidate();
     }
 
     public void actionPerformed(ActionEvent evt) {
@@ -61,6 +60,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
         if (source == menuItems[0][0]) {
             add(pracodawcaPanel);
+            pracodawcaPanel.init();
         } else if (source == menuItems[0][1]) {
             remove(pracodawcaPanel);
         } else if (source == menuItems[0][2])
@@ -68,6 +68,7 @@ public class MainFrame extends JFrame implements ActionListener {
         else if (source == menuItems[1][0]) {
             displayMessage(AUTHOR);
         }
+        revalidate();
         repaint();
     }
 

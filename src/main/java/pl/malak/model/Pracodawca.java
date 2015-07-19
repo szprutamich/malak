@@ -61,6 +61,24 @@ public class Pracodawca {
     public Pracodawca() {
     }
 
+    public Pracodawca(
+            String nazwa, Boolean teczka, String teczkaUwagi, Boolean ocena, String ocenaUwagi,
+            Boolean szkoleniaOkresowe, String szkoleniaOkresoweUwagi, Boolean szkoleniaPracodawcy,
+            Date szkoleniaPracodawcyData, String szkoleniaPracodawcyUwagi, Boolean odziezowka, String odziezowkaUwagi) {
+        this.nazwa = nazwa;
+        this.teczka = teczka;
+        this.teczkaUwagi = teczkaUwagi;
+        this.ocena = ocena;
+        this.ocenaUwagi = ocenaUwagi;
+        this.szkoleniaOkresowe = szkoleniaOkresowe;
+        this.szkoleniaOkresoweUwagi = szkoleniaOkresoweUwagi;
+        this.szkoleniaPracodawcy = szkoleniaPracodawcy;
+        this.szkoleniaPracodawcyData = szkoleniaPracodawcyData;
+        this.szkoleniaPracodawcyUwagi = szkoleniaPracodawcyUwagi;
+        this.odziezowka = odziezowka;
+        this.odziezowkaUwagi = odziezowkaUwagi;
+    }
+
     public Pracodawca(Sheet sheet) {
         parse(sheet);
     }

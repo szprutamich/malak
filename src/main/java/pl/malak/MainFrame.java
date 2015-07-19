@@ -1,6 +1,7 @@
 package pl.malak;
 
 import org.springframework.stereotype.Component;
+import pl.malak.helpers.UIHelper;
 import pl.malak.panels.PracodawcaPanel;
 
 import javax.annotation.Resource;
@@ -19,8 +20,8 @@ public class MainFrame extends JFrame implements ActionListener {
 
     private JMenuItem[][] menuItems = {
             {
-                    new JMenuItem("Widok pracodawcy"),
-                    new JMenuItem("Logout"),
+                    new JMenuItem("Przeglądaj pracodawców"),
+                    new JMenuItem("Dodaj pracodawcę"),
                     new JMenuItem("Exit")
             },
             {
@@ -59,24 +60,19 @@ public class MainFrame extends JFrame implements ActionListener {
         JMenuItem source = (JMenuItem) evt.getSource();
 
         if (source == menuItems[0][0]) {
+            remove(pracodawcaPanel);
             add(pracodawcaPanel);
             pracodawcaPanel.init();
         } else if (source == menuItems[0][1]) {
             remove(pracodawcaPanel);
+            add(pracodawcaPanel);
+            pracodawcaPanel.initEmpty();
         } else if (source == menuItems[0][2])
             System.exit(0);
         else if (source == menuItems[1][0]) {
-            displayMessage(AUTHOR);
+            UIHelper.displayMessage(this, AUTHOR);
         }
         revalidate();
         repaint();
-    }
-
-    public void displayMessage(String text) {
-        JOptionPane.showMessageDialog(this, text);
-    }
-
-    public String displayInput(String text) {
-        return JOptionPane.showInputDialog(this, text);
     }
 }

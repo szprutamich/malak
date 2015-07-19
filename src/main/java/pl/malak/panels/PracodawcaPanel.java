@@ -1,12 +1,12 @@
 package pl.malak.panels;
 
-import org.jdatepicker.DateModel;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 import pl.malak.DateLabelFormatter;
 import pl.malak.beans.PracodawcaBean;
 import pl.malak.dao.PracodawcaDao;
+import pl.malak.helpers.UIHelper;
 import pl.malak.model.Pracodawca;
 
 import javax.annotation.Resource;
@@ -37,6 +37,8 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
             "Nie dotyczy"
     };
 
+    private boolean editMode = true;
+
     JLabel nazwaLabel = new JLabel("Pracodawca:");
     JLabel uwagiLabel = new JLabel("Uwagi:");
     JLabel dataLabel = new JLabel("Do kiedy:");
@@ -62,7 +64,6 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
         szkoleniaOkresoweUwagi.setEditable(true);
         szkoleniaUwagi.setEditable(true);
         odziezowkaUwagi.setEditable(true);
-        nazwa.setEditable(true);
 
         nazwaLabel.setFont(new Font(nazwaLabel.getFont().getFamily(), Font.PLAIN, 25));
 
@@ -195,38 +196,44 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
         if (e.getSource() == nazwa) {
             initPracodawca();
         } else if (e.getSource() == zapisz) {
-            String pracodawcaNazwa = nazwa.getSelectedItem().toString();
+            String pracodawcaNazwa = UIHelper.getComboText(nazwa);
+            if (pracodawcaNazwa == null) {
+                UIHelper.displayMessage(this, "Nazwa nie może być pusta!");
+                return;
+            }
             Pracodawca pracodawca = pracodawcaDao.loadByName(pracodawcaNazwa);
             if (pracodawca == null) {
-                pracodawca = pracodawcaBean.stworzPracodawce(
-                        getComboText(nazwa),
+                pracodawcaBean.stworzPracodawce(
+                        UIHelper.getComboText(nazwa),
                         teczka.isSelected(),
-                        getComboText(teczkaUwagi),
+                        UIHelper.getComboText(teczkaUwagi),
                         ocena.isSelected(),
-                        getComboText(ocenaUwagi),
+                        UIHelper.getComboText(ocenaUwagi),
                         szkoleniaOkresowe.isSelected(),
-                        getComboText(szkoleniaOkresoweUwagi),
+                        UIHelper.getComboText(szkoleniaOkresoweUwagi),
                         szkolenia.isSelected(),
-                        datePickerGetDate(),
-                        getComboText(szkoleniaUwagi),
+                        UIHelper.datePickerGetDate(datePicker),
+                        UIHelper.getComboText(szkoleniaUwagi),
                         odziezowka.isSelected(),
-                        getComboText(odziezowkaUwagi));
-                nazwa.addItem(pracodawca.getNazwa());
+                        UIHelper.getComboText(odziezowkaUwagi));
+                UIHelper.displayMessage(this, "Pracodawca został dodany pomyślnie.");
+            } else if (!editMode) {
+                UIHelper.displayMessage(this, "Pracodawca o podanej nazwie już istnieje!");
             } else {
                 pracodawcaBean.uaktualnijPracodawce(
                         pracodawca.getId(),
-                        getComboText(nazwa),
+                        UIHelper.getComboText(nazwa),
                         teczka.isSelected(),
-                        getComboText(teczkaUwagi),
+                        UIHelper.getComboText(teczkaUwagi),
                         ocena.isSelected(),
-                        getComboText(ocenaUwagi),
+                        UIHelper.getComboText(ocenaUwagi),
                         szkoleniaOkresowe.isSelected(),
-                        getComboText(szkoleniaOkresoweUwagi),
+                        UIHelper.getComboText(szkoleniaOkresoweUwagi),
                         szkolenia.isSelected(),
-                        datePickerGetDate(),
-                        getComboText(szkoleniaUwagi),
+                        UIHelper.datePickerGetDate(datePicker),
+                        UIHelper.getComboText(szkoleniaUwagi),
                         odziezowka.isSelected(),
-                        getComboText(odziezowkaUwagi));
+                        UIHelper.getComboText(odziezowkaUwagi));
             }
         }
     }
@@ -236,12 +243,20 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
         for (String pracodawca : pracodawcy) {
             nazwa.addItem(pracodawca);
         }
+        nazwa.setEditable(false);
+        editMode = true;
     }
 
-    public void initPracodawca() {
-        String pracodawcaNazwa = nazwa.getSelectedItem().toString();
+    public void initEmpty() {
+        nazwa.removeAllItems();
+        nazwa.setEditable(true);
+        editMode = false;
+    }
+
+    private void initPracodawca() {
+        String pracodawcaNazwa = UIHelper.getComboText(nazwa);
         Pracodawca pracodawca = pracodawcaDao.loadByName(pracodawcaNazwa);
-        if (pracodawca != null) {
+        if (pracodawca != null && editMode) {
             teczka.setSelected(pracodawca.getTeczka());
             ocena.setSelected(pracodawca.getOcena());
             szkoleniaOkresowe.setSelected(pracodawca.getSzkoleniaOkresowe());
@@ -270,21 +285,5 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
             odziezowkaUwagi.setSelectedItem("");
             datePicker.getModel().setSelected(false);
         }
-    }
-
-    private Date datePickerGetDate() {
-        Date date = null;
-        DateModel model = datePicker.getModel();
-        if (model.isSelected()) {
-            date = new Date();
-            date.setYear(model.getYear() - 1900);
-            date.setMonth(model.getMonth());
-            date.setDate(model.getDay());
-        }
-        return date;
-    }
-
-    private String getComboText(JComboBox<String> comboBox) {
-        return comboBox.getSelectedItem() != null ? comboBox.getSelectedItem().toString() : null;
     }
 }

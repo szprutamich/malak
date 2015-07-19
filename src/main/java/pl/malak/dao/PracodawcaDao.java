@@ -19,6 +19,7 @@ public class PracodawcaDao extends CRUDRepository<Pracodawca> {
         CriteriaQuery<String> query = builder.createQuery(String.class);
         Root<Pracodawca> pracodawcaRoot = query.from(Pracodawca.class);
         query.select(pracodawcaRoot.get(Pracodawca_.nazwa));
+        query.orderBy(builder.asc(pracodawcaRoot.get(Pracodawca_.nazwa)));
         TypedQuery<String> typedQuery = entityManager.createQuery(query);
         return typedQuery.getResultList();
     }

@@ -282,12 +282,21 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
         }
         nazwa.setEditable(false);
         editMode = true;
+        initPracodawca();
+        przegladajPrace.setVisible(true);
+        przegladajZlecenia.setVisible(true);
+        dodajZlecenie.setVisible(true);
+        dodajPrace.setVisible(true);
     }
 
     public void initEmpty() {
         nazwa.removeAllItems();
         nazwa.setEditable(true);
         editMode = false;
+        przegladajPrace.setVisible(false);
+        przegladajZlecenia.setVisible(false);
+        dodajZlecenie.setVisible(false);
+        dodajPrace.setVisible(false);
     }
 
     private void initPracodawca() {

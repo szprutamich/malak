@@ -8,7 +8,7 @@ import javax.swing.*;
 @Component
 public class Main {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         // load context
         new ClassPathXmlApplicationContext("spring/context.xml");
         try {

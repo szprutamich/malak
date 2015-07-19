@@ -2,10 +2,14 @@ package pl.malak;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.springframework.stereotype.Service;
+import pl.malak.dao.PracodawcaDao;
+import pl.malak.dao.ZlecenieDao;
 import pl.malak.model.Pracodawca;
 import pl.malak.model.Zlecenie;
 import pl.malak.sheets.Work;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -13,7 +17,14 @@ import java.util.*;
 /**
  * @author Michał Szpruta - szprutamich@gmail.com
  */
+@Service
 public class Migration {
+
+    @Resource
+    private PracodawcaDao pracodawcaDao;
+
+    @Resource
+    private ZlecenieDao zlecenieDao;
 
     private Map<String, Pracodawca> employers = new TreeMap<>();
 
@@ -105,6 +116,18 @@ public class Migration {
 //        }
         System.out.println("Time: " + (System.currentTimeMillis() - time));
 
+        if (error.isEmpty()) {
+            zlecenieDao.deleteAll();
+            pracodawcaDao.deleteAll();
+            for (Pracodawca pracodawca : getEmployers()) {
+                pracodawcaDao.create(pracodawca);
+                for (Zlecenie zlecenie : pracodawca.getZlecenia()) {
+                    if (zlecenie.getPracodawca() != null) {
+                        zlecenieDao.create(zlecenie);
+                    }
+                }
+            }
+        }
         return error;
     }
 

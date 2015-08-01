@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
 
@@ -12,7 +13,14 @@ public class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
 
     @Override
     public Object stringToValue(String text) throws ParseException {
-        return dateFormatter.parseObject(text);
+        Object object = dateFormatter.parseObject(text);
+        if (Date.class.isInstance(object)) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(Date.class.cast(object));
+            return cal;
+        } else {
+            return dateFormatter.parseObject(text);
+        }
     }
 
     @Override

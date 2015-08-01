@@ -7,7 +7,7 @@ FLUSH PRIVILEGES;
 DROP TABLE IF EXISTS `pracodawcy`;
 CREATE TABLE `pracodawcy` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `nazwa` VARCHAR(255) NOT NULL UNIQUE,
+  `nazwa` VARCHAR(255) NOT NULL,
   `teczka` BOOLEAN DEFAULT FALSE,
   `teczka_uwagi` VARCHAR(255) DEFAULT NULL,
   `ocena` BOOLEAN DEFAULT FALSE,
@@ -19,13 +19,14 @@ CREATE TABLE `pracodawcy` (
   `szkolenia_pracodawcy_uwagi` VARCHAR(255) DEFAULT NULL,
   `odziezowka` BOOLEAN DEFAULT FALSE,
   `odziezowka_uwagi` VARCHAR(255) DEFAULT NULL,
+  `data_usuniecia` DATETIME DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `zlecenia`;
 CREATE TABLE `zlecenia` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `nazwa` VARCHAR(255) NOT NULL UNIQUE,
+  `nazwa` VARCHAR(255) NOT NULL,
   `kwestionariusz` BOOLEAN DEFAULT FALSE,
   `kwestionariusz_uwagi` VARCHAR(255) DEFAULT NULL,
   `karta_szkolenia` BOOLEAN DEFAULT FALSE,
@@ -71,6 +72,7 @@ CREATE TABLE `zlecenia` (
   `wyciag_kodeks` BOOLEAN DEFAULT FALSE,
   `wyciag_kodeks_uwagi` VARCHAR(255) DEFAULT NULL,
   `pracodawca_id` BIGINT NOT NULL,
+  `data_usuniecia` DATETIME DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `pracodawca_id_fk` (`pracodawca_id`),
   CONSTRAINT `pracodawca_id_fk` FOREIGN KEY (`pracodawca_id`) REFERENCES `pracodawcy` (`id`)

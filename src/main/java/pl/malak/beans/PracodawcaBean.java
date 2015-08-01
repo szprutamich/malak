@@ -7,7 +7,6 @@ import pl.malak.model.Pracodawca;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author Michał Szpruta - szprutamich@gmail.com
@@ -53,9 +52,4 @@ public class PracodawcaBean {
 
         return pracodawca;
     }
-
-    public List<String> listaNazwPracodawcow() {
-        return pracodawcaDao.loadAllNames();
-    }
-
 }

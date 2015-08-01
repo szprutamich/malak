@@ -6,6 +6,7 @@ import org.jdatepicker.impl.UtilDateModel;
 import pl.malak.DateLabelFormatter;
 import pl.malak.beans.PracodawcaBean;
 import pl.malak.dao.PracodawcaDao;
+import pl.malak.helpers.DateDocument;
 import pl.malak.helpers.UIHelper;
 import pl.malak.model.Pracodawca;
 
@@ -83,7 +84,9 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
         UtilDateModel model = new UtilDateModel();
         JDatePanelImpl datePanel = new JDatePanelImpl(model, properties);
         JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+        datePicker.setTextEditable(true);
         datePicker.getJFormattedTextField().setHorizontalAlignment(JTextField.CENTER);
+        datePicker.getJFormattedTextField().setDocument(new DateDocument());
 
         return datePicker;
     }
@@ -276,7 +279,7 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
     }
 
     public void init() {
-        java.util.List<String> pracodawcy = pracodawcaBean.listaNazwPracodawcow();
+        java.util.List<String> pracodawcy = pracodawcaDao.loadAllNames(false);
         for (String pracodawca : pracodawcy) {
             nazwa.addItem(pracodawca);
         }

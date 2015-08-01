@@ -163,6 +163,9 @@ public class Zlecenie {
     @JoinColumn(name = "pracodawca_id", nullable = false)
     private Pracodawca pracodawca;
 
+    @Column(name = "data_usuniecia")
+    private Date dataUsuniecia;
+
     public Zlecenie() {
     }
 
@@ -563,129 +566,100 @@ public class Zlecenie {
         this.sheetName = sheetName;
     }
 
+    public Date getDataUsuniecia() {
+        return dataUsuniecia;
+    }
+
+    public void setDataUsuniecia(Date dataUsuniecia) {
+        this.dataUsuniecia = dataUsuniecia;
+    }
+
     public void parse(Sheet sheet) {
-        this.pracodawcaNazwa = getTextOrNull(sheet, Field.W_1, Field.C);
-        this.nazwa = getTextOrNull(sheet, Field.W_2, Field.C);
+        this.pracodawcaNazwa = SheetHelper.getTextOrNull(sheet, Field.W_1, Field.C);
+        this.nazwa = SheetHelper.getTextOrNull(sheet, Field.W_2, Field.C);
 
-        this.kwestionariusz = getBoolean(sheet, Field.W_5);
-        this.kwestionariuszUwagi = getTextOrNull(sheet, Field.W_5, Field.E);
+        this.kwestionariusz = SheetHelper.getBoolean(sheet, Field.W_5);
+        this.kwestionariuszUwagi = SheetHelper.getTextOrNull(sheet, Field.W_5, Field.E);
 
-        this.kartaSzkolenia = getBoolean(sheet, Field.W_6);
-        this.kartaSzkoleniaUwagi = getTextOrNull(sheet, Field.W_6, Field.E);
-        this.kartaSzkoleniaData = getDate(sheet, Field.W_6, Field.F);
+        this.kartaSzkolenia = SheetHelper.getBoolean(sheet, Field.W_6);
+        this.kartaSzkoleniaUwagi = SheetHelper.getTextOrNull(sheet, Field.W_6, Field.E);
+        this.kartaSzkoleniaData = SheetHelper.getDate(sheet, Field.W_6, Field.F);
 
-        this.szkolenie = getBoolean(sheet, Field.W_7);
-        this.szkolenieUwagi = getTextOrNull(sheet, Field.W_7, Field.E);
+        this.szkolenie = SheetHelper.getBoolean(sheet, Field.W_7);
+        this.szkolenieUwagi = SheetHelper.getTextOrNull(sheet, Field.W_7, Field.E);
 
-        this.instruktaz = getBoolean(sheet, Field.W_8);
-        this.instruktazUwagi = getTextOrNull(sheet, Field.W_8, Field.E);
+        this.instruktaz = SheetHelper.getBoolean(sheet, Field.W_8);
+        this.instruktazUwagi = SheetHelper.getTextOrNull(sheet, Field.W_8, Field.E);
 
-        this.ryzyko = getBoolean(sheet, Field.W_9);
-        this.ryzykoUwagi = getTextOrNull(sheet, Field.W_9, Field.E);
+        this.ryzyko = SheetHelper.getBoolean(sheet, Field.W_9);
+        this.ryzykoUwagi = SheetHelper.getTextOrNull(sheet, Field.W_9, Field.E);
 
-        this.instrukcjeBhp = getBoolean(sheet, Field.W_10);
-        this.instrukcjeBhpUwagi = getTextOrNull(sheet, Field.W_10, Field.E);
+        this.instrukcjeBhp = SheetHelper.getBoolean(sheet, Field.W_10);
+        this.instrukcjeBhpUwagi = SheetHelper.getTextOrNull(sheet, Field.W_10, Field.E);
 
-        this.szkolenieBhp = getBoolean(sheet, Field.W_11);
-        this.szkolenieBhpUwagi = getTextOrNull(sheet, Field.W_11, Field.E);
-        this.szkolenieBhpData = getDate(sheet, Field.W_11, Field.F);
+        this.szkolenieBhp = SheetHelper.getBoolean(sheet, Field.W_11);
+        this.szkolenieBhpUwagi = SheetHelper.getTextOrNull(sheet, Field.W_11, Field.E);
+        this.szkolenieBhpData = SheetHelper.getDate(sheet, Field.W_11, Field.F);
 
-        this.rachunki = getBoolean(sheet, Field.W_12);
-        this.rachunkiUwagi = getTextOrNull(sheet, Field.W_12, Field.E);
+        this.rachunki = SheetHelper.getBoolean(sheet, Field.W_12);
+        this.rachunkiUwagi = SheetHelper.getTextOrNull(sheet, Field.W_12, Field.E);
 
-        this.umowa = getBoolean(sheet, Field.W_13);
-        this.umowaUwagi = getTextOrNull(sheet, Field.W_13, Field.E);
-        this.umowaData = getDate(sheet, Field.W_13, Field.F);
+        this.umowa = SheetHelper.getBoolean(sheet, Field.W_13);
+        this.umowaUwagi = SheetHelper.getTextOrNull(sheet, Field.W_13, Field.E);
+        this.umowaData = SheetHelper.getDate(sheet, Field.W_13, Field.F);
 
         for (int wiersz = 13; wiersz <= 16; wiersz++) {
-            String dokument = getTextOrNull(sheet, wiersz, Field.B);
+            String dokument = SheetHelper.getTextOrNull(sheet, wiersz, Field.B);
             if (dokument != null) {
                 switch (dokument.trim()) {
                     case "BADANIA LEKARSKIE":
                     case "Zaświadczenie lekarskie":
-                        this.badania = getBoolean(sheet, wiersz);
-                        this.badaniaUwagi = getTextOrNull(sheet, wiersz, Field.E);
-                        this.badaniaData = getDate(sheet, wiersz, Field.F);
+                        this.badania = SheetHelper.getBoolean(sheet, wiersz);
+                        this.badaniaUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
+                        this.badaniaData = SheetHelper.getDate(sheet, wiersz, Field.F);
                         break;
                     case "Legitymacja szkolna":
-                        this.legitymacja = getBoolean(sheet, wiersz);
-                        this.legitymacjaUwagi = getTextOrNull(sheet, wiersz, Field.E);
+                        this.legitymacja = SheetHelper.getBoolean(sheet, wiersz);
+                        this.legitymacjaUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         break;
                     case "DOWÓD OSOBISTY":
-                        this.dowod = getBoolean(sheet, wiersz);
-                        this.dowodUwagi = getTextOrNull(sheet, wiersz, Field.E);
+                        this.dowod = SheetHelper.getBoolean(sheet, wiersz);
+                        this.dowodUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         break;
                     case "Życiorys":
-                        this.zyciorys = getBoolean(sheet, wiersz);
-                        this.zyciorysUwagi = getTextOrNull(sheet, wiersz, Field.E);
+                        this.zyciorys = SheetHelper.getBoolean(sheet, wiersz);
+                        this.zyciorysUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         break;
                     case "Zaświadczenie sanitarno-epidemiologiczne":
-                        this.zaswiadczenieSanitarne = getBoolean(sheet, wiersz);
-                        this.zaswiadczenieSanitarneUwagi = getTextOrNull(sheet, wiersz, Field.E);
+                        this.zaswiadczenieSanitarne = SheetHelper.getBoolean(sheet, wiersz);
+                        this.zaswiadczenieSanitarneUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         break;
                     case "ZUA":
                     case "ZUS":
                     case "ZZA":
-                        this.zua = getBoolean(sheet, wiersz);
-                        this.zuaUwagi = getTextOrNull(sheet, wiersz, Field.E);
+                        this.zua = SheetHelper.getBoolean(sheet, wiersz);
+                        this.zuaUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         break;
                     case "Zaświadczenie  - student":
-                        this.zaswiadczenieStudent = getBoolean(sheet, wiersz);
-                        this.zaswiadczenieStudentUwagi = getTextOrNull(sheet, wiersz, Field.E);
+                        this.zaswiadczenieStudent = SheetHelper.getBoolean(sheet, wiersz);
+                        this.zaswiadczenieStudentUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         break;
                     case "ZWUA":
-                        this.zwua = getBoolean(sheet, wiersz);
-                        this.zwuaUwagi = getTextOrNull(sheet, wiersz, Field.E);
+                        this.zwua = SheetHelper.getBoolean(sheet, wiersz);
+                        this.zwuaUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         break;
                     case "Wyciąg z kodeksu pracy":
-                        this.wyciagKodeks = getBoolean(sheet, wiersz);
-                        this.wyciagKodeksUwagi = getTextOrNull(sheet, wiersz, Field.E);
+                        this.wyciagKodeks = SheetHelper.getBoolean(sheet, wiersz);
+                        this.wyciagKodeksUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         break;
                     case "ODBIÓR ODZIEŻY":
-                        this.odbiorOdziezy = getBoolean(sheet, wiersz);
-                        this.odbiorOdziezyUwagi = getTextOrNull(sheet, wiersz, Field.E);
-                        this.odbiorOdziezyData = getDate(sheet, wiersz, Field.F);
+                        this.odbiorOdziezy = SheetHelper.getBoolean(sheet, wiersz);
+                        this.odbiorOdziezyUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
+                        this.odbiorOdziezyData = SheetHelper.getDate(sheet, wiersz, Field.F);
                         break;
                     default:
                 }
             }
         }
-    }
-
-    private Date getDate(Sheet sheet, int wiersz, Field kolumna) {
-        String text = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(kolumna.getValue()));
-        String[] dates = text.split("-");
-        if (dates.length == 3) {
-            int i = 0;
-            return new Date(Integer.parseInt(dates[i++]) - 1900, Integer.parseInt(dates[i++]), Integer.parseInt(dates[i]));
-        }
-        return null;
-    }
-
-    private Date getDate(Sheet sheet, Field wiersz, Field kolumna) {
-        return getDate(sheet, wiersz.getValue(), kolumna);
-    }
-
-    private boolean getBoolean(Sheet sheet, int wiersz) {
-        String kolumnaJest = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.C.getValue()));
-        String kolumnaBrak = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.D.getValue()));
-        return !kolumnaBrak.trim().equalsIgnoreCase("BRAK")
-                && (kolumnaJest.trim().equalsIgnoreCase("JEST") || kolumnaJest.trim().equalsIgnoreCase("TAK"));
-    }
-
-    private boolean getBoolean(Sheet sheet, Field wiersz) {
-        return getBoolean(sheet, wiersz.getValue());
-    }
-
-    private String getTextOrNull(Sheet sheet, int wiersz, Field kolumna) {
-        String text = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(kolumna.getValue()));
-        if (text.isEmpty()) {
-            return null;
-        }
-        return text;
-    }
-
-    private String getTextOrNull(Sheet sheet, Field wiersz, Field kolumna) {
-        return getTextOrNull(sheet, wiersz.getValue(), kolumna);
     }
 }

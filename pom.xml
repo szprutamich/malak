@@ -13,6 +13,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hibernate.version>4.3.6.Final</hibernate.version>
         <junit.version>4.11</junit.version>
+        <liquibase.version>3.3.3</liquibase.version>
+        <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
+        <db.connectionURL><![CDATA[jdbc:mysql://localhost:3306/malak?useUnicode=true&amp;autoReconnect=true&amp;characterEncoding=UTF-8]]></db.connectionURL>
+        <db.username>malak</db.username>
+        <db.password>malak</db.password>
+        <mysql.mysql-connector-java.version>5.1.10</mysql.mysql-connector-java.version>
     </properties>
     <build>
         <plugins>
@@ -84,7 +90,34 @@
                 </executions>
             </plugin>
 
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>${liquibase.version}</version>
+                <configuration>
+                    <driver>${db.driverClass}</driver>
+                    <url>${db.connectionURL}</url>
+                    <username>${db.username}</username>
+                    <password>${db.password}</password>
+                    <changeLogFile>src/main/resources/schemaChangeLog.xml</changeLogFile>
+                    <liquibaseShouldRun>true</liquibaseShouldRun>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql.mysql-connector-java.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
         </plugins>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 
     <dependencies>

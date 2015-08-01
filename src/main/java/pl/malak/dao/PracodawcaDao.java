@@ -14,11 +14,14 @@ import java.util.List;
 @Repository
 public class PracodawcaDao extends CRUDRepository<Pracodawca> {
 
-    public List<String> loadAllNames() {
+    public List<String> loadAllNames(boolean withRemoved) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<String> query = builder.createQuery(String.class);
         Root<Pracodawca> pracodawcaRoot = query.from(Pracodawca.class);
         query.select(pracodawcaRoot.get(Pracodawca_.nazwa));
+        if (!withRemoved) {
+            query.where(builder.isNull(pracodawcaRoot.get(Pracodawca_.dataUsuniecia)));
+        }
         query.orderBy(builder.asc(pracodawcaRoot.get(Pracodawca_.nazwa)));
         TypedQuery<String> typedQuery = entityManager.createQuery(query);
         return typedQuery.getResultList();

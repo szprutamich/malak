@@ -3,6 +3,7 @@ package pl.malak;
 import org.springframework.stereotype.Component;
 import pl.malak.helpers.UIHelper;
 import pl.malak.panels.PracodawcaPanel;
+import pl.malak.panels.ZleceniePanel;
 
 import javax.annotation.Resource;
 import javax.swing.*;
@@ -31,13 +32,16 @@ public class MainFrame extends JFrame implements ActionListener {
     @Resource
     private PracodawcaPanel pracodawcaPanel;
 
+    @Resource
+    private ZleceniePanel zleceniePanel;
+
     public MainFrame() {
         super();
         setLayout(new BorderLayout());
         setTitle("Malak");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-        setMinimumSize(new Dimension(700, 600));
+        setMinimumSize(new Dimension(600, 450));
 
         JMenuBar menuBar = new JMenuBar();
 
@@ -58,13 +62,32 @@ public class MainFrame extends JFrame implements ActionListener {
         addActionListeners();
 
         setJMenuBar(menuBar);
-        revalidate();
+        refreshView();
+    }
+
+    private void removeAllPanels() {
+        remove(pracodawcaPanel);
+        remove(zleceniePanel);
     }
 
     public void init() {
-        remove(pracodawcaPanel);
+        removeAllPanels();
         add(pracodawcaPanel);
         pracodawcaPanel.init();
+        refreshView();
+    }
+
+    public void initEmpty() {
+        removeAllPanels();
+        add(pracodawcaPanel);
+        pracodawcaPanel.initEmpty();
+        refreshView();
+    }
+
+    public void initZlecenie() {
+        removeAllPanels();
+        add(zleceniePanel);
+        refreshView();
     }
 
     public void actionPerformed(ActionEvent evt) {
@@ -84,21 +107,14 @@ public class MainFrame extends JFrame implements ActionListener {
                 }
             }
         } else if (source == przegladaj) {
-            remove(pracodawcaPanel);
-            add(pracodawcaPanel);
-            pracodawcaPanel.init();
+            init();
         } else if (source == dodaj) {
-            remove(pracodawcaPanel);
-            add(pracodawcaPanel);
-            pracodawcaPanel.initEmpty();
+            initEmpty();
         } else if (source == zakoncz)
             System.exit(0);
         else if (source == autor) {
             UIHelper.displayMessage(this, AUTHOR);
         }
-
-        revalidate();
-        repaint();
     }
 
     private void addActionListeners() {
@@ -107,5 +123,11 @@ public class MainFrame extends JFrame implements ActionListener {
         dodaj.addActionListener(this);
         zakoncz.addActionListener(this);
         autor.addActionListener(this);
+    }
+
+    private void refreshView() {
+        revalidate();
+        repaint();
+        pack();
     }
 }

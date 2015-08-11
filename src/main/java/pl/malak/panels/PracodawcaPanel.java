@@ -1,12 +1,11 @@
 package pl.malak.panels;
 
-import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
-import pl.malak.DateLabelFormatter;
+import pl.malak.MainFrame;
 import pl.malak.beans.PracodawcaBean;
 import pl.malak.dao.PracodawcaDao;
-import pl.malak.helpers.DateDocument;
+import pl.malak.helpers.Helper;
 import pl.malak.helpers.UIHelper;
 import pl.malak.model.Pracodawca;
 
@@ -16,7 +15,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
-import java.util.Properties;
 
 /**
  * @author Michał Szpruta - szprutamich@gmail.com
@@ -30,14 +28,6 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
     @Resource
     private PracodawcaDao pracodawcaDao;
 
-    private String[] predefiniowaneUwagi = {
-            "",
-            "Wypisać",
-            "Dopisać",
-            "Podpisać",
-            "Nie dotyczy"
-    };
-
     private boolean editMode = true;
 
     JLabel nazwaLabel = new JLabel("Pracodawca:");
@@ -49,12 +39,12 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
     JCheckBox szkoleniaOkresowe = new JCheckBox("Szkolenia okresowe");
     JCheckBox szkolenia = new JCheckBox("Szkolenia pracodawcy");
     JCheckBox odziezowka = new JCheckBox("Odzieżówka");
-    JComboBox<String> teczkaUwagi = new JComboBox<>(predefiniowaneUwagi);
-    JComboBox<String> ocenaUwagi = new JComboBox<>(predefiniowaneUwagi);
-    JComboBox<String> szkoleniaOkresoweUwagi = new JComboBox<>(predefiniowaneUwagi);
-    JComboBox<String> szkoleniaUwagi = new JComboBox<>(predefiniowaneUwagi);
-    JComboBox<String> odziezowkaUwagi = new JComboBox<>(predefiniowaneUwagi);
-    JDatePickerImpl datePicker = getJDatePicker();
+    JComboBox<String> teczkaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
+    JComboBox<String> ocenaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
+    JComboBox<String> szkoleniaOkresoweUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
+    JComboBox<String> szkoleniaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
+    JComboBox<String> odziezowkaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
+    JDatePickerImpl datePicker = UIHelper.getJDatePicker();
     JButton zapisz = new JButton("Zapisz");
     JButton przegladajPrace = new JButton("Przeglądaj umowy o pracę");
     JButton dodajPrace = new JButton("Dodaj umowę o pracę");
@@ -76,21 +66,6 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
         addListeners();
     }
 
-    private JDatePickerImpl getJDatePicker() {
-        Properties properties = new Properties();
-        properties.put("text.today", "Dziś");
-        properties.put("text.month", "Miesiąc");
-        properties.put("text.year", "Rok");
-        UtilDateModel model = new UtilDateModel();
-        JDatePanelImpl datePanel = new JDatePanelImpl(model, properties);
-        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-        datePicker.setTextEditable(true);
-        datePicker.getJFormattedTextField().setHorizontalAlignment(JTextField.CENTER);
-        datePicker.getJFormattedTextField().setDocument(new DateDocument());
-
-        return datePicker;
-    }
-
     private void addListeners() {
         nazwa.addActionListener(this);
         zapisz.addActionListener(this);
@@ -103,10 +78,9 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.anchor = GridBagConstraints.PAGE_START;
         c.insets = new Insets(5, 15, 5, 15);
-        c.ipady = 10;
-        c.weightx = 0.5;
+        c.ipady = 0;
+        c.ipadx = 0;
 
         // wiersz 1
         c.gridx = 0;
@@ -196,7 +170,6 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = wiersz;
-        c.weighty = 1.0;
         add(zapisz, c);
 
         //wiersz 10
@@ -268,7 +241,7 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
                 UIHelper.displayMessage(this, "Pracodawca został uaktualniony pomyślnie.");
             }
         } else if (e.getSource() == przegladajZlecenia) {
-            UIHelper.displayMessage(this, "Nie zaimplementowane!");
+            getJFrame().initZlecenie();
         } else if (e.getSource() == przegladajPrace) {
             UIHelper.displayMessage(this, "Nie zaimplementowane!");
         } else if (e.getSource() == dodajPrace) {
@@ -317,7 +290,7 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
             odziezowkaUwagi.setSelectedItem(pracodawca.getOdziezowkaUwagi());
             Date date = pracodawca.getSzkoleniaPracodawcyData();
             if (date != null) {
-                ((UtilDateModel)datePicker.getModel()).setValue(date);
+                ((UtilDateModel) datePicker.getModel()).setValue(date);
                 datePicker.getModel().setSelected(true);
             } else {
                 datePicker.getModel().setSelected(false);
@@ -334,5 +307,9 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
             odziezowkaUwagi.setSelectedItem("");
             datePicker.getModel().setSelected(false);
         }
+    }
+
+    private MainFrame getJFrame() {
+        return (MainFrame) SwingUtilities.getWindowAncestor(this);
     }
 }

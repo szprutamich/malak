@@ -7,6 +7,14 @@ import java.util.Date;
  */
 public class Helper {
 
+    public static String[] PREDEFINIOWANE_UWAGI = {
+            "",
+            "Wypisać",
+            "Dopisać",
+            "Podpisać",
+            "Nie dotyczy"
+    };
+
     public static Date getDate(String text) {
         String[] dates = text.split("-");
         if (dates.length == 3) {

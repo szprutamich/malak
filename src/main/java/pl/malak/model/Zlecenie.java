@@ -92,6 +92,18 @@ public class Zlecenie {
     @Column(name = "zua_uwagi")
     private String zuaUwagi;
 
+    @Column(name = "zus")
+    private Boolean zus;
+
+    @Column(name = "zus_uwagi")
+    private String zusUwagi;
+
+    @Column(name = "zza")
+    private Boolean zza;
+
+    @Column(name = "zza_uwagi")
+    private String zzaUwagi;
+
     @Column(name = "zwua")
     private Boolean zwua;
 
@@ -518,6 +530,38 @@ public class Zlecenie {
         this.zuaUwagi = zuaUwagi;
     }
 
+    public Boolean getZus() {
+        return zus;
+    }
+
+    public void setZus(Boolean zus) {
+        this.zus = zus;
+    }
+
+    public String getZusUwagi() {
+        return zusUwagi;
+    }
+
+    public void setZusUwagi(String zusUwagi) {
+        this.zusUwagi = zusUwagi;
+    }
+
+    public Boolean getZza() {
+        return zza;
+    }
+
+    public void setZza(Boolean zza) {
+        this.zza = zza;
+    }
+
+    public String getZzaUwagi() {
+        return zzaUwagi;
+    }
+
+    public void setZzaUwagi(String zzaUwagi) {
+        this.zzaUwagi = zzaUwagi;
+    }
+
     public Boolean getZwua() {
         return zwua;
     }
@@ -635,10 +679,16 @@ public class Zlecenie {
                         this.zaswiadczenieSanitarneUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         break;
                     case "ZUA":
-                    case "ZUS":
-                    case "ZZA":
                         this.zua = SheetHelper.getBoolean(sheet, wiersz);
                         this.zuaUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
+                        break;
+                    case "ZUS":
+                        this.zus = SheetHelper.getBoolean(sheet, wiersz);
+                        this.zusUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
+                        break;
+                    case "ZZA":
+                        this.zza = SheetHelper.getBoolean(sheet, wiersz);
+                        this.zzaUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         break;
                     case "Zaświadczenie  - student":
                         this.zaswiadczenieStudent = SheetHelper.getBoolean(sheet, wiersz);

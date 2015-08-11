@@ -102,4 +102,12 @@
             <column name="data_usuniecia" type="DATETIME"/>
         </addColumn>
     </changeSet>
+    <changeSet author="szprutamich@gmail.com" id="5">
+        <addColumn tableName="zlecenia">
+            <column name="zza" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="zus" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="zza_uwagi" type="VARCHAR(255)"/>
+            <column name="zus_uwagi" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

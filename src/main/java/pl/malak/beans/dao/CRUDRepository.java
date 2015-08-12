@@ -1,4 +1,4 @@
-package pl.malak.dao;
+package pl.malak.beans.dao;
 
 import pl.malak.model.Pracodawca;
 

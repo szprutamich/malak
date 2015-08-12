@@ -1,7 +1,7 @@
 package pl.malak.beans;
 
 import org.springframework.stereotype.Service;
-import pl.malak.dao.PracodawcaDao;
+import pl.malak.beans.dao.PracodawcaDao;
 import pl.malak.model.Pracodawca;
 
 import javax.annotation.Resource;

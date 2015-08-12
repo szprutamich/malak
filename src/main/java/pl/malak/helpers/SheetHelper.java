@@ -33,7 +33,8 @@ public class SheetHelper {
         String[] dates = text.split("-");
         if (dates.length == 3) {
             int i = 0;
-            return new Date(Integer.parseInt(dates[i++]) - 1900, Integer.parseInt(dates[i++]), Integer.parseInt(dates[i]));
+            return new Date(Integer.parseInt(dates[i++]) - 1900, Integer.parseInt(dates[i++]), Integer
+                    .parseInt(dates[i]));
         }
         return null;
     }

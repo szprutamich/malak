@@ -15,7 +15,8 @@
         <junit.version>4.11</junit.version>
         <liquibase.version>3.3.3</liquibase.version>
         <db.driverClass>com.mysql.jdbc.Driver</db.driverClass>
-        <db.connectionURL><![CDATA[jdbc:mysql://localhost:3306/malak?useUnicode=true&amp;autoReconnect=true&amp;characterEncoding=UTF-8]]></db.connectionURL>
+        <db.connectionURL>
+            <![CDATA[jdbc:mysql://localhost:3306/malak?useUnicode=true&amp;autoReconnect=true&amp;characterEncoding=UTF-8]]></db.connectionURL>
         <db.username>malak</db.username>
         <db.password>malak</db.password>
         <mysql.mysql-connector-java.version>5.1.10</mysql.mysql-connector-java.version>

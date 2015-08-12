@@ -1,4 +1,4 @@
-package pl.malak.dao;
+package pl.malak.beans.dao;
 
 import org.springframework.stereotype.Repository;
 import pl.malak.model.Pracodawca;

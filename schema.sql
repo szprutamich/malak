@@ -4,6 +4,8 @@ GRANT ALL PRIVILEGES ON malak.* TO 'malak'@'localhost' IDENTIFIED BY 'malak';
 GRANT ALL PRIVILEGES ON malak.* TO 'malak'@'%' IDENTIFIED BY 'malak';
 FLUSH PRIVILEGES;
 
+USE malak;
+
 DROP TABLE IF EXISTS `pracodawcy`;
 CREATE TABLE `pracodawcy` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,

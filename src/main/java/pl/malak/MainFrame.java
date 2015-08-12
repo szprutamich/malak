@@ -5,6 +5,7 @@ import pl.malak.helpers.UIHelper;
 import pl.malak.panels.PracodawcaPanel;
 import pl.malak.panels.ZleceniePanel;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -41,7 +42,7 @@ public class MainFrame extends JFrame implements ActionListener {
         setTitle("Malak");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-        setMinimumSize(new Dimension(600, 450));
+        setMinimumSize(new Dimension(650, 450));
 
         JMenuBar menuBar = new JMenuBar();
 
@@ -65,26 +66,32 @@ public class MainFrame extends JFrame implements ActionListener {
         refreshView();
     }
 
+    @PostConstruct
+    private void setupPanels() {
+        pracodawcaPanel.setFrame(this);
+        zleceniePanel.setFrame(this);
+    }
+
     private void removeAllPanels() {
         remove(pracodawcaPanel);
         remove(zleceniePanel);
     }
 
-    public void init() {
+    public void initPrzegladaniePracodawcow() {
         removeAllPanels();
         add(pracodawcaPanel);
         pracodawcaPanel.init();
         refreshView();
     }
 
-    public void initEmpty() {
+    public void initDodajPracodawce() {
         removeAllPanels();
         add(pracodawcaPanel);
         pracodawcaPanel.initEmpty();
         refreshView();
     }
 
-    public void initZlecenie() {
+    public void initPrzeglądanieZlecen() {
         removeAllPanels();
         add(zleceniePanel);
         refreshView();
@@ -103,13 +110,13 @@ public class MainFrame extends JFrame implements ActionListener {
                     UIHelper.displayMessage(this, "Nie udało się wczytać pliku, ponieważ:\n" + error);
                 } else {
                     UIHelper.displayMessage(this, "Dane wczytane pomyślnie");
-                    init();
+                    initPrzegladaniePracodawcow();
                 }
             }
         } else if (source == przegladaj) {
-            init();
+            initPrzegladaniePracodawcow();
         } else if (source == dodaj) {
-            initEmpty();
+            initDodajPracodawce();
         } else if (source == zakoncz)
             System.exit(0);
         else if (source == autor) {

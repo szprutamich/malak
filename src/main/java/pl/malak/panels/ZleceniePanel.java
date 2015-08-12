@@ -2,22 +2,24 @@ package pl.malak.panels;
 
 import org.jdatepicker.impl.JDatePickerImpl;
 import pl.malak.beans.PracodawcaBean;
-import pl.malak.dao.PracodawcaDao;
-import pl.malak.dao.ZlecenieDao;
+import pl.malak.beans.dao.PracodawcaDao;
+import pl.malak.beans.dao.ZlecenieDao;
 import pl.malak.helpers.Helper;
 import pl.malak.helpers.UIHelper;
+import pl.malak.panels.model.UIRow;
 
 import javax.annotation.Resource;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * @author Michał Szpruta - szprutamich@gmail.com
  */
 @org.springframework.stereotype.Component
-public class ZleceniePanel extends JPanel implements ActionListener {
+public class ZleceniePanel extends FramePanel implements ActionListener {
 
     @Resource
     private PracodawcaBean pracodawcaBean;
@@ -29,6 +31,8 @@ public class ZleceniePanel extends JPanel implements ActionListener {
     private ZlecenieDao zlecenieDao;
 
     private boolean editMode = true;
+
+    private ArrayList<UIRow> rows = new ArrayList<>();
 
     JLabel pracodawcaNazwaLabel = new JLabel("Pracodawca:");
     JLabel nazwaLabel = new JLabel("Pracownik:");
@@ -84,9 +88,9 @@ public class ZleceniePanel extends JPanel implements ActionListener {
 
     JDatePickerImpl badaniaDatePicker = UIHelper.getJDatePicker();
     JDatePickerImpl zwuaDatePicker = UIHelper.getJDatePicker();
-    JDatePickerImpl odbiorOdziezyDatePicker = UIHelper.getJDatePicker();
+    JDatePickerImpl odbiorDatePicker = UIHelper.getJDatePicker();
     JDatePickerImpl umowaDatePicker = UIHelper.getJDatePicker();
-    JDatePickerImpl szkolenieBhpDatePicker = UIHelper.getJDatePicker();
+    JDatePickerImpl szkolenieOkresoweDatePicker = UIHelper.getJDatePicker();
     JDatePickerImpl kartaSzkoleniaDatePicker = UIHelper.getJDatePicker();
 
     JButton zapisz = new JButton("Zapisz");
@@ -95,20 +99,27 @@ public class ZleceniePanel extends JPanel implements ActionListener {
     public ZleceniePanel() {
         super();
 
-        kwestionariuszUwagi.setEditable(true);
-        kartaSzkoleniaUwagi.setEditable(true);
-        szkolenieOgolneUwagi.setEditable(true);
-        instruktazUwagi.setEditable(true);
-        ryzykoUwagi.setEditable(true);
-        instrukcjeUwagi.setEditable(true);
-        szkolenieOkresoweUwagi.setEditable(true);
-        rachunkiUwagi.setEditable(true);
-        umowaUwagi.setEditable(true);
-        odbiorUwagi.setEditable(true);
-        zuaUwagi.setEditable(true);
-        zusUwagi.setEditable(true);
-        zzaUwagi.setEditable(true);
-        zwuaUwagi.setEditable(true);
+        rows.add(new UIRow(kwestionariusz, kwestionariuszUwagi, null));
+        rows.add(new UIRow(kartaSzkolenia, kartaSzkoleniaUwagi, kartaSzkoleniaDatePicker));
+        rows.add(new UIRow(szkolenieOgolne, szkolenieOgolneUwagi, null));
+        rows.add(new UIRow(instruktaz, instruktazUwagi, null));
+        rows.add(new UIRow(ryzyko, ryzykoUwagi, null));
+        rows.add(new UIRow(instrukcje, instrukcjeUwagi, null));
+        rows.add(new UIRow(szkolenieOkresowe, szkolenieOkresoweUwagi, szkolenieOkresoweDatePicker));
+        rows.add(new UIRow(rachunki, rachunkiUwagi, null));
+        rows.add(new UIRow(umowa, umowaUwagi, umowaDatePicker));
+        rows.add(new UIRow(badania, badaniaUwagi, badaniaDatePicker));
+        rows.add(new UIRow(odbior, odbiorUwagi, odbiorDatePicker));
+        rows.add(new UIRow(zua, zuaUwagi, null));
+        rows.add(new UIRow(zus, zusUwagi, null));
+        rows.add(new UIRow(zza, zzaUwagi, null));
+        rows.add(new UIRow(zwua, zwuaUwagi, zwuaDatePicker));
+        rows.add(new UIRow(legitymacja, legitymacjaUwagi, null));
+        rows.add(new UIRow(dowod, dowodUwagi, null));
+        rows.add(new UIRow(zyciorys, zyciorysUwagi, null));
+        rows.add(new UIRow(zaswiadczenieSanitarne, zaswiadczenieSanitarneUwagi, null));
+        rows.add(new UIRow(zaswiadczenieStudent, zaswiadczenieStudentUwagi, null));
+        rows.add(new UIRow(wyciagKodeks, wyciagKodeksUwagi, null));
 
         nazwaLabel.setFont(new Font(nazwaLabel.getFont().getFamily(), Font.PLAIN, 25));
 
@@ -119,10 +130,8 @@ public class ZleceniePanel extends JPanel implements ActionListener {
     }
 
     private void addListeners() {
-//        nazwa.addActionListener(this);
-//        zapisz.addActionListener(this);
-//        przegladajPrace.addActionListener(this);
-//        przegladajZlecenia.addActionListener(this);
+        wroc.addActionListener(this);
+        zapisz.addActionListener(this);
     }
 
     private void layoutComponents() {
@@ -133,7 +142,6 @@ public class ZleceniePanel extends JPanel implements ActionListener {
         c.insets = new Insets(5, 5, 5, 5);
         c.ipady = 0;
         c.ipadx = 0;
-//        c.weightx = 1;
 
         // --------------
         c.gridx = 0;
@@ -142,285 +150,49 @@ public class ZleceniePanel extends JPanel implements ActionListener {
         add(pracodawcaNazwaLabel, c);
 
         // --------------
+        wiersz++;
         c.gridx = 0;
         c.gridy = wiersz;
-        c.gridwidth = 3;
+        c.gridwidth = 1;
         add(nazwaLabel, c);
 
-        // --------------
-        wiersz++;
-        c.gridx = 0;
+        c.gridx = 1;
         c.gridy = wiersz;
-        c.gridwidth = 3;
+        c.gridwidth = 2;
         add(nazwa, c);
 
-        // --------------
-        wiersz++;
-        c.insets = new Insets(0, 5, 0, 5);
-        c.gridwidth = 1;
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(uwagiLabel, c);
-
-        c.gridx = 2;
-        c.gridy = wiersz;
-        add(dataLabel, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(kwestionariusz, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(kwestionariuszUwagi, c);
+//        // --------------
+//        wiersz++;
+//        c.gridwidth = 1;
+//        c.gridx = 1;
+//        c.gridy = wiersz;
+//        add(uwagiLabel, c);
+//
+//        c.gridx = 2;
+//        c.gridy = wiersz;
+//        add(dataLabel, c);
 
         // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(kartaSzkolenia, c);
+        c.insets = new Insets(1, 5, 1, 5);
 
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(kartaSzkoleniaUwagi, c);
+        for (UIRow row : rows) {
+            wiersz++;
+            c.gridwidth = 1;
+            c.gridx = 0;
+            c.gridy = wiersz;
+            add(row.getCheckBox(), c);
 
-        c.gridx = 2;
-        c.gridy = wiersz;
-        add(kartaSzkoleniaDatePicker, c);
+            c.gridx = 1;
+            c.gridy = wiersz;
+            add(row.getComboBox(), c);
+            row.getComboBox().setEditable(true);
 
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(szkolenieOgolne, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(szkolenieOgolneUwagi, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(instruktaz, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(instruktazUwagi, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(ryzyko, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(ryzykoUwagi, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(instrukcje, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(instrukcjeUwagi, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(szkolenieOkresowe, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(szkolenieOkresoweUwagi, c);
-
-        c.gridx = 2;
-        c.gridy = wiersz;
-        add(szkolenieBhpDatePicker, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(rachunki, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(rachunkiUwagi, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(umowa, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(umowaUwagi, c);
-
-        c.gridx = 2;
-        c.gridy = wiersz;
-        add(umowaDatePicker, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(badania, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(badaniaUwagi, c);
-
-        c.gridx = 2;
-        c.gridy = wiersz;
-        add(badaniaDatePicker, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(odbior, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(odbiorUwagi, c);
-
-        c.gridx = 2;
-        c.gridy = wiersz;
-        add(odbiorOdziezyDatePicker, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(zua, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(zuaUwagi, c);
-
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(zus, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(zusUwagi, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(zza, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(zzaUwagi, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(zwua, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(zwuaUwagi, c);
-
-        c.gridx = 2;
-        c.gridy = wiersz;
-        add(zwuaDatePicker, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(legitymacja, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(legitymacjaUwagi, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(dowod, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(dowodUwagi, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(zyciorys, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(zyciorysUwagi, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(zaswiadczenieSanitarne, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(zaswiadczenieSanitarneUwagi, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(zaswiadczenieStudent, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(zaswiadczenieStudentUwagi, c);
-
-        // --------------
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(wyciagKodeks, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(wyciagKodeksUwagi, c);
+            if (row.getDatePicker() != null) {
+                c.gridx = 2;
+                c.gridy = wiersz;
+                add(row.getDatePicker(), c);
+            }
+        }
 
         // --------------
         wiersz++;
@@ -428,7 +200,6 @@ public class ZleceniePanel extends JPanel implements ActionListener {
         c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = wiersz;
-        c.weighty = 0.5;
         add(zapisz, c);
 
         c.gridwidth = 1;
@@ -439,115 +210,10 @@ public class ZleceniePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if (e.getSource() == nazwa) {
-//            initPracodawca();
-//        } else if (e.getSource() == zapisz) {
-//            String pracodawcaNazwa = UIHelper.getComboText(nazwa);
-//            if (pracodawcaNazwa == null) {
-//                UIHelper.displayMessage(this, "Nazwa nie może być pusta!");
-//                return;
-//            }
-//            Pracodawca pracodawca = pracodawcaDao.loadByName(pracodawcaNazwa);
-//            if (pracodawca == null) {
-//                pracodawcaBean.stworzPracodawce(
-//                        UIHelper.getComboText(nazwa),
-//                        teczka.isSelected(),
-//                        UIHelper.getComboText(teczkaUwagi),
-//                        ocena.isSelected(),
-//                        UIHelper.getComboText(ocenaUwagi),
-//                        szkoleniaOkresowe.isSelected(),
-//                        UIHelper.getComboText(szkoleniaOkresoweUwagi),
-//                        szkolenia.isSelected(),
-//                        UIHelper.datePickerGetDate(datePicker),
-//                        UIHelper.getComboText(szkoleniaUwagi),
-//                        odziezowka.isSelected(),
-//                        UIHelper.getComboText(odziezowkaUwagi));
-//                UIHelper.displayMessage(this, "Pracodawca został dodany pomyślnie.");
-//            } else if (!editMode) {
-//                UIHelper.displayMessage(this, "Pracodawca o podanej nazwie już istnieje!");
-//            } else {
-//                pracodawcaBean.uaktualnijPracodawce(
-//                        pracodawca.getId(),
-//                        UIHelper.getComboText(nazwa),
-//                        teczka.isSelected(),
-//                        UIHelper.getComboText(teczkaUwagi),
-//                        ocena.isSelected(),
-//                        UIHelper.getComboText(ocenaUwagi),
-//                        szkoleniaOkresowe.isSelected(),
-//                        UIHelper.getComboText(szkoleniaOkresoweUwagi),
-//                        szkolenia.isSelected(),
-//                        UIHelper.datePickerGetDate(datePicker),
-//                        UIHelper.getComboText(szkoleniaUwagi),
-//                        odziezowka.isSelected(),
-//                        UIHelper.getComboText(odziezowkaUwagi));
-//                UIHelper.displayMessage(this, "Pracodawca został uaktualniony pomyślnie.");
-//            }
-//        } else if (e.getSource() == przegladajZlecenia) {
-//            UIHelper.displayMessage(this, "Nie zaimplementowane!");
-//        } else if (e.getSource() == przegladajPrace) {
-//            UIHelper.displayMessage(this, "Nie zaimplementowane!");
-//        } else if (e.getSource() == dodajPrace) {
-//            UIHelper.displayMessage(this, "Nie zaimplementowane!");
-//        } else if (e.getSource() == dodajZlecenie) {
-//            UIHelper.displayMessage(this, "Nie zaimplementowane!");
-//        }
-    }
+        if (e.getSource() == wroc) {
+            getFrame().initPrzegladaniePracodawcow();
+        } else if (e.getSource() == zapisz) {
 
-//    public void init() {
-//        java.util.List<String> pracodawcy = pracodawcaDao.loadAllNames(false);
-//        for (String pracodawca : pracodawcy) {
-//            nazwa.addItem(pracodawca);
-//        }
-//        nazwa.setEditable(false);
-//        editMode = true;
-//        initPracodawca();
-//        przegladajPrace.setVisible(true);
-//        przegladajZlecenia.setVisible(true);
-//        dodajZlecenie.setVisible(true);
-//        dodajPrace.setVisible(true);
-//    }
-//
-//    public void initEmpty() {
-//        nazwa.removeAllItems();
-//        nazwa.setEditable(true);
-//        editMode = false;
-//        przegladajPrace.setVisible(false);
-//        przegladajZlecenia.setVisible(false);
-//        dodajZlecenie.setVisible(false);
-//        dodajPrace.setVisible(false);
-//    }
-//
-//    private void initPracodawca() {
-//        String pracodawcaNazwa = UIHelper.getComboText(nazwa);
-//        Pracodawca pracodawca = pracodawcaDao.loadByName(pracodawcaNazwa);
-//        if (pracodawca != null && editMode) {
-//            teczka.setSelected(pracodawca.getTeczka());
-//            ocena.setSelected(pracodawca.getOcena());
-//            szkoleniaOkresowe.setSelected(pracodawca.getSzkoleniaOkresowe());
-//            szkolenia.setSelected(pracodawca.getSzkoleniaPracodawcy());
-//            odziezowka.setSelected(pracodawca.getOdziezowka());
-//            teczkaUwagi.setSelectedItem(pracodawca.getTeczkaUwagi());
-//            ocenaUwagi.setSelectedItem(pracodawca.getOcenaUwagi());
-//            szkoleniaOkresoweUwagi.setSelectedItem(pracodawca.getSzkoleniaOkresoweUwagi());
-//            odziezowkaUwagi.setSelectedItem(pracodawca.getOdziezowkaUwagi());
-//            Date date = pracodawca.getSzkoleniaPracodawcyData();
-//            if (date != null) {
-//                ((UtilDateModel)datePicker.getModel()).setValue(date);
-//                datePicker.getModel().setSelected(true);
-//            } else {
-//                datePicker.getModel().setSelected(false);
-//            }
-//        } else {
-//            teczka.setSelected(false);
-//            ocena.setSelected(false);
-//            szkoleniaOkresowe.setSelected(false);
-//            szkolenia.setSelected(false);
-//            odziezowka.setSelected(false);
-//            teczkaUwagi.setSelectedItem("");
-//            ocenaUwagi.setSelectedItem("");
-//            szkoleniaOkresoweUwagi.setSelectedItem("");
-//            odziezowkaUwagi.setSelectedItem("");
-//            datePicker.getModel().setSelected(false);
-//        }
-//    }
+        }
+    }
 }

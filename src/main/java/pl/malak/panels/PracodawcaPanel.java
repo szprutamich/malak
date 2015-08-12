@@ -2,25 +2,26 @@ package pl.malak.panels;
 
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
-import pl.malak.MainFrame;
 import pl.malak.beans.PracodawcaBean;
-import pl.malak.dao.PracodawcaDao;
+import pl.malak.beans.dao.PracodawcaDao;
 import pl.malak.helpers.Helper;
 import pl.malak.helpers.UIHelper;
 import pl.malak.model.Pracodawca;
+import pl.malak.panels.model.UIRow;
 
 import javax.annotation.Resource;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
  * @author Michał Szpruta - szprutamich@gmail.com
  */
 @org.springframework.stereotype.Component
-public class PracodawcaPanel extends JPanel implements ActionListener {
+public class PracodawcaPanel extends FramePanel implements ActionListener {
 
     @Resource
     private PracodawcaBean pracodawcaBean;
@@ -29,6 +30,8 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
     private PracodawcaDao pracodawcaDao;
 
     private boolean editMode = true;
+
+    private ArrayList<UIRow> rows = new ArrayList<>();
 
     JLabel nazwaLabel = new JLabel("Pracodawca:");
     JLabel uwagiLabel = new JLabel("Uwagi:");
@@ -44,7 +47,7 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
     JComboBox<String> szkoleniaOkresoweUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JComboBox<String> szkoleniaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JComboBox<String> odziezowkaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JDatePickerImpl datePicker = UIHelper.getJDatePicker();
+    JDatePickerImpl szkoleniaDatePicker = UIHelper.getJDatePicker();
     JButton zapisz = new JButton("Zapisz");
     JButton przegladajPrace = new JButton("Przeglądaj umowy o pracę");
     JButton dodajPrace = new JButton("Dodaj umowę o pracę");
@@ -61,6 +64,12 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
         odziezowkaUwagi.setEditable(true);
 
         nazwaLabel.setFont(new Font(nazwaLabel.getFont().getFamily(), Font.PLAIN, 25));
+
+        rows.add(new UIRow(teczka, teczkaUwagi, null));
+        rows.add(new UIRow(ocena, ocenaUwagi, null));
+        rows.add(new UIRow(szkoleniaOkresowe, szkoleniaOkresoweUwagi, null));
+        rows.add(new UIRow(szkolenia, szkoleniaUwagi, szkoleniaDatePicker));
+        rows.add(new UIRow(odziezowka, odziezowkaUwagi, null));
 
         layoutComponents();
         addListeners();
@@ -82,97 +91,57 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
         c.ipady = 0;
         c.ipadx = 0;
 
-        // wiersz 1
+        // --------------
         c.gridx = 0;
         c.gridy = wiersz;
-        c.gridwidth = 3;
+        c.gridwidth = 1;
         add(nazwaLabel, c);
 
-        // wiersz 2
-        wiersz++;
-        c.gridx = 0;
+        c.gridx = 1;
         c.gridy = wiersz;
-        c.gridwidth = 3;
+        c.gridwidth = 2;
         add(nazwa, c);
 
-        //wiersz 3
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(uwagiLabel, c);
+//        // --------------
+//        wiersz++;
+//        c.gridwidth = 1;
+//        c.gridx = 1;
+//        c.gridy = wiersz;
+//        add(uwagiLabel, c);
+//
+//        c.gridx = 2;
+//        c.gridy = wiersz;
+//        add(dataLabel, c);
 
-        c.gridx = 2;
-        c.gridy = wiersz;
-        add(dataLabel, c);
+        // --------------
 
-        //wiersz 4
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(teczka, c);
+        for (UIRow row : rows) {
+            wiersz++;
+            c.gridwidth = 1;
+            c.gridx = 0;
+            c.gridy = wiersz;
+            add(row.getCheckBox(), c);
 
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(teczkaUwagi, c);
+            c.gridx = 1;
+            c.gridy = wiersz;
+            add(row.getComboBox(), c);
+            row.getComboBox().setEditable(true);
 
-        //wiersz 5
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(ocena, c);
+            if (row.getDatePicker() != null) {
+                c.gridx = 2;
+                c.gridy = wiersz;
+                add(row.getDatePicker(), c);
+            }
+        }
 
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(ocenaUwagi, c);
-
-        //wiersz 6
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(szkoleniaOkresowe, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(szkoleniaOkresoweUwagi, c);
-
-        //wiersz 7
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(szkolenia, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(szkoleniaUwagi, c);
-
-        c.gridx = 2;
-        c.gridy = wiersz;
-        add(datePicker, c);
-
-        //wiersz 8
-        wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 0;
-        c.gridy = wiersz;
-        add(odziezowka, c);
-
-        c.gridx = 1;
-        c.gridy = wiersz;
-        add(odziezowkaUwagi, c);
-
-        //wiersz 9
+        // --------------
         wiersz++;
         c.gridwidth = 3;
         c.gridx = 0;
         c.gridy = wiersz;
         add(zapisz, c);
 
-        //wiersz 10
+        // --------------
         wiersz++;
         c.gridwidth = 2;
         c.gridx = 0;
@@ -183,7 +152,7 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
         c.gridy = wiersz;
         add(dodajPrace, c);
 
-        //wiersz 11
+        // --------------
         wiersz++;
         c.gridwidth = 2;
         c.gridx = 0;
@@ -216,7 +185,7 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
                         szkoleniaOkresowe.isSelected(),
                         UIHelper.getComboText(szkoleniaOkresoweUwagi),
                         szkolenia.isSelected(),
-                        UIHelper.datePickerGetDate(datePicker),
+                        UIHelper.datePickerGetDate(szkoleniaDatePicker),
                         UIHelper.getComboText(szkoleniaUwagi),
                         odziezowka.isSelected(),
                         UIHelper.getComboText(odziezowkaUwagi));
@@ -234,14 +203,14 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
                         szkoleniaOkresowe.isSelected(),
                         UIHelper.getComboText(szkoleniaOkresoweUwagi),
                         szkolenia.isSelected(),
-                        UIHelper.datePickerGetDate(datePicker),
+                        UIHelper.datePickerGetDate(szkoleniaDatePicker),
                         UIHelper.getComboText(szkoleniaUwagi),
                         odziezowka.isSelected(),
                         UIHelper.getComboText(odziezowkaUwagi));
                 UIHelper.displayMessage(this, "Pracodawca został uaktualniony pomyślnie.");
             }
         } else if (e.getSource() == przegladajZlecenia) {
-            getJFrame().initZlecenie();
+            getFrame().initPrzeglądanieZlecen();
         } else if (e.getSource() == przegladajPrace) {
             UIHelper.displayMessage(this, "Nie zaimplementowane!");
         } else if (e.getSource() == dodajPrace) {
@@ -290,10 +259,10 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
             odziezowkaUwagi.setSelectedItem(pracodawca.getOdziezowkaUwagi());
             Date date = pracodawca.getSzkoleniaPracodawcyData();
             if (date != null) {
-                ((UtilDateModel) datePicker.getModel()).setValue(date);
-                datePicker.getModel().setSelected(true);
+                ((UtilDateModel) szkoleniaDatePicker.getModel()).setValue(date);
+                szkoleniaDatePicker.getModel().setSelected(true);
             } else {
-                datePicker.getModel().setSelected(false);
+                szkoleniaDatePicker.getModel().setSelected(false);
             }
         } else {
             teczka.setSelected(false);
@@ -305,11 +274,7 @@ public class PracodawcaPanel extends JPanel implements ActionListener {
             ocenaUwagi.setSelectedItem("");
             szkoleniaOkresoweUwagi.setSelectedItem("");
             odziezowkaUwagi.setSelectedItem("");
-            datePicker.getModel().setSelected(false);
+            szkoleniaDatePicker.getModel().setSelected(false);
         }
-    }
-
-    private MainFrame getJFrame() {
-        return (MainFrame) SwingUtilities.getWindowAncestor(this);
     }
 }

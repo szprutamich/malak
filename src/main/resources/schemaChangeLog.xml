@@ -93,16 +93,6 @@
         <rollback/>
     </changeSet>
     <changeSet author="szprutamich@gmail.com" id="3">
-        <addColumn tableName="pracodawcy">
-            <column name="data_usuniecia" type="DATETIME"/>
-        </addColumn>
-    </changeSet>
-    <changeSet author="szprutamich@gmail.com" id="4">
-        <addColumn tableName="zlecenia">
-            <column name="data_usuniecia" type="DATETIME"/>
-        </addColumn>
-    </changeSet>
-    <changeSet author="szprutamich@gmail.com" id="5">
         <addColumn tableName="zlecenia">
             <column name="zza" type="BOOLEAN" defaultValueBoolean="false"/>
             <column name="zus" type="BOOLEAN" defaultValueBoolean="false"/>

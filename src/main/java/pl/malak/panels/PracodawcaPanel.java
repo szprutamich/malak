@@ -4,6 +4,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 import pl.malak.beans.PracodawcaBean;
 import pl.malak.beans.dao.PracodawcaDao;
+import pl.malak.beans.dao.ZlecenieDao;
 import pl.malak.helpers.Helper;
 import pl.malak.helpers.UIHelper;
 import pl.malak.model.Pracodawca;
@@ -29,7 +30,12 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
     @Resource
     private PracodawcaDao pracodawcaDao;
 
+    @Resource
+    private ZlecenieDao zlecenieDao;
+
     private boolean editMode = true;
+
+    private Pracodawca obecnyPracodawca;
 
     private ArrayList<UIRow> rows = new ArrayList<>();
 
@@ -80,6 +86,8 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
         zapisz.addActionListener(this);
         przegladajPrace.addActionListener(this);
         przegladajZlecenia.addActionListener(this);
+        dodajZlecenie.addActionListener(this);
+        dodajPrace.addActionListener(this);
     }
 
     private void layoutComponents() {
@@ -167,7 +175,7 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == nazwa) {
-            initPracodawca();
+            init();
         } else if (e.getSource() == zapisz) {
             String pracodawcaNazwa = UIHelper.getComboText(nazwa);
             if (pracodawcaNazwa == null) {
@@ -210,31 +218,31 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
                 UIHelper.displayMessage(this, "Pracodawca został uaktualniony pomyślnie.");
             }
         } else if (e.getSource() == przegladajZlecenia) {
-            getFrame().initPrzeglądanieZlecen();
+            getFrame().initPrzeglądanieZlecen(obecnyPracodawca);
         } else if (e.getSource() == przegladajPrace) {
             UIHelper.displayMessage(this, "Nie zaimplementowane!");
         } else if (e.getSource() == dodajPrace) {
             UIHelper.displayMessage(this, "Nie zaimplementowane!");
         } else if (e.getSource() == dodajZlecenie) {
-            UIHelper.displayMessage(this, "Nie zaimplementowane!");
+            getFrame().initDodajZlecenie(obecnyPracodawca);
         }
     }
 
-    public void init() {
+    public void initPrzegladanie() {
         java.util.List<String> pracodawcy = pracodawcaDao.loadAllNames(false);
         for (String pracodawca : pracodawcy) {
             nazwa.addItem(pracodawca);
         }
         nazwa.setEditable(false);
         editMode = true;
-        initPracodawca();
+        init();
         przegladajPrace.setVisible(true);
         przegladajZlecenia.setVisible(true);
         dodajZlecenie.setVisible(true);
         dodajPrace.setVisible(true);
     }
 
-    public void initEmpty() {
+    public void initDodawanie() {
         nazwa.removeAllItems();
         nazwa.setEditable(true);
         editMode = false;
@@ -244,10 +252,17 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
         dodajPrace.setVisible(false);
     }
 
-    private void initPracodawca() {
+    protected void init() {
+        obecnyPracodawca = null;
         String pracodawcaNazwa = UIHelper.getComboText(nazwa);
         Pracodawca pracodawca = pracodawcaDao.loadByName(pracodawcaNazwa);
         if (pracodawca != null && editMode) {
+            obecnyPracodawca = pracodawca;
+
+            przegladajZlecenia.setEnabled(zlecenieDao.countByPracodawcaId(pracodawca.getId()) > 0);
+            // TODO implement pracaDao
+//            przegladajPrace.setEnabled(pracaDao.countByPracodawcaId(pracodawca.getId()) > 0);
+
             teczka.setSelected(pracodawca.getTeczka());
             ocena.setSelected(pracodawca.getOcena());
             szkoleniaOkresowe.setSelected(pracodawca.getSzkoleniaOkresowe());
@@ -265,16 +280,13 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
                 szkoleniaDatePicker.getModel().setSelected(false);
             }
         } else {
-            teczka.setSelected(false);
-            ocena.setSelected(false);
-            szkoleniaOkresowe.setSelected(false);
-            szkolenia.setSelected(false);
-            odziezowka.setSelected(false);
-            teczkaUwagi.setSelectedItem("");
-            ocenaUwagi.setSelectedItem("");
-            szkoleniaOkresoweUwagi.setSelectedItem("");
-            odziezowkaUwagi.setSelectedItem("");
-            szkoleniaDatePicker.getModel().setSelected(false);
+            for (UIRow row : rows) {
+                row.getCheckBox().setSelected(false);
+                row.getComboBox().setSelectedItem("");
+                if (row.getDatePicker() != null) {
+                    row.getDatePicker().getModel().setSelected(false);
+                }
+            }
         }
     }
 }

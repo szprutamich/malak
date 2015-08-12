@@ -1,11 +1,12 @@
 package pl.malak.panels;
 
 import org.jdatepicker.impl.JDatePickerImpl;
-import pl.malak.beans.PracodawcaBean;
 import pl.malak.beans.dao.PracodawcaDao;
 import pl.malak.beans.dao.ZlecenieDao;
 import pl.malak.helpers.Helper;
 import pl.malak.helpers.UIHelper;
+import pl.malak.model.Pracodawca;
+import pl.malak.model.Zlecenie;
 import pl.malak.panels.model.UIRow;
 
 import javax.annotation.Resource;
@@ -22,15 +23,14 @@ import java.util.ArrayList;
 public class ZleceniePanel extends FramePanel implements ActionListener {
 
     @Resource
-    private PracodawcaBean pracodawcaBean;
-
-    @Resource
     private PracodawcaDao pracodawcaDao;
 
     @Resource
     private ZlecenieDao zlecenieDao;
 
     private boolean editMode = true;
+
+    private Zlecenie obecneZlecenie;
 
     private ArrayList<UIRow> rows = new ArrayList<>();
 
@@ -208,12 +208,64 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
         add(wroc, c);
     }
 
+    public void initPrzegladanie(Pracodawca pracodawca) {
+        java.util.List<String> zlecenia = zlecenieDao.loadNamesByPracodawcaId(pracodawca.getId());
+        for (String zlecenie : zlecenia) {
+            nazwa.addItem(zlecenie);
+        }
+        nazwa.setEditable(false);
+        editMode = true;
+        init(pracodawca);
+    }
+
+    public void initDodawanie(Pracodawca pracodawca) {
+        nazwa.removeAllItems();
+        nazwa.setEditable(true);
+        editMode = false;
+        init(pracodawca);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == wroc) {
             getFrame().initPrzegladaniePracodawcow();
         } else if (e.getSource() == zapisz) {
 
+        }
+    }
+
+    protected void init(Pracodawca pracodawca) {
+        obecneZlecenie = null;
+        pracodawcaNazwaLabel.setText(pracodawca.getNazwa());
+        String zlecenieNazwa = UIHelper.getComboText(nazwa);
+        Zlecenie zlecenie = zlecenieDao.loadByName(zlecenieNazwa);
+        if (zlecenie != null && editMode) {
+            obecneZlecenie = zlecenie;
+
+//            teczka.setSelected(pracodawca.getTeczka());
+//            ocena.setSelected(pracodawca.getOcena());
+//            szkoleniaOkresowe.setSelected(pracodawca.getSzkoleniaOkresowe());
+//            szkolenia.setSelected(pracodawca.getSzkoleniaPracodawcy());
+//            odziezowka.setSelected(pracodawca.getOdziezowka());
+//            teczkaUwagi.setSelectedItem(pracodawca.getTeczkaUwagi());
+//            ocenaUwagi.setSelectedItem(pracodawca.getOcenaUwagi());
+//            szkoleniaOkresoweUwagi.setSelectedItem(pracodawca.getSzkoleniaOkresoweUwagi());
+//            odziezowkaUwagi.setSelectedItem(pracodawca.getOdziezowkaUwagi());
+//            Date date = pracodawca.getSzkoleniaPracodawcyData();
+//            if (date != null) {
+//                ((UtilDateModel) szkoleniaDatePicker.getModel()).setValue(date);
+//                szkoleniaDatePicker.getModel().setSelected(true);
+//            } else {
+//                szkoleniaDatePicker.getModel().setSelected(false);
+//            }
+        } else {
+            for (UIRow row : rows) {
+                row.getCheckBox().setSelected(false);
+                row.getComboBox().setSelectedItem("");
+                if (row.getDatePicker() != null) {
+                    row.getDatePicker().getModel().setSelected(false);
+                }
+            }
         }
     }
 }

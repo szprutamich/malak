@@ -9,8 +9,6 @@ import javax.swing.*;
 public class Main {
 
     public static void main(String[] args) {
-        // load context
-        new ClassPathXmlApplicationContext("spring/context.xml");
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception ex) {
@@ -21,5 +19,7 @@ public class Main {
                 System.err.println("GTK+ L&F failure");
             }
         }
+        // load context
+        new ClassPathXmlApplicationContext("spring/context.xml");
     }
 }

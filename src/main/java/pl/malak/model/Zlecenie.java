@@ -127,7 +127,7 @@ public class Zlecenie {
     private String sheetName;
 
     @Column(name = "badania")
-    private boolean badania;
+    private Boolean badania;
 
     @Column(name = "badania_uwagi")
     private String badaniaUwagi;
@@ -186,11 +186,75 @@ public class Zlecenie {
         this.sheetName = sheet.getSheetName();
     }
 
-    public boolean isBadania() {
+    public Zlecenie(
+            Boolean kwestionariusz, String kwestionariuszUwagi, Boolean kartaSzkolenia,
+            String kartaSzkoleniaUwagi, Date kartaSzkoleniaData, Boolean szkolenie, String szkolenieUwagi,
+            Boolean instruktaz, String instruktazUwagi, Boolean ryzyko, String ryzykoUwagi, Boolean instrukcjeBhp,
+            String instrukcjeBhpUwagi, Boolean szkolenieBhp, String szkolenieBhpUwagi, Date szkolenieBhpData,
+            Boolean rachunki, String rachunkiUwagi, Boolean umowa, String umowaUwagi, Date umowaData,
+            Boolean odbiorOdziezy, String odbiorOdziezyUwagi, Date odbiorOdziezyData, Boolean zua,
+            String zuaUwagi, Boolean zus, String zusUwagi, Boolean zza, String zzaUwagi, Boolean zwua,
+            String zwuaUwagi, Date zwuaData, String nazwa, Boolean badania,
+            String badaniaUwagi, Date badaniaData, Boolean legitymacja, String legitymacjaUwagi, Boolean dowod,
+            String dowodUwagi, Boolean zyciorys, String zyciorysUwagi, Boolean zaswiadczenieSanitarne,
+            String zaswiadczenieSanitarneUwagi, Boolean zaswiadczenieStudent, String zaswiadczenieStudentUwagi,
+            Boolean wyciagKodeks, String wyciagKodeksUwagi) {
+        this.kwestionariusz = kwestionariusz;
+        this.kwestionariuszUwagi = kwestionariuszUwagi;
+        this.kartaSzkolenia = kartaSzkolenia;
+        this.kartaSzkoleniaUwagi = kartaSzkoleniaUwagi;
+        this.kartaSzkoleniaData = kartaSzkoleniaData;
+        this.szkolenie = szkolenie;
+        this.szkolenieUwagi = szkolenieUwagi;
+        this.instruktaz = instruktaz;
+        this.instruktazUwagi = instruktazUwagi;
+        this.ryzyko = ryzyko;
+        this.ryzykoUwagi = ryzykoUwagi;
+        this.instrukcjeBhp = instrukcjeBhp;
+        this.instrukcjeBhpUwagi = instrukcjeBhpUwagi;
+        this.szkolenieBhp = szkolenieBhp;
+        this.szkolenieBhpUwagi = szkolenieBhpUwagi;
+        this.szkolenieBhpData = szkolenieBhpData;
+        this.rachunki = rachunki;
+        this.rachunkiUwagi = rachunkiUwagi;
+        this.umowa = umowa;
+        this.umowaUwagi = umowaUwagi;
+        this.umowaData = umowaData;
+        this.odbiorOdziezy = odbiorOdziezy;
+        this.odbiorOdziezyUwagi = odbiorOdziezyUwagi;
+        this.odbiorOdziezyData = odbiorOdziezyData;
+        this.zua = zua;
+        this.zuaUwagi = zuaUwagi;
+        this.zus = zus;
+        this.zusUwagi = zusUwagi;
+        this.zza = zza;
+        this.zzaUwagi = zzaUwagi;
+        this.zwua = zwua;
+        this.zwuaUwagi = zwuaUwagi;
+        this.zwuaData = zwuaData;
+        this.nazwa = nazwa;
+        this.badania = badania;
+        this.badaniaUwagi = badaniaUwagi;
+        this.badaniaData = badaniaData;
+        this.legitymacja = legitymacja;
+        this.legitymacjaUwagi = legitymacjaUwagi;
+        this.dowod = dowod;
+        this.dowodUwagi = dowodUwagi;
+        this.zyciorys = zyciorys;
+        this.zyciorysUwagi = zyciorysUwagi;
+        this.zaswiadczenieSanitarne = zaswiadczenieSanitarne;
+        this.zaswiadczenieSanitarneUwagi = zaswiadczenieSanitarneUwagi;
+        this.zaswiadczenieStudent = zaswiadczenieStudent;
+        this.zaswiadczenieStudentUwagi = zaswiadczenieStudentUwagi;
+        this.wyciagKodeks = wyciagKodeks;
+        this.wyciagKodeksUwagi = wyciagKodeksUwagi;
+    }
+
+    public boolean getBadania() {
         return badania;
     }
 
-    public void setBadania(boolean badania) {
+    public void setBadania(Boolean badania) {
         this.badania = badania;
     }
 

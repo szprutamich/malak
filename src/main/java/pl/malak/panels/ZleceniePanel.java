@@ -1,7 +1,8 @@
 package pl.malak.panels;
 
 import org.jdatepicker.impl.JDatePickerImpl;
-import pl.malak.beans.dao.PracodawcaDao;
+import org.jdatepicker.impl.UtilDateModel;
+import pl.malak.beans.ZlecenieBean;
 import pl.malak.beans.dao.ZlecenieDao;
 import pl.malak.helpers.Helper;
 import pl.malak.helpers.UIHelper;
@@ -14,7 +15,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.TextAttribute;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Michał Szpruta - szprutamich@gmail.com
@@ -23,7 +28,7 @@ import java.util.ArrayList;
 public class ZleceniePanel extends FramePanel implements ActionListener {
 
     @Resource
-    private PracodawcaDao pracodawcaDao;
+    private ZlecenieBean zlecenieBean;
 
     @Resource
     private ZlecenieDao zlecenieDao;
@@ -32,6 +37,8 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
 
     private Zlecenie obecneZlecenie;
 
+    private Pracodawca obecnyPracodawca;
+
     private ArrayList<UIRow> rows = new ArrayList<>();
 
     JLabel pracodawcaNazwaLabel = new JLabel("Pracodawca:");
@@ -39,7 +46,6 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
     JLabel uwagiLabel = new JLabel("Uwagi:");
     JLabel dataLabel = new JLabel("Do kiedy:");
 
-    JLabel pracodawca = new JLabel();
     JComboBox<String> nazwa = new JComboBox<>();
 
     JCheckBox kwestionariusz = new JCheckBox("<html>Kwestionariusz osobowy<br> + oświadczenie zleceniobiorcy</html>");
@@ -121,7 +127,12 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
         rows.add(new UIRow(zaswiadczenieStudent, zaswiadczenieStudentUwagi, null));
         rows.add(new UIRow(wyciagKodeks, wyciagKodeksUwagi, null));
 
+        Font font = new Font(pracodawcaNazwaLabel.getFont().getFamily(), Font.BOLD, 18);
+        Map<TextAttribute, Object> attributes = new HashMap<>();
+        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        pracodawcaNazwaLabel.setFont(font.deriveFont(attributes));
         nazwaLabel.setFont(new Font(nazwaLabel.getFont().getFamily(), Font.PLAIN, 25));
+        nazwa.setEditable(true);
 
         setMinimumSize(new Dimension(500, 770));
 
@@ -161,16 +172,16 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
         c.gridwidth = 2;
         add(nazwa, c);
 
-//        // --------------
-//        wiersz++;
-//        c.gridwidth = 1;
-//        c.gridx = 1;
-//        c.gridy = wiersz;
-//        add(uwagiLabel, c);
-//
-//        c.gridx = 2;
-//        c.gridy = wiersz;
-//        add(dataLabel, c);
+        // --------------
+        wiersz++;
+        c.gridwidth = 1;
+        c.gridx = 1;
+        c.gridy = wiersz;
+        add(uwagiLabel, c);
+
+        c.gridx = 2;
+        c.gridy = wiersz;
+        add(dataLabel, c);
 
         // --------------
         c.insets = new Insets(1, 5, 1, 5);
@@ -209,18 +220,17 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
     }
 
     public void initPrzegladanie(Pracodawca pracodawca) {
+        nazwa.removeAllItems();
         java.util.List<String> zlecenia = zlecenieDao.loadNamesByPracodawcaId(pracodawca.getId());
         for (String zlecenie : zlecenia) {
             nazwa.addItem(zlecenie);
         }
-        nazwa.setEditable(false);
         editMode = true;
         init(pracodawca);
     }
 
     public void initDodawanie(Pracodawca pracodawca) {
         nazwa.removeAllItems();
-        nazwa.setEditable(true);
         editMode = false;
         init(pracodawca);
     }
@@ -230,34 +240,185 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
         if (e.getSource() == wroc) {
             getFrame().initPrzegladaniePracodawcow();
         } else if (e.getSource() == zapisz) {
-
+            String zlecenieNazwa = UIHelper.getComboText(nazwa);
+            if (zlecenieNazwa == null) {
+                UIHelper.displayMessage(this, "Nazwa nie może być pusta!");
+                return;
+            }
+            Zlecenie zlecenie = zlecenieDao.loadByName(zlecenieNazwa);
+            if (!editMode && zlecenie == null) {
+                zlecenieBean.stworzZlecenie(
+                        kwestionariusz.isSelected(),
+                        UIHelper.getComboText(kwestionariuszUwagi),
+                        kartaSzkolenia.isSelected(),
+                        UIHelper.getComboText(kartaSzkoleniaUwagi),
+                        UIHelper.datePickerGetDate(kartaSzkoleniaDatePicker),
+                        szkolenieOgolne.isSelected(),
+                        UIHelper.getComboText(szkolenieOgolneUwagi),
+                        instruktaz.isSelected(),
+                        UIHelper.getComboText(instruktazUwagi),
+                        ryzyko.isSelected(),
+                        UIHelper.getComboText(ryzykoUwagi),
+                        instrukcje.isSelected(),
+                        UIHelper.getComboText(instrukcjeUwagi),
+                        szkolenieOkresowe.isSelected(),
+                        UIHelper.getComboText(szkolenieOkresoweUwagi),
+                        UIHelper.datePickerGetDate(szkolenieOkresoweDatePicker),
+                        rachunki.isSelected(),
+                        UIHelper.getComboText(rachunkiUwagi),
+                        umowa.isSelected(),
+                        UIHelper.getComboText(umowaUwagi),
+                        UIHelper.datePickerGetDate(umowaDatePicker),
+                        odbior.isSelected(),
+                        UIHelper.getComboText(odbiorUwagi),
+                        UIHelper.datePickerGetDate(odbiorDatePicker),
+                        zua.isSelected(),
+                        UIHelper.getComboText(zuaUwagi),
+                        zus.isSelected(),
+                        UIHelper.getComboText(zusUwagi),
+                        zza.isSelected(),
+                        UIHelper.getComboText(zzaUwagi),
+                        zwua.isSelected(),
+                        UIHelper.getComboText(zwuaUwagi),
+                        UIHelper.datePickerGetDate(zwuaDatePicker),
+                        UIHelper.getComboText(nazwa),
+                        badania.isSelected(),
+                        UIHelper.getComboText(badaniaUwagi),
+                        UIHelper.datePickerGetDate(badaniaDatePicker),
+                        legitymacja.isSelected(),
+                        UIHelper.getComboText(legitymacjaUwagi),
+                        dowod.isSelected(),
+                        UIHelper.getComboText(dowodUwagi),
+                        zyciorys.isSelected(),
+                        UIHelper.getComboText(zyciorysUwagi),
+                        zaswiadczenieSanitarne.isSelected(),
+                        UIHelper.getComboText(zaswiadczenieSanitarneUwagi),
+                        zaswiadczenieStudent.isSelected(),
+                        UIHelper.getComboText(zaswiadczenieStudentUwagi),
+                        wyciagKodeks.isSelected(),
+                        UIHelper.getComboText(wyciagKodeksUwagi),
+                        obecnyPracodawca.getId()
+                );
+                UIHelper.displayMessage(this, "Zlecenie zostało dodane pomyślnie.");
+            } else if (!editMode && zlecenie.getPracodawca().getId().equals(obecnyPracodawca.getId())) {
+                UIHelper.displayMessage(this, "Zlecenie o podanej nazwie dla tego pracodawcy już istnieje!");
+            } else {
+                zlecenieBean.uaktualnijZlecenie(
+                        obecneZlecenie.getId(),
+                        kwestionariusz.isSelected(),
+                        UIHelper.getComboText(kwestionariuszUwagi),
+                        kartaSzkolenia.isSelected(),
+                        UIHelper.getComboText(kartaSzkoleniaUwagi),
+                        UIHelper.datePickerGetDate(kartaSzkoleniaDatePicker),
+                        szkolenieOgolne.isSelected(),
+                        UIHelper.getComboText(szkolenieOgolneUwagi),
+                        instruktaz.isSelected(),
+                        UIHelper.getComboText(instruktazUwagi),
+                        ryzyko.isSelected(),
+                        UIHelper.getComboText(ryzykoUwagi),
+                        instrukcje.isSelected(),
+                        UIHelper.getComboText(instrukcjeUwagi),
+                        szkolenieOkresowe.isSelected(),
+                        UIHelper.getComboText(szkolenieOkresoweUwagi),
+                        UIHelper.datePickerGetDate(szkolenieOkresoweDatePicker),
+                        rachunki.isSelected(),
+                        UIHelper.getComboText(rachunkiUwagi),
+                        umowa.isSelected(),
+                        UIHelper.getComboText(umowaUwagi),
+                        UIHelper.datePickerGetDate(umowaDatePicker),
+                        odbior.isSelected(),
+                        UIHelper.getComboText(odbiorUwagi),
+                        UIHelper.datePickerGetDate(odbiorDatePicker),
+                        zua.isSelected(),
+                        UIHelper.getComboText(zuaUwagi),
+                        zus.isSelected(),
+                        UIHelper.getComboText(zusUwagi),
+                        zza.isSelected(),
+                        UIHelper.getComboText(zzaUwagi),
+                        zwua.isSelected(),
+                        UIHelper.getComboText(zwuaUwagi),
+                        UIHelper.datePickerGetDate(zwuaDatePicker),
+                        UIHelper.getComboText(nazwa),
+                        badania.isSelected(),
+                        UIHelper.getComboText(badaniaUwagi),
+                        UIHelper.datePickerGetDate(badaniaDatePicker),
+                        legitymacja.isSelected(),
+                        UIHelper.getComboText(legitymacjaUwagi),
+                        dowod.isSelected(),
+                        UIHelper.getComboText(dowodUwagi),
+                        zyciorys.isSelected(),
+                        UIHelper.getComboText(zyciorysUwagi),
+                        zaswiadczenieSanitarne.isSelected(),
+                        UIHelper.getComboText(zaswiadczenieSanitarneUwagi),
+                        zaswiadczenieStudent.isSelected(),
+                        UIHelper.getComboText(zaswiadczenieStudentUwagi),
+                        wyciagKodeks.isSelected(),
+                        UIHelper.getComboText(wyciagKodeksUwagi)
+                );
+                UIHelper.displayMessage(this, "Zlecenie zostało uaktualnione pomyślnie.");
+            }
         }
     }
 
     protected void init(Pracodawca pracodawca) {
-        obecneZlecenie = null;
-        pracodawcaNazwaLabel.setText(pracodawca.getNazwa());
+        obecnyPracodawca = pracodawca;
+        pracodawcaNazwaLabel.setText("Pracodawca: " + pracodawca.getNazwa());
         String zlecenieNazwa = UIHelper.getComboText(nazwa);
         Zlecenie zlecenie = zlecenieDao.loadByName(zlecenieNazwa);
         if (zlecenie != null && editMode) {
             obecneZlecenie = zlecenie;
 
-//            teczka.setSelected(pracodawca.getTeczka());
-//            ocena.setSelected(pracodawca.getOcena());
-//            szkoleniaOkresowe.setSelected(pracodawca.getSzkoleniaOkresowe());
-//            szkolenia.setSelected(pracodawca.getSzkoleniaPracodawcy());
-//            odziezowka.setSelected(pracodawca.getOdziezowka());
-//            teczkaUwagi.setSelectedItem(pracodawca.getTeczkaUwagi());
-//            ocenaUwagi.setSelectedItem(pracodawca.getOcenaUwagi());
-//            szkoleniaOkresoweUwagi.setSelectedItem(pracodawca.getSzkoleniaOkresoweUwagi());
-//            odziezowkaUwagi.setSelectedItem(pracodawca.getOdziezowkaUwagi());
-//            Date date = pracodawca.getSzkoleniaPracodawcyData();
-//            if (date != null) {
-//                ((UtilDateModel) szkoleniaDatePicker.getModel()).setValue(date);
-//                szkoleniaDatePicker.getModel().setSelected(true);
-//            } else {
-//                szkoleniaDatePicker.getModel().setSelected(false);
-//            }
+            kwestionariusz.setSelected(zlecenie.getKwestionariusz());
+            kartaSzkolenia.setSelected(zlecenie.getKartaSzkolenia());
+            szkolenieOgolne.setSelected(zlecenie.getSzkolenie());
+            instruktaz.setSelected(zlecenie.getInstruktaz());
+            ryzyko.setSelected(zlecenie.getRyzyko());
+            instrukcje.setSelected(zlecenie.getInstrukcjeBhp());
+            szkolenieOkresowe.setSelected(zlecenie.getSzkolenieBhp());
+            rachunki.setSelected(zlecenie.getRachunki());
+            umowa.setSelected(zlecenie.getUmowa());
+            badania.setSelected(zlecenie.getBadania());
+            odbior.setSelected(zlecenie.getOdbiorOdziezy());
+            zua.setSelected(zlecenie.getZua());
+            zus.setSelected(zlecenie.getZus());
+            zza.setSelected(zlecenie.getZza());
+            zwua.setSelected(zlecenie.getZwua());
+            legitymacja.setSelected(zlecenie.getLegitymacja());
+            dowod.setSelected(zlecenie.getDowod());
+            zyciorys.setSelected(zlecenie.getZyciorys());
+            zaswiadczenieSanitarne.setSelected(zlecenie.getZaswiadczenieSanitarne());
+            zaswiadczenieStudent.setSelected(zlecenie.getZaswiadczenieStudent());
+            wyciagKodeks.setSelected(zlecenie.getWyciagKodeks());
+
+            kwestionariuszUwagi.setSelectedItem(zlecenie.getKwestionariuszUwagi());
+            kartaSzkoleniaUwagi.setSelectedItem(zlecenie.getKartaSzkoleniaUwagi());
+            szkolenieOgolneUwagi.setSelectedItem(zlecenie.getSzkolenieUwagi());
+            instruktazUwagi.setSelectedItem(zlecenie.getInstruktazUwagi());
+            ryzykoUwagi.setSelectedItem(zlecenie.getRyzykoUwagi());
+            instrukcjeUwagi.setSelectedItem(zlecenie.getInstrukcjeBhpUwagi());
+            szkolenieOkresoweUwagi.setSelectedItem(zlecenie.getSzkolenieBhpUwagi());
+            rachunkiUwagi.setSelectedItem(zlecenie.getRachunkiUwagi());
+            umowaUwagi.setSelectedItem(zlecenie.getUmowaUwagi());
+            badaniaUwagi.setSelectedItem(zlecenie.getBadaniaUwagi());
+            odbiorUwagi.setSelectedItem(zlecenie.getOdbiorOdziezyUwagi());
+            zuaUwagi.setSelectedItem(zlecenie.getZuaUwagi());
+            zusUwagi.setSelectedItem(zlecenie.getZusUwagi());
+            zzaUwagi.setSelectedItem(zlecenie.getZzaUwagi());
+            zwuaUwagi.setSelectedItem(zlecenie.getZwuaUwagi());
+            legitymacjaUwagi.setSelectedItem(zlecenie.getLegitymacjaUwagi());
+            dowodUwagi.setSelectedItem(zlecenie.getDowodUwagi());
+            zyciorysUwagi.setSelectedItem(zlecenie.getZyciorysUwagi());
+            zaswiadczenieSanitarneUwagi.setSelectedItem(zlecenie.getZaswiadczenieSanitarneUwagi());
+            zaswiadczenieStudentUwagi.setSelectedItem(zlecenie.getZaswiadczenieStudentUwagi());
+            wyciagKodeksUwagi.setSelectedItem(zlecenie.getWyciagKodeksUwagi());
+
+            initDate(badaniaDatePicker, zlecenie.getBadaniaData());
+            initDate(zwuaDatePicker, zlecenie.getZwuaData());
+            initDate(odbiorDatePicker, zlecenie.getOdbiorOdziezyData());
+            initDate(umowaDatePicker, zlecenie.getUmowaData());
+            initDate(szkolenieOkresoweDatePicker, zlecenie.getSzkolenieBhpData());
+            initDate(kartaSzkoleniaDatePicker, zlecenie.getKartaSzkoleniaData());
+
         } else {
             for (UIRow row : rows) {
                 row.getCheckBox().setSelected(false);
@@ -266,6 +427,15 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
                     row.getDatePicker().getModel().setSelected(false);
                 }
             }
+        }
+    }
+
+    private void initDate(JDatePickerImpl datePicker, Date date) {
+        if (date != null) {
+            ((UtilDateModel) datePicker.getModel()).setValue(date);
+            datePicker.getModel().setSelected(true);
+        } else {
+            datePicker.getModel().setSelected(false);
         }
     }
 }

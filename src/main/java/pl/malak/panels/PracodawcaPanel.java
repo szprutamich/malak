@@ -77,6 +77,8 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
         rows.add(new UIRow(szkolenia, szkoleniaUwagi, szkoleniaDatePicker));
         rows.add(new UIRow(odziezowka, odziezowkaUwagi, null));
 
+        nazwa.setEditable(true);
+
         layoutComponents();
         addListeners();
     }
@@ -110,16 +112,16 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
         c.gridwidth = 2;
         add(nazwa, c);
 
-//        // --------------
-//        wiersz++;
-//        c.gridwidth = 1;
-//        c.gridx = 1;
-//        c.gridy = wiersz;
-//        add(uwagiLabel, c);
-//
-//        c.gridx = 2;
-//        c.gridy = wiersz;
-//        add(dataLabel, c);
+        // --------------
+        wiersz++;
+        c.gridwidth = 1;
+        c.gridx = 1;
+        c.gridy = wiersz;
+        add(uwagiLabel, c);
+
+        c.gridx = 2;
+        c.gridy = wiersz;
+        add(dataLabel, c);
 
         // --------------
 
@@ -183,7 +185,7 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
                 return;
             }
             Pracodawca pracodawca = pracodawcaDao.loadByName(pracodawcaNazwa);
-            if (pracodawca == null) {
+            if (!editMode && pracodawca == null) {
                 pracodawcaBean.stworzPracodawce(
                         UIHelper.getComboText(nazwa),
                         teczka.isSelected(),
@@ -202,7 +204,7 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
                 UIHelper.displayMessage(this, "Pracodawca o podanej nazwie już istnieje!");
             } else {
                 pracodawcaBean.uaktualnijPracodawce(
-                        pracodawca.getId(),
+                        obecnyPracodawca.getId(),
                         UIHelper.getComboText(nazwa),
                         teczka.isSelected(),
                         UIHelper.getComboText(teczkaUwagi),
@@ -215,6 +217,8 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
                         UIHelper.getComboText(szkoleniaUwagi),
                         odziezowka.isSelected(),
                         UIHelper.getComboText(odziezowkaUwagi));
+                refreshNazwaList();
+                nazwa.setSelectedItem(UIHelper.getComboText(nazwa));
                 UIHelper.displayMessage(this, "Pracodawca został uaktualniony pomyślnie.");
             }
         } else if (e.getSource() == przegladajZlecenia) {
@@ -229,11 +233,7 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
     }
 
     public void initPrzegladanie() {
-        java.util.List<String> pracodawcy = pracodawcaDao.loadAllNames(false);
-        for (String pracodawca : pracodawcy) {
-            nazwa.addItem(pracodawca);
-        }
-        nazwa.setEditable(false);
+        refreshNazwaList();
         editMode = true;
         init();
         przegladajPrace.setVisible(true);
@@ -244,7 +244,6 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
 
     public void initDodawanie() {
         nazwa.removeAllItems();
-        nazwa.setEditable(true);
         editMode = false;
         przegladajPrace.setVisible(false);
         przegladajZlecenia.setVisible(false);
@@ -253,15 +252,14 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
     }
 
     protected void init() {
-        obecnyPracodawca = null;
         String pracodawcaNazwa = UIHelper.getComboText(nazwa);
         Pracodawca pracodawca = pracodawcaDao.loadByName(pracodawcaNazwa);
         if (pracodawca != null && editMode) {
             obecnyPracodawca = pracodawca;
 
-            przegladajZlecenia.setEnabled(zlecenieDao.countByPracodawcaId(pracodawca.getId()) > 0);
+            przegladajZlecenia.setVisible(zlecenieDao.countByPracodawcaId(pracodawca.getId()) > 0);
             // TODO implement pracaDao
-//            przegladajPrace.setEnabled(pracaDao.countByPracodawcaId(pracodawca.getId()) > 0);
+//            przegladajPrace.setVisible(pracaDao.countByPracodawcaId(pracodawca.getId()) > 0);
 
             teczka.setSelected(pracodawca.getTeczka());
             ocena.setSelected(pracodawca.getOcena());
@@ -287,6 +285,14 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
                     row.getDatePicker().getModel().setSelected(false);
                 }
             }
+        }
+    }
+
+    private void refreshNazwaList() {
+        nazwa.removeAllItems();
+        java.util.List<String> pracodawcy = pracodawcaDao.loadAllNames(false);
+        for (String pracodawca : pracodawcy) {
+            nazwa.addItem(pracodawca);
         }
     }
 }

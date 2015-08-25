@@ -171,7 +171,7 @@
 //        this.sheetName = sheet.getSheetName();
 //    }
 //
-//    public boolean isBadania() {
+//    public boolean getBadania() {
 //        return badania;
 //    }
 //

@@ -249,6 +249,13 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
     public void initDodawanie() {
         nazwa.removeAllItems();
         editMode = false;
+        for (UIRow row : rows) {
+            row.getCheckBox().setSelected(false);
+            row.getComboBox().setSelectedItem("");
+            if (row.getDatePicker() != null) {
+                row.getDatePicker().getModel().setSelected(false);
+            }
+        }
         przegladajPrace.setVisible(false);
         przegladajZlecenia.setVisible(false);
         dodajZlecenie.setVisible(false);
@@ -279,14 +286,6 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
                 szkoleniaDatePicker.getModel().setSelected(true);
             } else {
                 szkoleniaDatePicker.getModel().setSelected(false);
-            }
-        } else if (!editMode) {
-            for (UIRow row : rows) {
-                row.getCheckBox().setSelected(false);
-                row.getComboBox().setSelectedItem("");
-                if (row.getDatePicker() != null) {
-                    row.getDatePicker().getModel().setSelected(false);
-                }
             }
         }
     }

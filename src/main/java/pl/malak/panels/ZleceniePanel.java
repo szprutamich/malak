@@ -230,6 +230,13 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
         nazwa.removeAllItems();
         editMode = false;
         init(pracodawca);
+        for (UIRow row : rows) {
+            row.getCheckBox().setSelected(false);
+            row.getComboBox().setSelectedItem("");
+            if (row.getDatePicker() != null) {
+                row.getDatePicker().getModel().setSelected(false);
+            }
+        }
     }
 
     @Override
@@ -421,15 +428,6 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
             initDate(umowaDatePicker, zlecenie.getUmowaData());
             initDate(szkolenieOkresoweDatePicker, zlecenie.getSzkolenieBhpData());
             initDate(kartaSzkoleniaDatePicker, zlecenie.getKartaSzkoleniaData());
-
-        } else if (!editMode) {
-            for (UIRow row : rows) {
-                row.getCheckBox().setSelected(false);
-                row.getComboBox().setSelectedItem("");
-                if (row.getDatePicker() != null) {
-                    row.getDatePicker().getModel().setSelected(false);
-                }
-            }
         }
     }
 

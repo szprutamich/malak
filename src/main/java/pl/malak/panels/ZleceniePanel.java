@@ -143,6 +143,7 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
     private void addListeners() {
         wroc.addActionListener(this);
         zapisz.addActionListener(this);
+        nazwa.addActionListener(this);
     }
 
     private void layoutComponents() {
@@ -220,13 +221,9 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
     }
 
     public void initPrzegladanie(Pracodawca pracodawca) {
-        nazwa.removeAllItems();
-        java.util.List<String> zlecenia = zlecenieDao.loadNamesByPracodawcaId(pracodawca.getId());
-        for (String zlecenie : zlecenia) {
-            nazwa.addItem(zlecenie);
-        }
-        editMode = true;
         init(pracodawca);
+        refreshNazwaList(pracodawca.getId());
+        editMode = true;
     }
 
     public void initDodawanie(Pracodawca pracodawca) {
@@ -237,7 +234,9 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == wroc) {
+        if (e.getSource() == nazwa) {
+            init(obecnyPracodawca);
+        } else if (e.getSource() == wroc) {
             getFrame().initPrzegladaniePracodawcow();
         } else if (e.getSource() == zapisz) {
             String zlecenieNazwa = UIHelper.getComboText(nazwa);
@@ -303,6 +302,7 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
             } else if (!editMode && zlecenie.getPracodawca().getId().equals(obecnyPracodawca.getId())) {
                 UIHelper.displayMessage(this, "Zlecenie o podanej nazwie dla tego pracodawcy już istnieje!");
             } else {
+                String nazwaText = UIHelper.getComboText(nazwa);
                 zlecenieBean.uaktualnijZlecenie(
                         obecneZlecenie.getId(),
                         kwestionariusz.isSelected(),
@@ -338,7 +338,7 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
                         zwua.isSelected(),
                         UIHelper.getComboText(zwuaUwagi),
                         UIHelper.datePickerGetDate(zwuaDatePicker),
-                        UIHelper.getComboText(nazwa),
+                        nazwaText,
                         badania.isSelected(),
                         UIHelper.getComboText(badaniaUwagi),
                         UIHelper.datePickerGetDate(badaniaDatePicker),
@@ -355,6 +355,9 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
                         wyciagKodeks.isSelected(),
                         UIHelper.getComboText(wyciagKodeksUwagi)
                 );
+                nazwa.removeItem(obecneZlecenie.getNazwa());
+                nazwa.addItem(nazwaText);
+                nazwa.setSelectedItem(nazwaText);
                 UIHelper.displayMessage(this, "Zlecenie zostało uaktualnione pomyślnie.");
             }
         }
@@ -419,7 +422,7 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
             initDate(szkolenieOkresoweDatePicker, zlecenie.getSzkolenieBhpData());
             initDate(kartaSzkoleniaDatePicker, zlecenie.getKartaSzkoleniaData());
 
-        } else {
+        } else if (!editMode) {
             for (UIRow row : rows) {
                 row.getCheckBox().setSelected(false);
                 row.getComboBox().setSelectedItem("");
@@ -436,6 +439,14 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
             datePicker.getModel().setSelected(true);
         } else {
             datePicker.getModel().setSelected(false);
+        }
+    }
+
+    private void refreshNazwaList(Long pracodawcaId) {
+        nazwa.removeAllItems();
+        java.util.List<String> pracodawcy = zlecenieDao.loadNamesByPracodawcaId(pracodawcaId);
+        for (String pracodawca : pracodawcy) {
+            nazwa.addItem(pracodawca);
         }
     }
 }

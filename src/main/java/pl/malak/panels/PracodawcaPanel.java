@@ -3,6 +3,7 @@ package pl.malak.panels;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 import pl.malak.beans.PracodawcaBean;
+import pl.malak.beans.dao.PracaDao;
 import pl.malak.beans.dao.PracodawcaDao;
 import pl.malak.beans.dao.ZlecenieDao;
 import pl.malak.helpers.Helper;
@@ -32,6 +33,9 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
 
     @Resource
     private ZlecenieDao zlecenieDao;
+
+    @Resource
+    private PracaDao pracaDao;
 
     private boolean editMode = true;
 
@@ -203,9 +207,10 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
             } else if (!editMode) {
                 UIHelper.displayMessage(this, "Pracodawca o podanej nazwie już istnieje!");
             } else {
+                String nazwaText = UIHelper.getComboText(nazwa);
                 pracodawcaBean.uaktualnijPracodawce(
                         obecnyPracodawca.getId(),
-                        UIHelper.getComboText(nazwa),
+                        nazwaText,
                         teczka.isSelected(),
                         UIHelper.getComboText(teczkaUwagi),
                         ocena.isSelected(),
@@ -217,8 +222,9 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
                         UIHelper.getComboText(szkoleniaUwagi),
                         odziezowka.isSelected(),
                         UIHelper.getComboText(odziezowkaUwagi));
-                refreshNazwaList();
-                nazwa.setSelectedItem(UIHelper.getComboText(nazwa));
+                nazwa.removeItem(obecnyPracodawca.getNazwa());
+                nazwa.addItem(nazwaText);
+                nazwa.setSelectedItem(nazwaText);
                 UIHelper.displayMessage(this, "Pracodawca został uaktualniony pomyślnie.");
             }
         } else if (e.getSource() == przegladajZlecenia) {
@@ -236,8 +242,6 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
         refreshNazwaList();
         editMode = true;
         init();
-        przegladajPrace.setVisible(true);
-        przegladajZlecenia.setVisible(true);
         dodajZlecenie.setVisible(true);
         dodajPrace.setVisible(true);
     }
@@ -258,8 +262,7 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
             obecnyPracodawca = pracodawca;
 
             przegladajZlecenia.setVisible(zlecenieDao.countByPracodawcaId(pracodawca.getId()) > 0);
-            // TODO implement pracaDao
-//            przegladajPrace.setVisible(pracaDao.countByPracodawcaId(pracodawca.getId()) > 0);
+            przegladajPrace.setVisible(pracaDao.countByPracodawcaId(pracodawca.getId()) > 0);
 
             teczka.setSelected(pracodawca.getTeczka());
             ocena.setSelected(pracodawca.getOcena());
@@ -277,7 +280,7 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
             } else {
                 szkoleniaDatePicker.getModel().setSelected(false);
             }
-        } else {
+        } else if (!editMode) {
             for (UIRow row : rows) {
                 row.getCheckBox().setSelected(false);
                 row.getComboBox().setSelectedItem("");

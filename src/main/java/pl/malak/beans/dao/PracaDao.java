@@ -1,9 +1,9 @@
 package pl.malak.beans.dao;
 
 import org.springframework.stereotype.Repository;
+import pl.malak.model.Praca;
+import pl.malak.model.Praca_;
 import pl.malak.model.Pracodawca_;
-import pl.malak.model.Zlecenie;
-import pl.malak.model.Zlecenie_;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,17 +13,17 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-public class ZlecenieDao extends CRUDRepository<Zlecenie> {
+public class PracaDao extends CRUDRepository<Praca> {
 
     public Long countByPracodawcaId(Long pracodawcaId) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> query = builder.createQuery(Long.class);
-        Root<Zlecenie> zlecenie = query.from(Zlecenie.class);
-        query.select(builder.countDistinct(zlecenie));
+        Root<Praca> praca = query.from(Praca.class);
+        query.select(builder.countDistinct(praca));
         ParameterExpression<Long> pracodawcaIdParam = builder.parameter(Long.class);
         query.where(
-                builder.equal(zlecenie.get(Zlecenie_.pracodawca).get(Pracodawca_.id), pracodawcaIdParam),
-                builder.isNull(zlecenie.get(Zlecenie_.dataUsuniecia))
+                builder.equal(praca.get(Praca_.pracodawca).get(Pracodawca_.id), pracodawcaIdParam),
+                builder.isNull(praca.get(Praca_.dataUsuniecia))
         );
         TypedQuery<Long> typedQuery = entityManager.createQuery(query);
         typedQuery.setParameter(pracodawcaIdParam, pracodawcaId);
@@ -33,29 +33,29 @@ public class ZlecenieDao extends CRUDRepository<Zlecenie> {
     public List<String> loadNamesByPracodawcaId(Long pracodawcaId) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<String> query = builder.createQuery(String.class);
-        Root<Zlecenie> zlecenie = query.from(Zlecenie.class);
-        query.select(zlecenie.get(Zlecenie_.nazwa));
+        Root<Praca> praca = query.from(Praca.class);
+        query.select(praca.get(Praca_.nazwa));
         ParameterExpression<Long> pracodawcaIdParam = builder.parameter(Long.class);
         query.where(
-                builder.equal(zlecenie.get(Zlecenie_.pracodawca).get(Pracodawca_.id), pracodawcaIdParam),
-                builder.isNull(zlecenie.get(Zlecenie_.dataUsuniecia))
+                builder.equal(praca.get(Praca_.pracodawca).get(Pracodawca_.id), pracodawcaIdParam),
+                builder.isNull(praca.get(Praca_.dataUsuniecia))
         );
-        query.orderBy(builder.asc(zlecenie.get(Zlecenie_.nazwa)));
+        query.orderBy(builder.asc(praca.get(Praca_.nazwa)));
         TypedQuery<String> typedQuery = entityManager.createQuery(query);
         typedQuery.setParameter(pracodawcaIdParam, pracodawcaId);
         return typedQuery.getResultList();
     }
 
-    public Zlecenie loadByName(String nazwa) {
+    public Praca loadByName(String nazwa) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Zlecenie> query = builder.createQuery(Zlecenie.class);
-        Root<Zlecenie> pracodawcaRoot = query.from(Zlecenie.class);
+        CriteriaQuery<Praca> query = builder.createQuery(Praca.class);
+        Root<Praca> pracodawcaRoot = query.from(Praca.class);
         query.select(pracodawcaRoot);
         ParameterExpression<String> nazwaParam = builder.parameter(String.class);
-        query.where(builder.equal(pracodawcaRoot.get(Zlecenie_.nazwa), nazwaParam));
-        TypedQuery<Zlecenie> typedQuery = entityManager.createQuery(query);
+        query.where(builder.equal(pracodawcaRoot.get(Praca_.nazwa), nazwaParam));
+        TypedQuery<Praca> typedQuery = entityManager.createQuery(query);
         typedQuery.setParameter(nazwaParam, nazwa);
-        List<Zlecenie> result = typedQuery.getResultList();
+        List<Praca> result = typedQuery.getResultList();
         return result.isEmpty() ? null : result.get(0);
     }
 }

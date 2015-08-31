@@ -1,569 +1,748 @@
-//package pl.malak.model;
-//
-//import org.apache.poi.ss.usermodel.Sheet;
-//import pl.malak.Field;
-//import pl.malak.helpers.SheetHelper;
-//
-//import javax.persistence.*;
-//import java.util.Date;
-//
-///**
-// * @author Michał Szpruta - szprutamich@gmail.com
-// */
-//@Entity
-//@Table(name = "prace")
-//public class Praca {
-//
-//    @Column(name = "kwestionariusz")
-//    private Boolean kwestionariusz;
-//
-//    @Column(name = "kwestionariusz_uwagi")
-//    private String kwestionariuszUwagi;
-//
-//    @Column(name = "karta_szkolenia")
-//    private Boolean kartaSzkolenia;
-//
-//    @Column(name = "karta_szkolenia_uwagi")
-//    private String kartaSzkoleniaUwagi;
-//
-//    @Column(name = "karta_szkolenia_data")
-//    private Date kartaSzkoleniaData;
-//
-//    @Column(name = "szkolenie")
-//    private Boolean szkolenie;
-//
-//    @Column(name = "szkolenie_uwagi")
-//    private String szkolenieUwagi;
-//
-//    @Column(name = "instruktaz")
-//    private Boolean instruktaz;
-//
-//    @Column(name = "instruktaz_uwagi")
-//    private String instruktazUwagi;
-//
-//    @Column(name = "ryzyko")
-//    private Boolean ryzyko;
-//
-//    @Column(name = "ryzyko_uwagi")
-//    private String ryzykoUwagi;
-//
-//    @Column(name = "instrukcje_bhp")
-//    private Boolean instrukcjeBhp;
-//
-//    @Column(name = "instrukcje_bhp_uwagi")
-//    private String instrukcjeBhpUwagi;
-//
-//    @Column(name = "szkolenie_bhp")
-//    private Boolean szkolenieBhp;
-//
-//    @Column(name = "szkolenie_bhp_uwagi")
-//    private String szkolenieBhpUwagi;
-//
-//    @Column(name = "szkolenie_bhp_data")
-//    private Date szkolenieBhpData;
-//
-//    @Column(name = "rachunki")
-//    private Boolean rachunki;
-//
-//    @Column(name = "rachunki_uwagi")
-//    private String rachunkiUwagi;
-//
-//    @Column(name = "umowa")
-//    private Boolean umowa;
-//
-//    @Column(name = "umowa_uwagi")
-//    private String umowaUwagi;
-//
-//    @Column(name = "umowa_data")
-//    private Date umowaData;
-//
-//    @Column(name = "odbior_odziezy")
-//    private Boolean odbiorOdziezy;
-//
-//    @Column(name = "odbior_odziezy_uwagi")
-//    private String odbiorOdziezyUwagi;
-//
-//    @Column(name = "odbior_odziezy_data")
-//    private Date odbiorOdziezyData;
-//
-//    @Column(name = "zua")
-//    private Boolean zua;
-//
-//    @Column(name = "zua_uwagi")
-//    private String zuaUwagi;
-//
-//    @Column(name = "zwua")
-//    private Boolean zwua;
-//
-//    @Column(name = "zwua_uwagi")
-//    private String zwuaUwagi;
-//
-//    @Column(name = "zwua_data")
-//    private Date zwuaData;
-//
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    protected Long id;
-//
-//    @Column(name = "nazwa")
-//    private String nazwa;
-//
-//    @Transient
-//    private String pracodawcaNazwa;
-//
-//    @Transient
-//    private String sheetName;
-//
-//    @Column(name = "badania")
-//    private boolean badania;
-//
-//    @Column(name = "badania_uwagi")
-//    private String badaniaUwagi;
-//
-//    @Column(name = "badania_data")
-//    private Date badaniaData;
-//
-//    @Column(name = "legitymacja")
-//    private Boolean legitymacja;
-//
-//    @Column(name = "legitymacja_uwagi")
-//    private String legitymacjaUwagi;
-//
-//    @Column(name = "dowod")
-//    private Boolean dowod;
-//
-//    @Column(name = "dowod_uwagi")
-//    private String dowodUwagi;
-//
-//    @Column(name = "zyciorys")
-//    private Boolean zyciorys;
-//
-//    @Column(name = "zyciorys_uwagi")
-//    private String zyciorysUwagi;
-//
-//    @Column(name = "zaswiadczenie_sanitarne")
-//    private Boolean zaswiadczenieSanitarne;
-//
-//    @Column(name = "zaswiadczenie_sanitarne_uwagi")
-//    private String zaswiadczenieSanitarneUwagi;
-//
-//    @Column(name = "zaswiadczenie_student")
-//    private Boolean zaswiadczenieStudent;
-//
-//    @Column(name = "zaswiadczenie_student_uwagi")
-//    private String zaswiadczenieStudentUwagi;
-//
-//    @Column(name = "wyciag_kodeks")
-//    private Boolean wyciagKodeks;
-//
-//    @Column(name = "wyciag_kodeks_uwagi")
-//    private String wyciagKodeksUwagi;
-//
-//    @ManyToOne(cascade = CascadeType.REFRESH)
-//    @JoinColumn(name = "pracodawca_id", nullable = false)
-//    private Pracodawca pracodawca;
-//
-//    public Praca() {
-//    }
-//
-//    public Praca(Sheet sheet) {
-//        parse(sheet);
-//        this.sheetName = sheet.getSheetName();
-//    }
-//
-//    public boolean getBadania() {
-//        return badania;
-//    }
-//
-//    public void setBadania(boolean badania) {
-//        this.badania = badania;
-//    }
-//
-//    public String getBadaniaUwagi() {
-//        return badaniaUwagi;
-//    }
-//
-//    public void setBadaniaUwagi(String badaniaUwagi) {
-//        this.badaniaUwagi = badaniaUwagi;
-//    }
-//
-//    public Date getBadaniaData() {
-//        return badaniaData;
-//    }
-//
-//    public void setBadaniaData(Date badaniaData) {
-//        this.badaniaData = badaniaData;
-//    }
-//
-//    public Boolean getLegitymacja() {
-//        return legitymacja;
-//    }
-//
-//    public void setLegitymacja(Boolean legitymacja) {
-//        this.legitymacja = legitymacja;
-//    }
-//
-//    public String getLegitymacjaUwagi() {
-//        return legitymacjaUwagi;
-//    }
-//
-//    public void setLegitymacjaUwagi(String legitymacjaUwagi) {
-//        this.legitymacjaUwagi = legitymacjaUwagi;
-//    }
-//
-//    public Boolean getDowod() {
-//        return dowod;
-//    }
-//
-//    public void setDowod(Boolean dowod) {
-//        this.dowod = dowod;
-//    }
-//
-//    public String getDowodUwagi() {
-//        return dowodUwagi;
-//    }
-//
-//    public void setDowodUwagi(String dowodUwagi) {
-//        this.dowodUwagi = dowodUwagi;
-//    }
-//
-//    public Boolean getZyciorys() {
-//        return zyciorys;
-//    }
-//
-//    public void setZyciorys(Boolean zyciorys) {
-//        this.zyciorys = zyciorys;
-//    }
-//
-//    public String getZyciorysUwagi() {
-//        return zyciorysUwagi;
-//    }
-//
-//    public void setZyciorysUwagi(String zyciorysUwagi) {
-//        this.zyciorysUwagi = zyciorysUwagi;
-//    }
-//
-//    public Boolean getZaswiadczenieSanitarne() {
-//        return zaswiadczenieSanitarne;
-//    }
-//
-//    public void setZaswiadczenieSanitarne(Boolean zaswiadczenieSanitarne) {
-//        this.zaswiadczenieSanitarne = zaswiadczenieSanitarne;
-//    }
-//
-//    public String getZaswiadczenieSanitarneUwagi() {
-//        return zaswiadczenieSanitarneUwagi;
-//    }
-//
-//    public void setZaswiadczenieSanitarneUwagi(String zaswiadczenieSanitarneUwagi) {
-//        this.zaswiadczenieSanitarneUwagi = zaswiadczenieSanitarneUwagi;
-//    }
-//
-//    public Boolean getZaswiadczenieStudent() {
-//        return zaswiadczenieStudent;
-//    }
-//
-//    public void setZaswiadczenieStudent(Boolean zaswiadczenieStudent) {
-//        this.zaswiadczenieStudent = zaswiadczenieStudent;
-//    }
-//
-//    public String getZaswiadczenieStudentUwagi() {
-//        return zaswiadczenieStudentUwagi;
-//    }
-//
-//    public void setZaswiadczenieStudentUwagi(String zaswiadczenieStudentUwagi) {
-//        this.zaswiadczenieStudentUwagi = zaswiadczenieStudentUwagi;
-//    }
-//
-//    public Boolean getWyciagKodeks() {
-//        return wyciagKodeks;
-//    }
-//
-//    public void setWyciagKodeks(Boolean wyciagKodeks) {
-//        this.wyciagKodeks = wyciagKodeks;
-//    }
-//
-//    public String getWyciagKodeksUwagi() {
-//        return wyciagKodeksUwagi;
-//    }
-//
-//    public void setWyciagKodeksUwagi(String wyciagKodeksUwagi) {
-//        this.wyciagKodeksUwagi = wyciagKodeksUwagi;
-//    }
-//
-//    public Pracodawca getPracodawca() {
-//        return pracodawca;
-//    }
-//
-//    public void setPracodawca(Pracodawca pracodawca) {
-//        this.pracodawca = pracodawca;
-//    }
-//
-//    public String getPracodawcaNazwa() {
-//        return pracodawcaNazwa;
-//    }
-//
-//    public void setPracodawcaNazwa(String pracodawcaNazwa) {
-//        this.pracodawcaNazwa = pracodawcaNazwa;
-//    }
-//
-//    public Boolean getKwestionariusz() {
-//        return kwestionariusz;
-//    }
-//
-//    public void setKwestionariusz(Boolean kwsetionariusz) {
-//        this.kwestionariusz = kwsetionariusz;
-//    }
-//
-//    public String getKwestionariuszUwagi() {
-//        return kwestionariuszUwagi;
-//    }
-//
-//    public void setKwestionariuszUwagi(String kwsetionariuszUwagi) {
-//        this.kwestionariuszUwagi = kwsetionariuszUwagi;
-//    }
-//
-//    public Boolean getKartaSzkolenia() {
-//        return kartaSzkolenia;
-//    }
-//
-//    public void setKartaSzkolenia(Boolean kartaSzkolenia) {
-//        this.kartaSzkolenia = kartaSzkolenia;
-//    }
-//
-//    public String getKartaSzkoleniaUwagi() {
-//        return kartaSzkoleniaUwagi;
-//    }
-//
-//    public void setKartaSzkoleniaUwagi(String kartaSzkoleniaUwagi) {
-//        this.kartaSzkoleniaUwagi = kartaSzkoleniaUwagi;
-//    }
-//
-//    public Date getKartaSzkoleniaData() {
-//        return kartaSzkoleniaData;
-//    }
-//
-//    public void setKartaSzkoleniaData(Date kartaSzkoleniaData) {
-//        this.kartaSzkoleniaData = kartaSzkoleniaData;
-//    }
-//
-//    public Boolean getSzkolenie() {
-//        return szkolenie;
-//    }
-//
-//    public void setSzkolenie(Boolean szkolenie) {
-//        this.szkolenie = szkolenie;
-//    }
-//
-//    public String getSzkolenieUwagi() {
-//        return szkolenieUwagi;
-//    }
-//
-//    public void setSzkolenieUwagi(String szkolenieUwagi) {
-//        this.szkolenieUwagi = szkolenieUwagi;
-//    }
-//
-//    public Boolean getInstruktaz() {
-//        return instruktaz;
-//    }
-//
-//    public void setInstruktaz(Boolean instruktaz) {
-//        this.instruktaz = instruktaz;
-//    }
-//
-//    public String getInstruktazUwagi() {
-//        return instruktazUwagi;
-//    }
-//
-//    public void setInstruktazUwagi(String instruktazUwagi) {
-//        this.instruktazUwagi = instruktazUwagi;
-//    }
-//
-//    public Boolean getRyzyko() {
-//        return ryzyko;
-//    }
-//
-//    public void setRyzyko(Boolean ryzyko) {
-//        this.ryzyko = ryzyko;
-//    }
-//
-//    public String getRyzykoUwagi() {
-//        return ryzykoUwagi;
-//    }
-//
-//    public void setRyzykoUwagi(String ryzykoUwagi) {
-//        this.ryzykoUwagi = ryzykoUwagi;
-//    }
-//
-//    public Boolean getInstrukcjeBhp() {
-//        return instrukcjeBhp;
-//    }
-//
-//    public void setInstrukcjeBhp(Boolean instrukacje_bhp) {
-//        this.instrukcjeBhp = instrukacje_bhp;
-//    }
-//
-//    public String getInstrukcjeBhpUwagi() {
-//        return instrukcjeBhpUwagi;
-//    }
-//
-//    public void setInstrukcjeBhpUwagi(String instrukcjeBhpUwagi) {
-//        this.instrukcjeBhpUwagi = instrukcjeBhpUwagi;
-//    }
-//
-//    public Boolean getSzkolenieBhp() {
-//        return szkolenieBhp;
-//    }
-//
-//    public void setSzkolenieBhp(Boolean szkolenieBhp) {
-//        this.szkolenieBhp = szkolenieBhp;
-//    }
-//
-//    public String getSzkolenieBhpUwagi() {
-//        return szkolenieBhpUwagi;
-//    }
-//
-//    public void setSzkolenieBhpUwagi(String szkolenieBhpUwagi) {
-//        this.szkolenieBhpUwagi = szkolenieBhpUwagi;
-//    }
-//
-//    public Date getSzkolenieBhpData() {
-//        return szkolenieBhpData;
-//    }
-//
-//    public void setSzkolenieBhpData(Date szkolenieBhpData) {
-//        this.szkolenieBhpData = szkolenieBhpData;
-//    }
-//
-//    public Boolean getRachunki() {
-//        return rachunki;
-//    }
-//
-//    public void setRachunki(Boolean rachunki) {
-//        this.rachunki = rachunki;
-//    }
-//
-//    public String getRachunkiUwagi() {
-//        return rachunkiUwagi;
-//    }
-//
-//    public void setRachunkiUwagi(String rachunkiUwagi) {
-//        this.rachunkiUwagi = rachunkiUwagi;
-//    }
-//
-//    public Boolean getUmowa() {
-//        return umowa;
-//    }
-//
-//    public void setUmowa(Boolean umowa) {
-//        this.umowa = umowa;
-//    }
-//
-//    public String getUmowaUwagi() {
-//        return umowaUwagi;
-//    }
-//
-//    public void setUmowaUwagi(String umowaUwagi) {
-//        this.umowaUwagi = umowaUwagi;
-//    }
-//
-//    public Date getUmowaData() {
-//        return umowaData;
-//    }
-//
-//    public void setUmowaData(Date umowaData) {
-//        this.umowaData = umowaData;
-//    }
-//
-//    public Boolean getOdbiorOdziezy() {
-//        return odbiorOdziezy;
-//    }
-//
-//    public void setOdbiorOdziezy(Boolean odbiorOdziezy) {
-//        this.odbiorOdziezy = odbiorOdziezy;
-//    }
-//
-//    public String getOdbiorOdziezyUwagi() {
-//        return odbiorOdziezyUwagi;
-//    }
-//
-//    public void setOdbiorOdziezyUwagi(String odbiorOdziezyUwagi) {
-//        this.odbiorOdziezyUwagi = odbiorOdziezyUwagi;
-//    }
-//
-//    public Date getOdbiorOdziezyData() {
-//        return odbiorOdziezyData;
-//    }
-//
-//    public void setOdbiorOdziezyData(Date odbiorOdziezyData) {
-//        this.odbiorOdziezyData = odbiorOdziezyData;
-//    }
-//
-//    public Boolean getZua() {
-//        return zua;
-//    }
-//
-//    public void setZua(Boolean zua) {
-//        this.zua = zua;
-//    }
-//
-//    public String getZuaUwagi() {
-//        return zuaUwagi;
-//    }
-//
-//    public void setZuaUwagi(String zuaUwagi) {
-//        this.zuaUwagi = zuaUwagi;
-//    }
-//
-//    public Boolean getZwua() {
-//        return zwua;
-//    }
-//
-//    public void setZwua(Boolean zwua) {
-//        this.zwua = zwua;
-//    }
-//
-//    public String getZwuaUwagi() {
-//        return zwuaUwagi;
-//    }
-//
-//    public void setZwuaUwagi(String zwuaUwagi) {
-//        this.zwuaUwagi = zwuaUwagi;
-//    }
-//
-//    public Date getZwuaData() {
-//        return zwuaData;
-//    }
-//
-//    public void setZwuaData(Date zwuaData) {
-//        this.zwuaData = zwuaData;
-//    }
-//
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public String getNazwa() {
-//        return nazwa;
-//    }
-//
-//    public void setNazwa(String nazwa) {
-//        this.nazwa = nazwa;
-//    }
-//
-//    public String getSheetName() {
-//        return sheetName;
-//    }
-//
-//    public void setSheetName(String sheetName) {
-//        this.sheetName = sheetName;
-//    }
-//
-//    public void parse(Sheet sheet) {
+package pl.malak.model;
+
+import org.apache.poi.ss.usermodel.Sheet;
+import pl.malak.Field;
+import pl.malak.helpers.SheetHelper;
+
+import javax.persistence.*;
+import java.util.Date;
+
+/**
+* @author Michał Szpruta - szprutamich@gmail.com
+*/
+@Entity
+@Table(name = "prace")
+public class Praca {
+
+    @Column(name = "kwestionariusz_osobowy_ubiegajacego")
+    private Boolean kwsetionariuszOsobowyUbiegajacego;
+
+    @Column(name = "kwestionariusz_osobowy_ubiegajacego_uwagi")
+    private String kwsetionariuszOsobowyUbiegajacegoUwagi;
+
+    @Column(name = "podanie_o_prace")
+    private Boolean podanieOPrace;
+
+    @Column(name = "podanie_o_prace_uwagi")
+    private String podanieOPraceUwagi;
+
+    @Column(name = "zyciorys")
+    private Boolean zyciorys;
+
+    @Column(name = "zyciorys_uwagi")
+    private String zyciorysUwagi;
+
+    @Column(name = "swiadectwo_pracy")
+    private Boolean swiadectwoPracy;
+
+    @Column(name = "swiadectwo_pracy_uwagi")
+    private String swiadectwoPracyUwagi;
+
+    @Column(name = "dokumenty_potwierdzajace")
+    private Boolean dokumentyPotwierdzajace;
+
+    @Column(name = "dokumenty_potwierdzajace_uwagi")
+    private String dokumentyPotwierdzajaceUwagi;
+
+    @Column(name = "swiadectwo_ukonczenia_gimnazjum")
+    private Boolean swiadectwoUkonczeniaGimnazjum;
+
+    @Column(name = "swiadectwo_ukonczenia_gimnazjum_uwagi")
+    private String swiadectwoUkonczeniaGimnazjumUwagi;
+
+    @Column(name = "podstawa_urlopu")
+    private Boolean podstawaUrlopu;
+
+    @Column(name = "podstawa_urlopu_uwagi")
+    private String podstawaUrlopuUwagi;
+
+    @Column(name = "orzeczenie_lekarskie_przeciwskazania")
+    private Boolean orzeczenieLekarskiePrzeciwskazania;
+
+    @Column(name = "orzeczenie_lekarskie_przeciwskazania_uwagi")
+    private String orzeczenieLekarskiePrzeciwskazaniaUwagi;
+
+    @Column(name = "orzeczenie_lekarskie_przeciwskazania_data")
+    private Date orzeczenieLekarskiePrzeciwskazaniaData;
+
+    @Column(name = "dowod_osobisty")
+    private Boolean dowodOsobisty;
+
+    @Column(name = "dowod_osobisty_uwagi")
+    private String dowodOsobistyUwagi;
+
+    @Column(name = "kwestionariusz_osobowy_pracownika")
+    private Boolean kwsetionariuszOsobowyPracownika;
+
+    @Column(name = "kwestionariusz_osobowy_pracownika_uwagi")
+    private String kwsetionariuszOsobowyPracownikaUwagi;
+
+    @Column(name = "umowa_o_prace")
+    private Boolean umowaOPrace;
+
+    @Column(name = "umowa_o_prace_uwagi")
+    private String umowaOPraceUwagi;
+
+    @Column(name = "informacja_o_warunkach")
+    private Boolean informacjaOWarunkach;
+
+    @Column(name = "informacja_o_warunkach_uwagi")
+    private String informacjaOWarunkachUwagi;
+
+    @Column(name = "oswiadczenie_o_ryzyku")
+    private Boolean oswiadczenieORyzyku;
+
+    @Column(name = "oswiadczenie_o_ryzyku_uwagi")
+    private String oswiadczenieORyzykuUwagi;
+
+    @Column(name = "oswiadczenie_o_przepisach")
+    private Boolean oswiadczenieOPrzepisach;
+
+    @Column(name = "oswiadczenie_o_przepisach_uwagi")
+    private String oswiadczenieOPrzepisachUwagi;
+
+    @Column(name = "oswiadczenie_o_bhp")
+    private Boolean oswiadczenieOBhp;
+
+    @Column(name = "oswiadczenie_o_bhp_uwagi")
+    private String oswiadczenieOBhpUwagi;
+
+    @Column(name = "oswiadczenie_o_bhp_data")
+    private Date oswiadczenieOBhpData;
+
+    @Column(name = "oswiadczenie_o_pozarze")
+    private Boolean oswiadczenieOPozarze;
+
+    @Column(name = "oswiadczenie_o_pozarze_uwagi")
+    private String oswiadczenieOPozarzeUwagi;
+
+    @Column(name = "oswiadczenie_o_uprawnieniach")
+    private Boolean oswiadczenieOUprawnieniach;
+
+    @Column(name = "oswiadczenie_o_uprawnieniach_uwagi")
+    private String oswiadczenieOUprawnieniachUwagi;
+
+    @Column(name = "pit")
+    private Boolean pit;
+
+    @Column(name = "pit_uwagi")
+    private String pitUwagi;
+
+    @Column(name = "oswiadczenie_urzad_skarbowy")
+    private Boolean oswiadczenieUrzadSkarbowy;
+
+    @Column(name = "oswiadczenie_urzad_skarbowy_uwagi")
+    private String oswiadczenieUrzadSkarbowyUwagi;
+
+    @Column(name = "oswiadczenie_o_kosztach")
+    private Boolean oswiadczenieOKosztach;
+
+    @Column(name = "oswiadczenie_o_kosztach_uwagi")
+    private String oswiadczenieOKosztachUwagi;
+
+    @Column(name = "zgoda_pracownika")
+    private Boolean zgodaPracownika;
+
+    @Column(name = "zgoda_pracownika_uwagi")
+    private String zgodaPracownikaUwagi;
+
+    @Column(name = "umowa_odpowiedzialnosci")
+    private Boolean umowaOdpowiedzialnosci;
+
+    @Column(name = "umowa_odpowiedzialnosci_uwagi")
+    private String umowaOdpowiedzialnosciUwagi;
+
+    @Column(name = "umowa_o_zakazie")
+    private Boolean umowaOZakazie;
+
+    @Column(name = "umowa_o_zakazie_uwagi")
+    private String umowaOZakazieUwagi;
+
+    @Column(name = "orzeczenie_lekarskie")
+    private Boolean orzeczenieLekarskie;
+
+    @Column(name = "orzeczenie_lekarskie_uwagi")
+    private String orzeczenieLekarskieUwagi;
+
+    @Column(name = "orzeczenie_lekarskie_data")
+    private Date orzeczenieLekarskieData;
+
+    @Column(name = "okresowe_badania_bhp")
+    private Boolean okresoweBadaniaBhp;
+
+    @Column(name = "okresowe_badania_bhp_uwagi")
+    private String okresoweBadaniaBhpUwagi;
+
+    @Column(name = "okresowe_badania_bhp_data")
+    private Date okresoweBadaniaBhpData;
+
+    @Column(name = "druk_zua")
+    private Boolean drukZua;
+
+    @Column(name = "druk_zua_uwagi")
+    private String drukZuaUwagi;
+
+    @Column(name = "oswiadczenie_wypowiedzenie")
+    private Boolean oswiadczenieWypowiedzenie;
+
+    @Column(name = "oswiadczenie_wypowiedzenie_uwagi")
+    private String oswiadczenieWypowiedzenieUwagi;
+
+    @Column(name = "kopia_swiadectwa")
+    private Boolean kopiaSwiadectwa;
+
+    @Column(name = "kopia_swiadectwa_uwagi")
+    private String kopiaSwiadectwaUwagi;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(name = "nazwa")
+    private String nazwa;
+
+    @Column(name = "data_usuniecia")
+    private Date dataUsuniecia;
+
+    @Transient
+    private String pracodawcaNazwa;
+
+    @Transient
+    private String sheetName;
+
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "pracodawca_id", nullable = false)
+    private Pracodawca pracodawca;
+
+    public Praca() {
+    }
+
+    public Praca(Sheet sheet) {
+        parse(sheet);
+        this.sheetName = sheet.getSheetName();
+    }
+
+    public Boolean getKwsetionariuszOsobowyUbiegajacego() {
+        return kwsetionariuszOsobowyUbiegajacego;
+    }
+
+    public void setKwsetionariuszOsobowyUbiegajacego(Boolean kwsetionariuszOsobowyUbiegajacego) {
+        this.kwsetionariuszOsobowyUbiegajacego = kwsetionariuszOsobowyUbiegajacego;
+    }
+
+    public String getKwsetionariuszOsobowyUbiegajacegoUwagi() {
+        return kwsetionariuszOsobowyUbiegajacegoUwagi;
+    }
+
+    public void setKwsetionariuszOsobowyUbiegajacegoUwagi(String kwsetionariuszOsobowyUbiegajacegoUwagi) {
+        this.kwsetionariuszOsobowyUbiegajacegoUwagi = kwsetionariuszOsobowyUbiegajacegoUwagi;
+    }
+
+    public Boolean getPodanieOPrace() {
+        return podanieOPrace;
+    }
+
+    public void setPodanieOPrace(Boolean podanieOPrace) {
+        this.podanieOPrace = podanieOPrace;
+    }
+
+    public String getPodanieOPraceUwagi() {
+        return podanieOPraceUwagi;
+    }
+
+    public void setPodanieOPraceUwagi(String podanieOPraceUwagi) {
+        this.podanieOPraceUwagi = podanieOPraceUwagi;
+    }
+
+    public Boolean getZyciorys() {
+        return zyciorys;
+    }
+
+    public void setZyciorys(Boolean zyciorys) {
+        this.zyciorys = zyciorys;
+    }
+
+    public String getZyciorysUwagi() {
+        return zyciorysUwagi;
+    }
+
+    public void setZyciorysUwagi(String zyciorysUwagi) {
+        this.zyciorysUwagi = zyciorysUwagi;
+    }
+
+    public Boolean getSwiadectwoPracy() {
+        return swiadectwoPracy;
+    }
+
+    public void setSwiadectwoPracy(Boolean swiadectwoPracy) {
+        this.swiadectwoPracy = swiadectwoPracy;
+    }
+
+    public String getSwiadectwoPracyUwagi() {
+        return swiadectwoPracyUwagi;
+    }
+
+    public void setSwiadectwoPracyUwagi(String swiadectwoPracyUwagi) {
+        this.swiadectwoPracyUwagi = swiadectwoPracyUwagi;
+    }
+
+    public Boolean getDokumentyPotwierdzajace() {
+        return dokumentyPotwierdzajace;
+    }
+
+    public void setDokumentyPotwierdzajace(Boolean dokumentyPotwierdzajace) {
+        this.dokumentyPotwierdzajace = dokumentyPotwierdzajace;
+    }
+
+    public String getDokumentyPotwierdzajaceUwagi() {
+        return dokumentyPotwierdzajaceUwagi;
+    }
+
+    public void setDokumentyPotwierdzajaceUwagi(String dokumentyPotwierdzajaceUwagi) {
+        this.dokumentyPotwierdzajaceUwagi = dokumentyPotwierdzajaceUwagi;
+    }
+
+    public Boolean getSwiadectwoUkonczeniaGimnazjum() {
+        return swiadectwoUkonczeniaGimnazjum;
+    }
+
+    public void setSwiadectwoUkonczeniaGimnazjum(Boolean swiadectwoUkonczeniaGimnazjum) {
+        this.swiadectwoUkonczeniaGimnazjum = swiadectwoUkonczeniaGimnazjum;
+    }
+
+    public String getSwiadectwoUkonczeniaGimnazjumUwagi() {
+        return swiadectwoUkonczeniaGimnazjumUwagi;
+    }
+
+    public void setSwiadectwoUkonczeniaGimnazjumUwagi(String swiadectwoUkonczeniaGimnazjumUwagi) {
+        this.swiadectwoUkonczeniaGimnazjumUwagi = swiadectwoUkonczeniaGimnazjumUwagi;
+    }
+
+    public Boolean getPodstawaUrlopu() {
+        return podstawaUrlopu;
+    }
+
+    public void setPodstawaUrlopu(Boolean podstawaUrlopu) {
+        this.podstawaUrlopu = podstawaUrlopu;
+    }
+
+    public String getPodstawaUrlopuUwagi() {
+        return podstawaUrlopuUwagi;
+    }
+
+    public void setPodstawaUrlopuUwagi(String podstawaUrlopuUwagi) {
+        this.podstawaUrlopuUwagi = podstawaUrlopuUwagi;
+    }
+
+    public Boolean getOrzeczenieLekarskiePrzeciwskazania() {
+        return orzeczenieLekarskiePrzeciwskazania;
+    }
+
+    public void setOrzeczenieLekarskiePrzeciwskazania(Boolean orzeczenieLekarskiePrzeciwskazania) {
+        this.orzeczenieLekarskiePrzeciwskazania = orzeczenieLekarskiePrzeciwskazania;
+    }
+
+    public String getOrzeczenieLekarskiePrzeciwskazaniaUwagi() {
+        return orzeczenieLekarskiePrzeciwskazaniaUwagi;
+    }
+
+    public void setOrzeczenieLekarskiePrzeciwskazaniaUwagi(String orzeczenieLekarskiePrzeciwskazaniaUwagi) {
+        this.orzeczenieLekarskiePrzeciwskazaniaUwagi = orzeczenieLekarskiePrzeciwskazaniaUwagi;
+    }
+
+    public Date getOrzeczenieLekarskiePrzeciwskazaniaData() {
+        return orzeczenieLekarskiePrzeciwskazaniaData;
+    }
+
+    public void setOrzeczenieLekarskiePrzeciwskazaniaData(Date orzeczenieLekarskiePrzeciwskazaniaData) {
+        this.orzeczenieLekarskiePrzeciwskazaniaData = orzeczenieLekarskiePrzeciwskazaniaData;
+    }
+
+    public Boolean getDowodOsobisty() {
+        return dowodOsobisty;
+    }
+
+    public void setDowodOsobisty(Boolean dowodOsobisty) {
+        this.dowodOsobisty = dowodOsobisty;
+    }
+
+    public String getDowodOsobistyUwagi() {
+        return dowodOsobistyUwagi;
+    }
+
+    public void setDowodOsobistyUwagi(String dowodOsobistyUwagi) {
+        this.dowodOsobistyUwagi = dowodOsobistyUwagi;
+    }
+
+    public Boolean getKwsetionariuszOsobowyPracownika() {
+        return kwsetionariuszOsobowyPracownika;
+    }
+
+    public void setKwsetionariuszOsobowyPracownika(Boolean kwsetionariuszOsobowyPracownika) {
+        this.kwsetionariuszOsobowyPracownika = kwsetionariuszOsobowyPracownika;
+    }
+
+    public String getKwsetionariuszOsobowyPracownikaUwagi() {
+        return kwsetionariuszOsobowyPracownikaUwagi;
+    }
+
+    public void setKwsetionariuszOsobowyPracownikaUwagi(String kwsetionariuszOsobowyPracownikaUwagi) {
+        this.kwsetionariuszOsobowyPracownikaUwagi = kwsetionariuszOsobowyPracownikaUwagi;
+    }
+
+    public Boolean getUmowaOPrace() {
+        return umowaOPrace;
+    }
+
+    public void setUmowaOPrace(Boolean umowaOPrace) {
+        this.umowaOPrace = umowaOPrace;
+    }
+
+    public String getUmowaOPraceUwagi() {
+        return umowaOPraceUwagi;
+    }
+
+    public void setUmowaOPraceUwagi(String umowaOPraceUwagi) {
+        this.umowaOPraceUwagi = umowaOPraceUwagi;
+    }
+
+    public Boolean getInformacjaOWarunkach() {
+        return informacjaOWarunkach;
+    }
+
+    public void setInformacjaOWarunkach(Boolean informacjaOWarunkach) {
+        this.informacjaOWarunkach = informacjaOWarunkach;
+    }
+
+    public String getInformacjaOWarunkachUwagi() {
+        return informacjaOWarunkachUwagi;
+    }
+
+    public void setInformacjaOWarunkachUwagi(String informacjaOWarunkachUwagi) {
+        this.informacjaOWarunkachUwagi = informacjaOWarunkachUwagi;
+    }
+
+    public Boolean getOswiadczenieORyzyku() {
+        return oswiadczenieORyzyku;
+    }
+
+    public void setOswiadczenieORyzyku(Boolean oswiadczenieORyzyku) {
+        this.oswiadczenieORyzyku = oswiadczenieORyzyku;
+    }
+
+    public String getOswiadczenieORyzykuUwagi() {
+        return oswiadczenieORyzykuUwagi;
+    }
+
+    public void setOswiadczenieORyzykuUwagi(String oswiadczenieORyzykuUwagi) {
+        this.oswiadczenieORyzykuUwagi = oswiadczenieORyzykuUwagi;
+    }
+
+    public Boolean getOswiadczenieOPrzepisach() {
+        return oswiadczenieOPrzepisach;
+    }
+
+    public void setOswiadczenieOPrzepisach(Boolean oswiadczenieOPrzepisach) {
+        this.oswiadczenieOPrzepisach = oswiadczenieOPrzepisach;
+    }
+
+    public String getOswiadczenieOPrzepisachUwagi() {
+        return oswiadczenieOPrzepisachUwagi;
+    }
+
+    public void setOswiadczenieOPrzepisachUwagi(String oswiadczenieOPrzepisachUwagi) {
+        this.oswiadczenieOPrzepisachUwagi = oswiadczenieOPrzepisachUwagi;
+    }
+
+    public Boolean getOswiadczenieOBhp() {
+        return oswiadczenieOBhp;
+    }
+
+    public void setOswiadczenieOBhp(Boolean oswiadczenieOBhp) {
+        this.oswiadczenieOBhp = oswiadczenieOBhp;
+    }
+
+    public String getOswiadczenieOBhpUwagi() {
+        return oswiadczenieOBhpUwagi;
+    }
+
+    public void setOswiadczenieOBhpUwagi(String oswiadczenieOBhpUwagi) {
+        this.oswiadczenieOBhpUwagi = oswiadczenieOBhpUwagi;
+    }
+
+    public Date getOswiadczenieOBhpData() {
+        return oswiadczenieOBhpData;
+    }
+
+    public void setOswiadczenieOBhpData(Date oswiadczenieOBhpData) {
+        this.oswiadczenieOBhpData = oswiadczenieOBhpData;
+    }
+
+    public Boolean getOswiadczenieOPozarze() {
+        return oswiadczenieOPozarze;
+    }
+
+    public void setOswiadczenieOPozarze(Boolean oswiadczenieOPozarze) {
+        this.oswiadczenieOPozarze = oswiadczenieOPozarze;
+    }
+
+    public String getOswiadczenieOPozarzeUwagi() {
+        return oswiadczenieOPozarzeUwagi;
+    }
+
+    public void setOswiadczenieOPozarzeUwagi(String oswiadczenieOPozarzeUwagi) {
+        this.oswiadczenieOPozarzeUwagi = oswiadczenieOPozarzeUwagi;
+    }
+
+    public Boolean getOswiadczenieOUprawnieniach() {
+        return oswiadczenieOUprawnieniach;
+    }
+
+    public void setOswiadczenieOUprawnieniach(Boolean oswiadczenieOUprawnieniach) {
+        this.oswiadczenieOUprawnieniach = oswiadczenieOUprawnieniach;
+    }
+
+    public String getOswiadczenieOUprawnieniachUwagi() {
+        return oswiadczenieOUprawnieniachUwagi;
+    }
+
+    public void setOswiadczenieOUprawnieniachUwagi(String oswiadczenieOUprawnieniachUwagi) {
+        this.oswiadczenieOUprawnieniachUwagi = oswiadczenieOUprawnieniachUwagi;
+    }
+
+    public Boolean getPit() {
+        return pit;
+    }
+
+    public void setPit(Boolean pit) {
+        this.pit = pit;
+    }
+
+    public String getPitUwagi() {
+        return pitUwagi;
+    }
+
+    public void setPitUwagi(String pitUwagi) {
+        this.pitUwagi = pitUwagi;
+    }
+
+    public Boolean getOswiadczenieUrzadSkarbowy() {
+        return oswiadczenieUrzadSkarbowy;
+    }
+
+    public void setOswiadczenieUrzadSkarbowy(Boolean oswiadczenieUrzadSkarbowy) {
+        this.oswiadczenieUrzadSkarbowy = oswiadczenieUrzadSkarbowy;
+    }
+
+    public String getOswiadczenieUrzadSkarbowyUwagi() {
+        return oswiadczenieUrzadSkarbowyUwagi;
+    }
+
+    public void setOswiadczenieUrzadSkarbowyUwagi(String oswiadczenieUrzadSkarbowyUwagi) {
+        this.oswiadczenieUrzadSkarbowyUwagi = oswiadczenieUrzadSkarbowyUwagi;
+    }
+
+    public Boolean getOswiadczenieOKosztach() {
+        return oswiadczenieOKosztach;
+    }
+
+    public void setOswiadczenieOKosztach(Boolean oswiadczenieOKosztach) {
+        this.oswiadczenieOKosztach = oswiadczenieOKosztach;
+    }
+
+    public String getOswiadczenieOKosztachUwagi() {
+        return oswiadczenieOKosztachUwagi;
+    }
+
+    public void setOswiadczenieOKosztachUwagi(String oswiadczenieOKosztachUwagi) {
+        this.oswiadczenieOKosztachUwagi = oswiadczenieOKosztachUwagi;
+    }
+
+    public Boolean getZgodaPracownika() {
+        return zgodaPracownika;
+    }
+
+    public void setZgodaPracownika(Boolean zgodaPracownika) {
+        this.zgodaPracownika = zgodaPracownika;
+    }
+
+    public String getZgodaPracownikaUwagi() {
+        return zgodaPracownikaUwagi;
+    }
+
+    public void setZgodaPracownikaUwagi(String zgodaPracownikaUwagi) {
+        this.zgodaPracownikaUwagi = zgodaPracownikaUwagi;
+    }
+
+    public Boolean getUmowaOdpowiedzialnosci() {
+        return umowaOdpowiedzialnosci;
+    }
+
+    public void setUmowaOdpowiedzialnosci(Boolean umowaOdpowiedzialnosci) {
+        this.umowaOdpowiedzialnosci = umowaOdpowiedzialnosci;
+    }
+
+    public String getUmowaOdpowiedzialnosciUwagi() {
+        return umowaOdpowiedzialnosciUwagi;
+    }
+
+    public void setUmowaOdpowiedzialnosciUwagi(String umowaOdpowiedzialnosciUwagi) {
+        this.umowaOdpowiedzialnosciUwagi = umowaOdpowiedzialnosciUwagi;
+    }
+
+    public Boolean getUmowaOZakazie() {
+        return umowaOZakazie;
+    }
+
+    public void setUmowaOZakazie(Boolean umowaOZakazie) {
+        this.umowaOZakazie = umowaOZakazie;
+    }
+
+    public String getUmowaOZakazieUwagi() {
+        return umowaOZakazieUwagi;
+    }
+
+    public void setUmowaOZakazieUwagi(String umowaOZakazieUwagi) {
+        this.umowaOZakazieUwagi = umowaOZakazieUwagi;
+    }
+
+    public Boolean getOrzeczenieLekarskie() {
+        return orzeczenieLekarskie;
+    }
+
+    public void setOrzeczenieLekarskie(Boolean orzeczenieLekarskie) {
+        this.orzeczenieLekarskie = orzeczenieLekarskie;
+    }
+
+    public String getOrzeczenieLekarskieUwagi() {
+        return orzeczenieLekarskieUwagi;
+    }
+
+    public void setOrzeczenieLekarskieUwagi(String orzeczenieLekarskieUwagi) {
+        this.orzeczenieLekarskieUwagi = orzeczenieLekarskieUwagi;
+    }
+
+    public Date getOrzeczenieLekarskieData() {
+        return orzeczenieLekarskieData;
+    }
+
+    public void setOrzeczenieLekarskieData(Date orzeczenieLekarskieData) {
+        this.orzeczenieLekarskieData = orzeczenieLekarskieData;
+    }
+
+    public Boolean getOkresoweBadaniaBhp() {
+        return okresoweBadaniaBhp;
+    }
+
+    public void setOkresoweBadaniaBhp(Boolean okresoweBadaniaBhp) {
+        this.okresoweBadaniaBhp = okresoweBadaniaBhp;
+    }
+
+    public String getOkresoweBadaniaBhpUwagi() {
+        return okresoweBadaniaBhpUwagi;
+    }
+
+    public void setOkresoweBadaniaBhpUwagi(String okresoweBadaniaBhpUwagi) {
+        this.okresoweBadaniaBhpUwagi = okresoweBadaniaBhpUwagi;
+    }
+
+    public Date getOkresoweBadaniaBhpData() {
+        return okresoweBadaniaBhpData;
+    }
+
+    public void setOkresoweBadaniaBhpData(Date okresoweBadaniaBhpData) {
+        this.okresoweBadaniaBhpData = okresoweBadaniaBhpData;
+    }
+
+    public Boolean getDrukZua() {
+        return drukZua;
+    }
+
+    public void setDrukZua(Boolean drukZua) {
+        this.drukZua = drukZua;
+    }
+
+    public String getDrukZuaUwagi() {
+        return drukZuaUwagi;
+    }
+
+    public void setDrukZuaUwagi(String drukZuaUwagi) {
+        this.drukZuaUwagi = drukZuaUwagi;
+    }
+
+    public Boolean getOswiadczenieWypowiedzenie() {
+        return oswiadczenieWypowiedzenie;
+    }
+
+    public void setOswiadczenieWypowiedzenie(Boolean oswiadczenieWypowiedzenie) {
+        this.oswiadczenieWypowiedzenie = oswiadczenieWypowiedzenie;
+    }
+
+    public String getOswiadczenieWypowiedzenieUwagi() {
+        return oswiadczenieWypowiedzenieUwagi;
+    }
+
+    public void setOswiadczenieWypowiedzenieUwagi(String oswiadczenieWypowiedzenieUwagi) {
+        this.oswiadczenieWypowiedzenieUwagi = oswiadczenieWypowiedzenieUwagi;
+    }
+
+    public Boolean getKopiaSwiadectwa() {
+        return kopiaSwiadectwa;
+    }
+
+    public void setKopiaSwiadectwa(Boolean kopiaSwiadectwa) {
+        this.kopiaSwiadectwa = kopiaSwiadectwa;
+    }
+
+    public String getKopiaSwiadectwaUwagi() {
+        return kopiaSwiadectwaUwagi;
+    }
+
+    public void setKopiaSwiadectwaUwagi(String kopiaSwiadectwaUwagi) {
+        this.kopiaSwiadectwaUwagi = kopiaSwiadectwaUwagi;
+    }
+
+    public String getNazwa() {
+        return nazwa;
+    }
+
+    public void setNazwa(String nazwa) {
+        this.nazwa = nazwa;
+    }
+
+    public String getPracodawcaNazwa() {
+        return pracodawcaNazwa;
+    }
+
+    public void setPracodawcaNazwa(String pracodawcaNazwa) {
+        this.pracodawcaNazwa = pracodawcaNazwa;
+    }
+
+    public String getSheetName() {
+        return sheetName;
+    }
+
+    public void setSheetName(String sheetName) {
+        this.sheetName = sheetName;
+    }
+
+    public Date getDataUsuniecia() {
+        return dataUsuniecia;
+    }
+
+    public void setDataUsuniecia(Date dataUsuniecia) {
+        this.dataUsuniecia = dataUsuniecia;
+    }
+
+    public Pracodawca getPracodawca() {
+        return pracodawca;
+    }
+
+    public void setPracodawca(Pracodawca pracodawca) {
+        this.pracodawca = pracodawca;
+    }
+
+    public void parse(Sheet sheet) {
 //        this.pracodawcaNazwa = getTextOrNull(sheet, Field.W_1, Field.C);
 //        this.nazwa = getTextOrNull(sheet, Field.W_2, Field.C);
 //
@@ -650,42 +829,42 @@
 //                }
 //            }
 //        }
-//    }
-//
-//    private Date getDate(Sheet sheet, int wiersz, Field kolumna) {
-//        String text = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(kolumna.getValue()));
-//        String[] dates = text.split("-");
-//        if (dates.length == 3) {
-//            int i = 0;
-//            return new Date(Integer.parseInt(dates[i++]) - 1900, Integer.parseInt(dates[i++]), Integer.parseInt(dates[i]));
-//        }
-//        return null;
-//    }
-//
-//    private Date getDate(Sheet sheet, Field wiersz, Field kolumna) {
-//        return getDate(sheet, wiersz.getValue(), kolumna);
-//    }
-//
-//    private boolean getBoolean(Sheet sheet, int wiersz) {
-//        String kolumnaJest = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.C.getValue()));
-//        String kolumnaBrak = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.D.getValue()));
-//        return !kolumnaBrak.trim().equalsIgnoreCase("BRAK")
-//                && (kolumnaJest.trim().equalsIgnoreCase("JEST") || kolumnaJest.trim().equalsIgnoreCase("TAK"));
-//    }
-//
-//    private boolean getBoolean(Sheet sheet, Field wiersz) {
-//        return getBoolean(sheet, wiersz.getValue());
-//    }
-//
-//    private String getTextOrNull(Sheet sheet, int wiersz, Field kolumna) {
-//        String text = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(kolumna.getValue()));
-//        if (text.isEmpty()) {
-//            return null;
-//        }
-//        return text;
-//    }
-//
-//    private String getTextOrNull(Sheet sheet, Field wiersz, Field kolumna) {
-//        return getTextOrNull(sheet, wiersz.getValue(), kolumna);
-//    }
-//}
+    }
+
+    private Date getDate(Sheet sheet, int wiersz, Field kolumna) {
+        String text = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(kolumna.getValue()));
+        String[] dates = text.split("-");
+        if (dates.length == 3) {
+            int i = 0;
+            return new Date(Integer.parseInt(dates[i++]) - 1900, Integer.parseInt(dates[i++]), Integer.parseInt(dates[i]));
+        }
+        return null;
+    }
+
+    private Date getDate(Sheet sheet, Field wiersz, Field kolumna) {
+        return getDate(sheet, wiersz.getValue(), kolumna);
+    }
+
+    private boolean getBoolean(Sheet sheet, int wiersz) {
+        String kolumnaJest = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.C.getValue()));
+        String kolumnaBrak = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.D.getValue()));
+        return !kolumnaBrak.trim().equalsIgnoreCase("BRAK")
+                && (kolumnaJest.trim().equalsIgnoreCase("JEST") || kolumnaJest.trim().equalsIgnoreCase("TAK"));
+    }
+
+    private boolean getBoolean(Sheet sheet, Field wiersz) {
+        return getBoolean(sheet, wiersz.getValue());
+    }
+
+    private String getTextOrNull(Sheet sheet, int wiersz, Field kolumna) {
+        String text = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(kolumna.getValue()));
+        if (text.isEmpty()) {
+            return null;
+        }
+        return text;
+    }
+
+    private String getTextOrNull(Sheet sheet, Field wiersz, Field kolumna) {
+        return getTextOrNull(sheet, wiersz.getValue(), kolumna);
+    }
+}

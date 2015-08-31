@@ -100,4 +100,83 @@
             <column name="zus_uwagi" type="VARCHAR(255)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="szprutamich@gmail.com" id="4">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="prace"/>
+            </not>
+        </preConditions>
+        <sql>
+            CREATE TABLE `prace` (
+            `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+            `nazwa` VARCHAR(255) NOT NULL,
+            `kwestionariusz_osobowy_ubiegajacego` BOOLEAN DEFAULT FALSE,
+            `kwestionariusz_osobowy_ubiegajacego_uwagi` VARCHAR(255) DEFAULT NULL,
+            `podanie_o_prace` BOOLEAN DEFAULT FALSE,
+            `podanie_o_prace_uwagi` VARCHAR(255) DEFAULT NULL,
+            `zyciorys` BOOLEAN DEFAULT FALSE,
+            `zyciorys_uwagi` VARCHAR(255) DEFAULT NULL,
+            `swiadectwo_pracy` BOOLEAN DEFAULT FALSE,
+            `swiadectwo_pracy_uwagi` VARCHAR(255) DEFAULT NULL,
+            `dokumenty_potwierdzajace` BOOLEAN DEFAULT FALSE,
+            `dokumenty_potwierdzajace_uwagi` VARCHAR(255) DEFAULT NULL,
+            `swiadectwo_ukonczenia_gimnazjum` BOOLEAN DEFAULT FALSE,
+            `swiadectwo_ukonczenia_gimnazjum_uwagi` VARCHAR(255) DEFAULT NULL,
+            `podstawa_urlopu` BOOLEAN DEFAULT FALSE,
+            `podstawa_urlopu_uwagi` VARCHAR(255) DEFAULT NULL,
+            `orzeczenie_lekarskie_przeciwskazania` BOOLEAN DEFAULT FALSE,
+            `orzeczenie_lekarskie_przeciwskazania_uwagi` VARCHAR(255) DEFAULT NULL,
+            `orzeczenie_lekarskie_przeciwskazania_data` DATETIME DEFAULT NULL,
+            `dowod_osobisty` BOOLEAN DEFAULT FALSE,
+            `dowod_osobisty_uwagi` VARCHAR(255) DEFAULT NULL,
+            `kwestionariusz_osobowy_pracownika` BOOLEAN DEFAULT FALSE,
+            `kwestionariusz_osobowy_pracownika_uwagi` VARCHAR(255) DEFAULT NULL,
+            `umowa_o_prace` BOOLEAN DEFAULT FALSE,
+            `umowa_o_prace_uwagi` VARCHAR(255) DEFAULT NULL,
+            `informacja_o_warunkach` BOOLEAN DEFAULT FALSE,
+            `informacja_o_warunkach_uwagi` VARCHAR(255) DEFAULT NULL,
+            `oswiadczenie_o_ryzyku` BOOLEAN DEFAULT FALSE,
+            `oswiadczenie_o_ryzyku_uwagi` VARCHAR(255) DEFAULT NULL,
+            `oswiadczenie_o_przepisach` BOOLEAN DEFAULT FALSE,
+            `oswiadczenie_o_przepisach_uwagi` VARCHAR(255) DEFAULT NULL,
+            `oswiadczenie_o_bhp` BOOLEAN DEFAULT FALSE,
+            `oswiadczenie_o_bhp_uwagi` VARCHAR(255) DEFAULT NULL,
+            `oswiadczenie_o_bhp_data` DATETIME DEFAULT NULL,
+            `oswiadczenie_o_pozarze` BOOLEAN DEFAULT FALSE,
+            `oswiadczenie_o_pozarze_uwagi` VARCHAR(255) DEFAULT NULL,
+            `oswiadczenie_o_uprawnieniach` BOOLEAN DEFAULT FALSE,
+            `oswiadczenie_o_uprawnieniach_uwagi` VARCHAR(255) DEFAULT NULL,
+            `pit` BOOLEAN DEFAULT FALSE,
+            `pit_uwagi` VARCHAR(255) DEFAULT NULL,
+            `oswiadczenie_urzad_skarbowy` BOOLEAN DEFAULT FALSE,
+            `oswiadczenie_urzad_skarbowy_uwagi` VARCHAR(255) DEFAULT NULL,
+            `oswiadczenie_o_kosztach` BOOLEAN DEFAULT FALSE,
+            `oswiadczenie_o_kosztach_uwagi` VARCHAR(255) DEFAULT NULL,
+            `zgoda_pracownika` BOOLEAN DEFAULT FALSE,
+            `zgoda_pracownika_uwagi` VARCHAR(255) DEFAULT NULL,
+            `umowa_odpowiedzialnosci` BOOLEAN DEFAULT FALSE,
+            `umowa_odpowiedzialnosci_uwagi` VARCHAR(255) DEFAULT NULL,
+            `umowa_o_zakazie` BOOLEAN DEFAULT FALSE,
+            `umowa_o_zakazie_uwagi` VARCHAR(255) DEFAULT NULL,
+            `orzeczenie_lekarskie` BOOLEAN DEFAULT FALSE,
+            `orzeczenie_lekarskie_uwagi` VARCHAR(255) DEFAULT NULL,
+            `orzeczenie_lekarskie_data` DATETIME DEFAULT NULL,
+            `okresowe_badania_bhp` BOOLEAN DEFAULT FALSE,
+            `okresowe_badania_bhp_uwagi` VARCHAR(255) DEFAULT NULL,
+            `okresowe_badania_bhp_data` DATETIME DEFAULT NULL,
+            `druk_zua` BOOLEAN DEFAULT FALSE,
+            `druk_zua_uwagi` VARCHAR(255) DEFAULT NULL,
+            `oswiadczenie_wypowiedzenie` BOOLEAN DEFAULT FALSE,
+            `oswiadczenie_wypowiedzenie_uwagi` VARCHAR(255) DEFAULT NULL,
+            `kopia_swiadectwa` BOOLEAN DEFAULT FALSE,
+            `kopia_swiadectwa_uwagi` VARCHAR(255) DEFAULT NULL,
+            `pracodawca_id` BIGINT NOT NULL,
+            `data_usuniecia` DATETIME DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `prace_pracodawca_id_fk` (`pracodawca_id`),
+            CONSTRAINT `prace_pracodawca_id_fk` FOREIGN KEY (`pracodawca_id`) REFERENCES `pracodawcy` (`id`)
+            ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+        </sql>
+        <rollback/>
+    </changeSet>
 </databaseChangeLog>

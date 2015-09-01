@@ -194,6 +194,12 @@ public class Praca {
     @Column(name = "kopia_swiadectwa_uwagi")
     private String kopiaSwiadectwaUwagi;
 
+    @Column(name = "druk_zwua")
+    private Boolean drukZwua;
+
+    @Column(name = "druk_zwua_uwagi")
+    private String drukZwuaUwagi;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -700,6 +706,22 @@ public class Praca {
 
     public void setKopiaSwiadectwaUwagi(String kopiaSwiadectwaUwagi) {
         this.kopiaSwiadectwaUwagi = kopiaSwiadectwaUwagi;
+    }
+
+    public Boolean getDrukZwua() {
+        return drukZwua;
+    }
+
+    public void setDrukZwua(Boolean drukZwua) {
+        this.drukZwua = drukZwua;
+    }
+
+    public String getDrukZwuaUwagi() {
+        return drukZwuaUwagi;
+    }
+
+    public void setDrukZwuaUwagi(String drukZwuaUwagi) {
+        this.drukZwuaUwagi = drukZwuaUwagi;
     }
 
     public String getNazwa() {

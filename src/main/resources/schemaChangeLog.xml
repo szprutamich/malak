@@ -179,4 +179,10 @@
         </sql>
         <rollback/>
     </changeSet>
+    <changeSet author="szprutamich@gmail.com" id="5">
+        <addColumn tableName="prace">
+            <column name="druk_zwua" type="BOOLEAN" defaultValueBoolean="false"/>
+            <column name="druk_zwua_uwagi" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

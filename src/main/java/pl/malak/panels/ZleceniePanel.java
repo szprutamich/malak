@@ -1,7 +1,6 @@
 package pl.malak.panels;
 
 import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 import pl.malak.beans.ZlecenieBean;
 import pl.malak.beans.dao.ZlecenieDao;
 import pl.malak.helpers.Helper;
@@ -17,7 +16,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.TextAttribute;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -422,21 +420,12 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
             zaswiadczenieStudentUwagi.setSelectedItem(zlecenie.getZaswiadczenieStudentUwagi());
             wyciagKodeksUwagi.setSelectedItem(zlecenie.getWyciagKodeksUwagi());
 
-            initDate(badaniaDatePicker, zlecenie.getBadaniaData());
-            initDate(zwuaDatePicker, zlecenie.getZwuaData());
-            initDate(odbiorDatePicker, zlecenie.getOdbiorOdziezyData());
-            initDate(umowaDatePicker, zlecenie.getUmowaData());
-            initDate(szkolenieOkresoweDatePicker, zlecenie.getSzkolenieBhpData());
-            initDate(kartaSzkoleniaDatePicker, zlecenie.getKartaSzkoleniaData());
-        }
-    }
-
-    private void initDate(JDatePickerImpl datePicker, Date date) {
-        if (date != null) {
-            ((UtilDateModel) datePicker.getModel()).setValue(date);
-            datePicker.getModel().setSelected(true);
-        } else {
-            datePicker.getModel().setSelected(false);
+            UIHelper.initDate(badaniaDatePicker, zlecenie.getBadaniaData());
+            UIHelper.initDate(zwuaDatePicker, zlecenie.getZwuaData());
+            UIHelper.initDate(odbiorDatePicker, zlecenie.getOdbiorOdziezyData());
+            UIHelper.initDate(umowaDatePicker, zlecenie.getUmowaData());
+            UIHelper.initDate(szkolenieOkresoweDatePicker, zlecenie.getSzkolenieBhpData());
+            UIHelper.initDate(kartaSzkoleniaDatePicker, zlecenie.getKartaSzkoleniaData());
         }
     }
 

@@ -230,9 +230,9 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
         } else if (e.getSource() == przegladajZlecenia) {
             getFrame().initPrzeglądanieZlecen(obecnyPracodawca);
         } else if (e.getSource() == przegladajPrace) {
-            UIHelper.displayMessage(this, "Nie zaimplementowane!");
+            getFrame().initPrzeglądaniePrac(obecnyPracodawca);
         } else if (e.getSource() == dodajPrace) {
-            UIHelper.displayMessage(this, "Nie zaimplementowane!");
+            getFrame().initDodajPrace(obecnyPracodawca);
         } else if (e.getSource() == dodajZlecenie) {
             getFrame().initDodajZlecenie(obecnyPracodawca);
         }
@@ -280,13 +280,8 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
             ocenaUwagi.setSelectedItem(pracodawca.getOcenaUwagi());
             szkoleniaOkresoweUwagi.setSelectedItem(pracodawca.getSzkoleniaOkresoweUwagi());
             odziezowkaUwagi.setSelectedItem(pracodawca.getOdziezowkaUwagi());
-            Date date = pracodawca.getSzkoleniaPracodawcyData();
-            if (date != null) {
-                ((UtilDateModel) szkoleniaDatePicker.getModel()).setValue(date);
-                szkoleniaDatePicker.getModel().setSelected(true);
-            } else {
-                szkoleniaDatePicker.getModel().setSelected(false);
-            }
+
+            UIHelper.initDate(szkoleniaDatePicker, pracodawca.getSzkoleniaPracodawcyData());
         }
     }
 

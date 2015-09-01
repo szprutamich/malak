@@ -52,4 +52,13 @@ public class UIHelper {
 
         return datePicker;
     }
+
+    public static void initDate(JDatePickerImpl datePicker, Date date) {
+        if (date != null) {
+            ((UtilDateModel) datePicker.getModel()).setValue(date);
+            datePicker.getModel().setSelected(true);
+        } else {
+            datePicker.getModel().setSelected(false);
+        }
+    }
 }

@@ -3,6 +3,7 @@ package pl.malak;
 import org.springframework.stereotype.Component;
 import pl.malak.helpers.UIHelper;
 import pl.malak.model.Pracodawca;
+import pl.malak.panels.PracaPanel;
 import pl.malak.panels.PracodawcaPanel;
 import pl.malak.panels.ZleceniePanel;
 
@@ -36,6 +37,9 @@ public class MainFrame extends JFrame implements ActionListener {
 
     @Resource
     private ZleceniePanel zleceniePanel;
+
+    @Resource
+    private PracaPanel pracaPanel;
 
     public MainFrame() {
         super();
@@ -71,11 +75,13 @@ public class MainFrame extends JFrame implements ActionListener {
     private void setupPanels() {
         pracodawcaPanel.setFrame(this);
         zleceniePanel.setFrame(this);
+        pracaPanel.setFrame(this);
     }
 
     private void removeAllPanels() {
         remove(pracodawcaPanel);
         remove(zleceniePanel);
+        remove(pracaPanel);
     }
 
     public void initPrzegladaniePracodawcow() {
@@ -103,6 +109,20 @@ public class MainFrame extends JFrame implements ActionListener {
         removeAllPanels();
         add(zleceniePanel);
         zleceniePanel.initDodawanie(pracodawca);
+        refreshView();
+    }
+
+    public void initPrzeglądaniePrac(Pracodawca pracodawca) {
+        removeAllPanels();
+        add(pracaPanel);
+        pracaPanel.initPrzegladanie(pracodawca);
+        refreshView();
+    }
+
+    public void initDodajPrace(Pracodawca pracodawca) {
+        removeAllPanels();
+        add(pracaPanel);
+        pracaPanel.initDodawanie(pracodawca);
         refreshView();
     }
 

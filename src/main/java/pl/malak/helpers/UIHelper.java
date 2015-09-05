@@ -61,4 +61,12 @@ public class UIHelper {
             datePicker.getModel().setSelected(false);
         }
     }
+
+    public static int[] getScreenSize() {
+        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+        return new int[]{
+                gd.getDisplayMode().getWidth(),
+                gd.getDisplayMode().getHeight()
+        };
+    }
 }

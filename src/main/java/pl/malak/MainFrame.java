@@ -21,6 +21,28 @@ import java.awt.event.ActionListener;
 @Component
 public class MainFrame extends JFrame implements ActionListener {
 
+    private enum MinPanelSize {
+        PRACODAWCA(650, 450),
+        PRACA(1250, 760),
+        ZLECENIE(650, 760);
+
+        private int minWidth;
+        private int minHeight;
+
+        private MinPanelSize(int minWidth, int minHeight) {
+            this.minHeight = minHeight;
+            this.minWidth = minWidth;
+        }
+
+        public int getMinWidth() {
+            return minWidth;
+        }
+
+        public int getMinHeight() {
+            return minHeight;
+        }
+    }
+
     private static final String AUTHOR = "Autor: Michał Szpruta";
 
     private JMenuItem importuj = new JMenuItem("Importuj z excela");
@@ -47,7 +69,6 @@ public class MainFrame extends JFrame implements ActionListener {
         setTitle("Malak");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
-        setMinimumSize(new Dimension(650, 450));
 
         JMenuBar menuBar = new JMenuBar();
 
@@ -68,7 +89,7 @@ public class MainFrame extends JFrame implements ActionListener {
         addActionListeners();
 
         setJMenuBar(menuBar);
-        refreshView();
+        refreshView(MinPanelSize.PRACODAWCA);
     }
 
     @PostConstruct
@@ -88,42 +109,42 @@ public class MainFrame extends JFrame implements ActionListener {
         removeAllPanels();
         add(pracodawcaPanel);
         pracodawcaPanel.initPrzegladanie();
-        refreshView();
+        refreshView(MinPanelSize.PRACODAWCA);
     }
 
     public void initDodajPracodawce() {
         removeAllPanels();
         add(pracodawcaPanel);
         pracodawcaPanel.initDodawanie();
-        refreshView();
+        refreshView(MinPanelSize.PRACODAWCA);
     }
 
     public void initPrzeglądanieZlecen(Pracodawca pracodawca) {
         removeAllPanels();
         add(zleceniePanel);
         zleceniePanel.initPrzegladanie(pracodawca);
-        refreshView();
+        refreshView(MinPanelSize.ZLECENIE);
     }
 
     public void initDodajZlecenie(Pracodawca pracodawca) {
         removeAllPanels();
         add(zleceniePanel);
         zleceniePanel.initDodawanie(pracodawca);
-        refreshView();
+        refreshView(MinPanelSize.ZLECENIE);
     }
 
     public void initPrzeglądaniePrac(Pracodawca pracodawca) {
         removeAllPanels();
         add(pracaPanel);
         pracaPanel.initPrzegladanie(pracodawca);
-        refreshView();
+        refreshView(MinPanelSize.PRACA);
     }
 
     public void initDodajPrace(Pracodawca pracodawca) {
         removeAllPanels();
         add(pracaPanel);
         pracaPanel.initDodawanie(pracodawca);
-        refreshView();
+        refreshView(MinPanelSize.PRACA);
     }
 
     public void actionPerformed(ActionEvent evt) {
@@ -146,9 +167,9 @@ public class MainFrame extends JFrame implements ActionListener {
             initPrzegladaniePracodawcow();
         } else if (source == dodaj) {
             initDodajPracodawce();
-        } else if (source == zakoncz)
+        } else if (source == zakoncz) {
             System.exit(0);
-        else if (source == autor) {
+        } else if (source == autor) {
             UIHelper.displayMessage(this, AUTHOR);
         }
     }
@@ -161,7 +182,8 @@ public class MainFrame extends JFrame implements ActionListener {
         autor.addActionListener(this);
     }
 
-    private void refreshView() {
+    private void refreshView(MinPanelSize panelSize) {
+        setMinimumSize(new Dimension(panelSize.getMinWidth(), panelSize.getMinHeight()));
         revalidate();
         repaint();
         pack();

@@ -41,52 +41,80 @@ public class PracaPanel extends FramePanel implements ActionListener {
 
     JLabel pracodawcaNazwaLabel = new JLabel("Pracodawca:");
     JLabel nazwaLabel = new JLabel("Pracownik:");
-    JLabel uwagiLabel = new JLabel("Uwagi:");
-    JLabel dataLabel = new JLabel("Do kiedy:");
+    JLabel uwagiLabel = new JLabel("Uwagi:                             ");
+    JLabel uwagiLabel2 = new JLabel("Uwagi:                             ");
+    JLabel dataLabel = new JLabel("Do kiedy:                          ");
+    JLabel dataLabel2 = new JLabel("Do kiedy:                          ");
 
     JComboBox<String> nazwa = new JComboBox<>();
 
-    JCheckBox kwsetionariuszOsobowyUbiegajacego = new JCheckBox("Wypełniony kwestionariusz osobowy dla osoby ubiegającej się o zatrudnienie");
+    JCheckBox kwsetionariuszOsobowyUbiegajacego = new JCheckBox(
+            "<html>Wypełniony kwestionariusz osobowy dla osoby ubiegającej się o zatrudnienie</html>"
+    );
     JComboBox<String> kwsetionariuszOsobowyUbiegajacegoUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox podanieOPrace = new JCheckBox("Podanie o pracę");
     JComboBox<String> podanieOPraceUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox zyciorys = new JCheckBox("Życiorys pracownika");
     JComboBox<String> zyciorysUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox swiadectwoPracy = new JCheckBox("Świadectwo pracy z poprzednich miejsc pracy lub inne dokumenty potwierdzające okresy zatrudnienia, obejmujace okresy pracy przypadające w roku kalendarzowym, w którym pracownik ubiega się o zatrudnienie");
+    JCheckBox swiadectwoPracy = new JCheckBox(
+            "<html>Świadectwo pracy z poprzednich miejsc pracy lub inne dokumenty " +
+                    "potwierdzające okresy zatrudnienia, w danym roku kalendarzowym</html>"
+    );
     JComboBox<String> swiadectwoPracyUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox dokumentyPotwierdzajace = new JCheckBox("Dokumenty potwierdzające kwalifikacje zawodowe, wymagane do wykonywania oferowanej pracy");
+    JCheckBox dokumentyPotwierdzajace = new JCheckBox(
+            "<html>Dokumenty potwierdzające kwalifikacje zawodowe, wymagane do wykonywania oferowanej pracy</html>"
+    );
     JComboBox<String> dokumentyPotwierdzajaceUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox swiadectwoUkonczeniaGimnazjum = new JCheckBox("Świadectwo ukończenia gimnazjum w przypadku zatrudnienia w celu przygotowania zawodowego");
+    JCheckBox swiadectwoUkonczeniaGimnazjum = new JCheckBox(
+            "<html>Świadectwo ukończenia gimnazjum w przypadku zatrudnienia w celu przygotowania zawodowego</html>"
+    );
     JComboBox<String> swiadectwoUkonczeniaGimnazjumUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox podstawaUrlopu = new JCheckBox("Podstawa urlopu - DRUK");
     JComboBox<String> podstawaUrlopuUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox orzeczenieLekarskiePrzeciwskazania = new JCheckBox("Orzeczenie lekarskie stwierdzające brak przeciwwskazań do pracy na okreslonym stanowisku");
+    JCheckBox orzeczenieLekarskiePrzeciwskazania = new JCheckBox(
+            "<html>Orzeczenie lekarskie stwierdzające brak przeciwwskazań do pracy na określonym stanowisku</html>"
+    );
     JComboBox<String> orzeczenieLekarskiePrzeciwskazaniaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JDatePickerImpl orzeczenieLekarskiePrzeciwskazaniaData = UIHelper.getJDatePicker();
     JCheckBox dowodOsobisty = new JCheckBox("Dowód osobisty");
     JComboBox<String> dowodOsobistyUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox kwsetionariuszOsobowyPracownika = new JCheckBox("Kwestionariusz osobowy pracownika ");
+    JCheckBox kwsetionariuszOsobowyPracownika = new JCheckBox("Kwestionariusz osobowy pracownika");
     JComboBox<String> kwsetionariuszOsobowyPracownikaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox umowaOPrace = new JCheckBox("Umowa o pracę + Aneks");
     JComboBox<String> umowaOPraceUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox informacjaOWarunkach = new JCheckBox("Informacja o warunkach zatrudnienia");
     JComboBox<String> informacjaOWarunkachUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox oswiadczenieORyzyku = new JCheckBox("Oświadczenie pracownika o zapoznaniu się z informacją o ryzyku zawodowym na danym stanowisku");
+    JCheckBox oswiadczenieORyzyku = new JCheckBox(
+            "<html>Oświadczenie pracownika o zapoznaniu się z informacją o ryzyku zawodowym</html>"
+    );
     JComboBox<String> oswiadczenieORyzykuUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox oswiadczenieOPrzepisach = new JCheckBox("Oświadczenie pracownika o zapoznaniu się z obowiązkowymi przepisami w zakresie równouprawnienia");
+    JCheckBox oswiadczenieOPrzepisach = new JCheckBox(
+            "<html>Oświadczenie pracownika o zapoznaniu się z obowiązkowymi " +
+                    "przepisami w zakresie równouprawnienia</html>"
+    );
     JComboBox<String> oswiadczenieOPrzepisachUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox oswiadczenieOBhp = new JCheckBox("Oświadczenie pracownika o zapoznaniu się w zakresie BHP");
+    JCheckBox oswiadczenieOBhp = new JCheckBox("Oświadczenie pracownika o zapoznaniu się z przepisami BHP");
     JComboBox<String> oswiadczenieOBhpUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JDatePickerImpl oswiadczenieOBhpData = UIHelper.getJDatePicker();
-    JCheckBox oswiadczenieOPozarze = new JCheckBox("Oświadczenie pracownika o zapoznaniu się przepisów przeciwpozarowych");
+    JCheckBox oswiadczenieOPozarze = new JCheckBox(
+            "<html>Oświadczenie pracownika o zapoznaniu się przepisami przeciwpozarowymi</html>"
+    );
     JComboBox<String> oswiadczenieOPozarzeUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox oswiadczenieOUprawnieniach = new JCheckBox("Oświadczenie pracownika o zapoznaniu się związanych z uprawnieniami rodzicielskimi itp.");
+    JCheckBox oswiadczenieOUprawnieniach = new JCheckBox(
+            "<html>Oświadczenie pracownika o zapoznaniu się z uprawnieniami rodzicielskimi itp.</html>"
+    );
     JComboBox<String> oswiadczenieOUprawnieniachUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox pit = new JCheckBox("PIT-2, czyli wyrażenie zgody pracownika na miesięczne potrącanie kwoty wolnej z zaliczek na podatek dochodowy");
+    JCheckBox pit = new JCheckBox(
+            "<html>PIT-2, czyli wyrażenie zgody pracownika na miesięczne potrącanie " +
+                    "kwoty wolnej z zaliczek na podatek dochodowy</html>"
+    );
     JComboBox<String> pitUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox oswiadczenieUrzadSkarbowy = new JCheckBox("Oświadczenie o podleganiu pod Urząd Skarbowy");
     JComboBox<String> oswiadczenieUrzadSkarbowyUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox oswiadczenieOKosztach = new JCheckBox("Oświadczenie o podwyższonych kosztach uzyskania przychodów jeśli pracownik mieszka poza miejscowowścią w której jest siedziba pracodawcy");
+    JCheckBox oswiadczenieOKosztach = new JCheckBox(
+            "<html>Oświadczenie o podwyższonych kosztach uzyskania przychodów jeśli pracownik mieszka " +
+                    "poza miejscowowścią, w której jest siedziba pracodawcy</html>"
+    );
     JComboBox<String> oswiadczenieOKosztachUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox zgodaPracownika = new JCheckBox("Zgoda pracownika na wypłatę wynagrodzenia na konto bankowe");
     JComboBox<String> zgodaPracownikaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
@@ -102,9 +130,15 @@ public class PracaPanel extends FramePanel implements ActionListener {
     JDatePickerImpl okresoweBadaniaBhpData = UIHelper.getJDatePicker();
     JCheckBox drukZua = new JCheckBox("DRUK ZUA+ZCNA");
     JComboBox<String> drukZuaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox oswiadczenieWypowiedzenie = new JCheckBox("Oświadczenie o wypowiedzeniu lub rozwiązaniu umowy o pracę, a także dokumenty potwierdzające zaistnienie zdarzeń powodujących wygaśnięcie stosunku pracy");
+    JCheckBox oswiadczenieWypowiedzenie = new JCheckBox(
+            "<html>Oświadczenie o wypowiedzeniu lub rozwiązaniu umowy o pracę, a także dokumenty potwierdzające " +
+                    "zaistnienie zdarzeń powodujących wygaśnięcie stosunku pracy</html>"
+    );
     JComboBox<String> oswiadczenieWypowiedzenieUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox kopiaSwiadectwa = new JCheckBox("Kopia wydanego pracownikowi świadectwa pracy oraz ewentualny wniosek o sprostowanie świadectwa i korespondencja w tej sprawie");
+    JCheckBox kopiaSwiadectwa = new JCheckBox(
+            "<html>Kopia wydanego pracownikowi świadectwa pracy oraz ewentualny wniosek o sprostowanie świadectwa " +
+                    "i korespondencja w tej sprawie</html>"
+    );
     JComboBox<String> kopiaSwiadectwaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox drukZwua = new JCheckBox("Druk ZWUA");
     JComboBox<String> drukZwuaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
@@ -153,8 +187,6 @@ public class PracaPanel extends FramePanel implements ActionListener {
         nazwaLabel.setFont(new Font(nazwaLabel.getFont().getFamily(), Font.PLAIN, 25));
         nazwa.setEditable(true);
 
-        setMinimumSize(new Dimension(500, 770));
-
         layoutComponents();
         addListeners();
     }
@@ -166,6 +198,11 @@ public class PracaPanel extends FramePanel implements ActionListener {
     }
 
     private void layoutComponents() {
+        int[] screenSize = UIHelper.getScreenSize();
+        int height = screenSize[1];
+
+        boolean twoColumns = height < 900;
+
         int wiersz = 0;
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -177,19 +214,19 @@ public class PracaPanel extends FramePanel implements ActionListener {
         // --------------
         c.gridx = 0;
         c.gridy = wiersz;
-        c.gridwidth = 3;
+        c.gridwidth = twoColumns ? 6 : 3;
         add(pracodawcaNazwaLabel, c);
 
         // --------------
         wiersz++;
         c.gridx = 0;
         c.gridy = wiersz;
-        c.gridwidth = 1;
+        c.gridwidth = twoColumns ? 2 : 1;
         add(nazwaLabel, c);
 
-        c.gridx = 1;
+        c.gridx = twoColumns ? 2 : 1;
         c.gridy = wiersz;
-        c.gridwidth = 2;
+        c.gridwidth = twoColumns ? 4 : 2;
         add(nazwa, c);
 
         // --------------
@@ -203,23 +240,42 @@ public class PracaPanel extends FramePanel implements ActionListener {
         c.gridy = wiersz;
         add(dataLabel, c);
 
+        if (twoColumns) {
+            c.gridwidth = 1;
+            c.gridx = 4;
+            c.gridy = wiersz;
+            add(uwagiLabel2, c);
+
+            c.gridx = 5;
+            c.gridy = wiersz;
+            add(dataLabel2, c);
+        }
+
         // --------------
         c.insets = new Insets(1, 5, 1, 5);
 
+
+        int wierszStart = wiersz + 1;
+        int gridxOffset = 0;
         for (UIRow row : rows) {
             wiersz++;
+            if (wiersz > 17 && twoColumns) {
+                wiersz = wierszStart;
+                gridxOffset = 3;
+            }
+
             c.gridwidth = 1;
-            c.gridx = 0;
+            c.gridx = gridxOffset;
             c.gridy = wiersz;
             add(row.getCheckBox(), c);
 
-            c.gridx = 1;
+            c.gridx = 1 + gridxOffset;
             c.gridy = wiersz;
             add(row.getComboBox(), c);
             row.getComboBox().setEditable(true);
 
             if (row.getDatePicker() != null) {
-                c.gridx = 2;
+                c.gridx = 2 + gridxOffset;
                 c.gridy = wiersz;
                 add(row.getDatePicker(), c);
             }
@@ -227,14 +283,15 @@ public class PracaPanel extends FramePanel implements ActionListener {
 
         // --------------
         wiersz++;
+        wiersz++;
         c.insets = new Insets(5, 5, 5, 5);
-        c.gridwidth = 2;
+        c.gridwidth = twoColumns ? 4 : 2;
         c.gridx = 0;
         c.gridy = wiersz;
         add(zapisz, c);
 
-        c.gridwidth = 1;
-        c.gridx = 2;
+        c.gridwidth = twoColumns ? 2 : 1;
+        c.gridx = twoColumns ? 4 : 2;
         c.gridy = wiersz;
         add(wroc, c);
     }

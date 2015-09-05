@@ -1,7 +1,6 @@
 package pl.malak.panels;
 
 import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 import pl.malak.beans.PracodawcaBean;
 import pl.malak.beans.dao.PracaDao;
 import pl.malak.beans.dao.PracodawcaDao;
@@ -17,7 +16,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * @author Michał Szpruta - szprutamich@gmail.com

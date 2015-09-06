@@ -223,9 +223,101 @@ public class Praca {
     public Praca() {
     }
 
+    public Praca(
+            Boolean kwsetionariuszOsobowyUbiegajacego, String kwsetionariuszOsobowyUbiegajacegoUwagi,
+            Boolean podanieOPrace, String podanieOPraceUwagi, Boolean zyciorys, String zyciorysUwagi,
+            Boolean swiadectwoPracy, String swiadectwoPracyUwagi, Boolean dokumentyPotwierdzajace,
+            String dokumentyPotwierdzajaceUwagi, Boolean swiadectwoUkonczeniaGimnazjum,
+            String swiadectwoUkonczeniaGimnazjumUwagi, Boolean podstawaUrlopu, String podstawaUrlopuUwagi,
+            Boolean orzeczenieLekarskiePrzeciwskazania, String orzeczenieLekarskiePrzeciwskazaniaUwagi,
+            Date orzeczenieLekarskiePrzeciwskazaniaData, Boolean dowodOsobisty, String dowodOsobistyUwagi,
+            Boolean kwsetionariuszOsobowyPracownika, String kwsetionariuszOsobowyPracownikaUwagi,
+            Boolean umowaOPrace, String umowaOPraceUwagi, Boolean informacjaOWarunkach,
+            String informacjaOWarunkachUwagi, Boolean oswiadczenieORyzyku, String oswiadczenieORyzykuUwagi,
+            Boolean oswiadczenieOPrzepisach, String oswiadczenieOPrzepisachUwagi, Boolean oswiadczenieOBhp,
+            String oswiadczenieOBhpUwagi, Date oswiadczenieOBhpData, Boolean oswiadczenieOPozarze,
+            String oswiadczenieOPozarzeUwagi, Boolean oswiadczenieOUprawnieniach,
+            String oswiadczenieOUprawnieniachUwagi, Boolean pit, String pitUwagi,
+            Boolean oswiadczenieUrzadSkarbowy, String oswiadczenieUrzadSkarbowyUwagi,
+            Boolean oswiadczenieOKosztach, String oswiadczenieOKosztachUwagi, Boolean zgodaPracownika,
+            String zgodaPracownikaUwagi, Boolean umowaOdpowiedzialnosci, String umowaOdpowiedzialnosciUwagi,
+            Boolean umowaOZakazie, String umowaOZakazieUwagi, Boolean orzeczenieLekarskie,
+            String orzeczenieLekarskieUwagi, Date orzeczenieLekarskieData, Boolean okresoweBadaniaBhp,
+            String okresoweBadaniaBhpUwagi, Date okresoweBadaniaBhpData, Boolean drukZua, String drukZuaUwagi,
+            Boolean oswiadczenieWypowiedzenie, String oswiadczenieWypowiedzenieUwagi, Boolean kopiaSwiadectwa,
+            String kopiaSwiadectwaUwagi, Boolean drukZwua, String drukZwuaUwagi, String nazwa) {
+        this.kwsetionariuszOsobowyUbiegajacego = kwsetionariuszOsobowyUbiegajacego;
+        this.kwsetionariuszOsobowyUbiegajacegoUwagi = kwsetionariuszOsobowyUbiegajacegoUwagi;
+        this.podanieOPrace = podanieOPrace;
+        this.podanieOPraceUwagi = podanieOPraceUwagi;
+        this.zyciorys = zyciorys;
+        this.zyciorysUwagi = zyciorysUwagi;
+        this.swiadectwoPracy = swiadectwoPracy;
+        this.swiadectwoPracyUwagi = swiadectwoPracyUwagi;
+        this.dokumentyPotwierdzajace = dokumentyPotwierdzajace;
+        this.dokumentyPotwierdzajaceUwagi = dokumentyPotwierdzajaceUwagi;
+        this.swiadectwoUkonczeniaGimnazjum = swiadectwoUkonczeniaGimnazjum;
+        this.swiadectwoUkonczeniaGimnazjumUwagi = swiadectwoUkonczeniaGimnazjumUwagi;
+        this.podstawaUrlopu = podstawaUrlopu;
+        this.podstawaUrlopuUwagi = podstawaUrlopuUwagi;
+        this.orzeczenieLekarskiePrzeciwskazania = orzeczenieLekarskiePrzeciwskazania;
+        this.orzeczenieLekarskiePrzeciwskazaniaUwagi = orzeczenieLekarskiePrzeciwskazaniaUwagi;
+        this.orzeczenieLekarskiePrzeciwskazaniaData = orzeczenieLekarskiePrzeciwskazaniaData;
+        this.dowodOsobisty = dowodOsobisty;
+        this.dowodOsobistyUwagi = dowodOsobistyUwagi;
+        this.kwsetionariuszOsobowyPracownika = kwsetionariuszOsobowyPracownika;
+        this.kwsetionariuszOsobowyPracownikaUwagi = kwsetionariuszOsobowyPracownikaUwagi;
+        this.umowaOPrace = umowaOPrace;
+        this.umowaOPraceUwagi = umowaOPraceUwagi;
+        this.informacjaOWarunkach = informacjaOWarunkach;
+        this.informacjaOWarunkachUwagi = informacjaOWarunkachUwagi;
+        this.oswiadczenieORyzyku = oswiadczenieORyzyku;
+        this.oswiadczenieORyzykuUwagi = oswiadczenieORyzykuUwagi;
+        this.oswiadczenieOPrzepisach = oswiadczenieOPrzepisach;
+        this.oswiadczenieOPrzepisachUwagi = oswiadczenieOPrzepisachUwagi;
+        this.oswiadczenieOBhp = oswiadczenieOBhp;
+        this.oswiadczenieOBhpUwagi = oswiadczenieOBhpUwagi;
+        this.oswiadczenieOBhpData = oswiadczenieOBhpData;
+        this.oswiadczenieOPozarze = oswiadczenieOPozarze;
+        this.oswiadczenieOPozarzeUwagi = oswiadczenieOPozarzeUwagi;
+        this.oswiadczenieOUprawnieniach = oswiadczenieOUprawnieniach;
+        this.oswiadczenieOUprawnieniachUwagi = oswiadczenieOUprawnieniachUwagi;
+        this.pit = pit;
+        this.pitUwagi = pitUwagi;
+        this.oswiadczenieUrzadSkarbowy = oswiadczenieUrzadSkarbowy;
+        this.oswiadczenieUrzadSkarbowyUwagi = oswiadczenieUrzadSkarbowyUwagi;
+        this.oswiadczenieOKosztach = oswiadczenieOKosztach;
+        this.oswiadczenieOKosztachUwagi = oswiadczenieOKosztachUwagi;
+        this.zgodaPracownika = zgodaPracownika;
+        this.zgodaPracownikaUwagi = zgodaPracownikaUwagi;
+        this.umowaOdpowiedzialnosci = umowaOdpowiedzialnosci;
+        this.umowaOdpowiedzialnosciUwagi = umowaOdpowiedzialnosciUwagi;
+        this.umowaOZakazie = umowaOZakazie;
+        this.umowaOZakazieUwagi = umowaOZakazieUwagi;
+        this.orzeczenieLekarskie = orzeczenieLekarskie;
+        this.orzeczenieLekarskieUwagi = orzeczenieLekarskieUwagi;
+        this.orzeczenieLekarskieData = orzeczenieLekarskieData;
+        this.okresoweBadaniaBhp = okresoweBadaniaBhp;
+        this.okresoweBadaniaBhpUwagi = okresoweBadaniaBhpUwagi;
+        this.okresoweBadaniaBhpData = okresoweBadaniaBhpData;
+        this.drukZua = drukZua;
+        this.drukZuaUwagi = drukZuaUwagi;
+        this.oswiadczenieWypowiedzenie = oswiadczenieWypowiedzenie;
+        this.oswiadczenieWypowiedzenieUwagi = oswiadczenieWypowiedzenieUwagi;
+        this.kopiaSwiadectwa = kopiaSwiadectwa;
+        this.kopiaSwiadectwaUwagi = kopiaSwiadectwaUwagi;
+        this.drukZwua = drukZwua;
+        this.drukZwuaUwagi = drukZwuaUwagi;
+        this.nazwa = nazwa;
+    }
+
     public Praca(Sheet sheet) {
         parse(sheet);
         this.sheetName = sheet.getSheetName();
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Boolean getKwsetionariuszOsobowyUbiegajacego() {

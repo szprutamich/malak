@@ -322,128 +322,156 @@ public class PracaPanel extends FramePanel implements ActionListener {
             init(obecnyPracodawca);
         } else if (e.getSource() == wroc) {
             getFrame().initPrzegladaniePracodawcow();
-//        } else if (e.getSource() == zapisz) {
-//            String zlecenieNazwa = UIHelper.getComboText(nazwa);
-//            if (zlecenieNazwa == null) {
-//                UIHelper.displayMessage(this, "Nazwa nie może być pusta!");
-//                return;
-//            }
-//            Zlecenie zlecenie = zlecenieDao.loadByName(zlecenieNazwa);
-//            if (!editMode && zlecenie == null) {
-//                zlecenieBean.stworzZlecenie(
-//                        kwestionariusz.isSelected(),
-//                        UIHelper.getComboText(kwestionariuszUwagi),
-//                        kartaSzkolenia.isSelected(),
-//                        UIHelper.getComboText(kartaSzkoleniaUwagi),
-//                        UIHelper.datePickerGetDate(kartaSzkoleniaDatePicker),
-//                        szkolenieOgolne.isSelected(),
-//                        UIHelper.getComboText(szkolenieOgolneUwagi),
-//                        instruktaz.isSelected(),
-//                        UIHelper.getComboText(instruktazUwagi),
-//                        ryzyko.isSelected(),
-//                        UIHelper.getComboText(ryzykoUwagi),
-//                        instrukcje.isSelected(),
-//                        UIHelper.getComboText(instrukcjeUwagi),
-//                        szkolenieOkresowe.isSelected(),
-//                        UIHelper.getComboText(szkolenieOkresoweUwagi),
-//                        UIHelper.datePickerGetDate(szkolenieOkresoweDatePicker),
-//                        rachunki.isSelected(),
-//                        UIHelper.getComboText(rachunkiUwagi),
-//                        umowa.isSelected(),
-//                        UIHelper.getComboText(umowaUwagi),
-//                        UIHelper.datePickerGetDate(umowaDatePicker),
-//                        odbior.isSelected(),
-//                        UIHelper.getComboText(odbiorUwagi),
-//                        UIHelper.datePickerGetDate(odbiorDatePicker),
-//                        zua.isSelected(),
-//                        UIHelper.getComboText(zuaUwagi),
-//                        zus.isSelected(),
-//                        UIHelper.getComboText(zusUwagi),
-//                        zza.isSelected(),
-//                        UIHelper.getComboText(zzaUwagi),
-//                        zwua.isSelected(),
-//                        UIHelper.getComboText(zwuaUwagi),
-//                        UIHelper.datePickerGetDate(zwuaDatePicker),
-//                        UIHelper.getComboText(nazwa),
-//                        badania.isSelected(),
-//                        UIHelper.getComboText(badaniaUwagi),
-//                        UIHelper.datePickerGetDate(badaniaDatePicker),
-//                        legitymacja.isSelected(),
-//                        UIHelper.getComboText(legitymacjaUwagi),
-//                        dowod.isSelected(),
-//                        UIHelper.getComboText(dowodUwagi),
-//                        zyciorys.isSelected(),
-//                        UIHelper.getComboText(zyciorysUwagi),
-//                        zaswiadczenieSanitarne.isSelected(),
-//                        UIHelper.getComboText(zaswiadczenieSanitarneUwagi),
-//                        zaswiadczenieStudent.isSelected(),
-//                        UIHelper.getComboText(zaswiadczenieStudentUwagi),
-//                        wyciagKodeks.isSelected(),
-//                        UIHelper.getComboText(wyciagKodeksUwagi),
-//                        obecnyPracodawca.getId()
-//                );
-//                UIHelper.displayMessage(this, "Zlecenie zostało dodane pomyślnie.");
-//            } else if (!editMode && zlecenie.getPracodawca().getId().equals(obecnyPracodawca.getId())) {
-//                UIHelper.displayMessage(this, "Zlecenie o podanej nazwie dla tego pracodawcy już istnieje!");
-//            } else {
-//                String nazwaText = UIHelper.getComboText(nazwa);
-//                zlecenieBean.uaktualnijZlecenie(
-//                        obecneZlecenie.getId(),
-//                        kwestionariusz.isSelected(),
-//                        UIHelper.getComboText(kwestionariuszUwagi),
-//                        kartaSzkolenia.isSelected(),
-//                        UIHelper.getComboText(kartaSzkoleniaUwagi),
-//                        UIHelper.datePickerGetDate(kartaSzkoleniaDatePicker),
-//                        szkolenieOgolne.isSelected(),
-//                        UIHelper.getComboText(szkolenieOgolneUwagi),
-//                        instruktaz.isSelected(),
-//                        UIHelper.getComboText(instruktazUwagi),
-//                        ryzyko.isSelected(),
-//                        UIHelper.getComboText(ryzykoUwagi),
-//                        instrukcje.isSelected(),
-//                        UIHelper.getComboText(instrukcjeUwagi),
-//                        szkolenieOkresowe.isSelected(),
-//                        UIHelper.getComboText(szkolenieOkresoweUwagi),
-//                        UIHelper.datePickerGetDate(szkolenieOkresoweDatePicker),
-//                        rachunki.isSelected(),
-//                        UIHelper.getComboText(rachunkiUwagi),
-//                        umowa.isSelected(),
-//                        UIHelper.getComboText(umowaUwagi),
-//                        UIHelper.datePickerGetDate(umowaDatePicker),
-//                        odbior.isSelected(),
-//                        UIHelper.getComboText(odbiorUwagi),
-//                        UIHelper.datePickerGetDate(odbiorDatePicker),
-//                        zua.isSelected(),
-//                        UIHelper.getComboText(zuaUwagi),
-//                        zus.isSelected(),
-//                        UIHelper.getComboText(zusUwagi),
-//                        zza.isSelected(),
-//                        UIHelper.getComboText(zzaUwagi),
-//                        zwua.isSelected(),
-//                        UIHelper.getComboText(zwuaUwagi),
-//                        UIHelper.datePickerGetDate(zwuaDatePicker),
-//                        nazwaText,
-//                        badania.isSelected(),
-//                        UIHelper.getComboText(badaniaUwagi),
-//                        UIHelper.datePickerGetDate(badaniaDatePicker),
-//                        legitymacja.isSelected(),
-//                        UIHelper.getComboText(legitymacjaUwagi),
-//                        dowod.isSelected(),
-//                        UIHelper.getComboText(dowodUwagi),
-//                        zyciorys.isSelected(),
-//                        UIHelper.getComboText(zyciorysUwagi),
-//                        zaswiadczenieSanitarne.isSelected(),
-//                        UIHelper.getComboText(zaswiadczenieSanitarneUwagi),
-//                        zaswiadczenieStudent.isSelected(),
-//                        UIHelper.getComboText(zaswiadczenieStudentUwagi),
-//                        wyciagKodeks.isSelected(),
-//                        UIHelper.getComboText(wyciagKodeksUwagi)
-//                );
-//                nazwa.removeItem(obecneZlecenie.getNazwa());
-//                nazwa.addItem(nazwaText);
-//                nazwa.setSelectedItem(nazwaText);
-//                UIHelper.displayMessage(this, "Zlecenie zostało uaktualnione pomyślnie.");
-//            }
+        } else if (e.getSource() == zapisz) {
+            String pracaNazwa = UIHelper.getComboText(nazwa);
+            if (pracaNazwa == null) {
+                UIHelper.displayMessage(this, "Nazwa nie może być pusta!");
+                return;
+            }
+            Praca praca = pracaDao.loadByName(pracaNazwa);
+            if (!editMode && praca == null) {
+                pracaBean.stworzPrace(
+                        kwsetionariuszOsobowyUbiegajacego.isSelected(),
+                        UIHelper.getComboText(kwsetionariuszOsobowyUbiegajacegoUwagi),
+                        podanieOPrace.isSelected(),
+                        UIHelper.getComboText(podanieOPraceUwagi),
+                        zyciorys.isSelected(),
+                        UIHelper.getComboText(zyciorysUwagi),
+                        swiadectwoPracy.isSelected(),
+                        UIHelper.getComboText(swiadectwoPracyUwagi),
+                        dokumentyPotwierdzajace.isSelected(),
+                        UIHelper.getComboText(dokumentyPotwierdzajaceUwagi),
+                        swiadectwoUkonczeniaGimnazjum.isSelected(),
+                        UIHelper.getComboText(swiadectwoUkonczeniaGimnazjumUwagi),
+                        podstawaUrlopu.isSelected(),
+                        UIHelper.getComboText(podstawaUrlopuUwagi),
+                        orzeczenieLekarskiePrzeciwskazania.isSelected(),
+                        UIHelper.getComboText(orzeczenieLekarskiePrzeciwskazaniaUwagi),
+                        UIHelper.datePickerGetDate(orzeczenieLekarskiePrzeciwskazaniaData),
+                        dowodOsobisty.isSelected(),
+                        UIHelper.getComboText(dowodOsobistyUwagi),
+                        kwsetionariuszOsobowyPracownika.isSelected(),
+                        UIHelper.getComboText(kwsetionariuszOsobowyPracownikaUwagi),
+                        umowaOPrace.isSelected(),
+                        UIHelper.getComboText(umowaOPraceUwagi),
+                        informacjaOWarunkach.isSelected(),
+                        UIHelper.getComboText(informacjaOWarunkachUwagi),
+                        oswiadczenieORyzyku.isSelected(),
+                        UIHelper.getComboText(oswiadczenieORyzykuUwagi),
+                        oswiadczenieOPrzepisach.isSelected(),
+                        UIHelper.getComboText(oswiadczenieOPrzepisachUwagi),
+                        oswiadczenieOBhp.isSelected(),
+                        UIHelper.getComboText(oswiadczenieOBhpUwagi),
+                        UIHelper.datePickerGetDate(oswiadczenieOBhpData),
+                        oswiadczenieOPozarze.isSelected(),
+                        UIHelper.getComboText(oswiadczenieOPozarzeUwagi),
+                        oswiadczenieOUprawnieniach.isSelected(),
+                        UIHelper.getComboText(oswiadczenieOUprawnieniachUwagi),
+                        pit.isSelected(),
+                        UIHelper.getComboText(pitUwagi),
+                        oswiadczenieUrzadSkarbowy.isSelected(),
+                        UIHelper.getComboText(oswiadczenieUrzadSkarbowyUwagi),
+                        oswiadczenieOKosztach.isSelected(),
+                        UIHelper.getComboText(oswiadczenieOKosztachUwagi),
+                        zgodaPracownika.isSelected(),
+                        UIHelper.getComboText(zgodaPracownikaUwagi),
+                        umowaOdpowiedzialnosci.isSelected(),
+                        UIHelper.getComboText(umowaOdpowiedzialnosciUwagi),
+                        umowaOZakazie.isSelected(),
+                        UIHelper.getComboText(umowaOZakazieUwagi),
+                        orzeczenieLekarskie.isSelected(),
+                        UIHelper.getComboText(orzeczenieLekarskieUwagi),
+                        UIHelper.datePickerGetDate(orzeczenieLekarskieData),
+                        okresoweBadaniaBhp.isSelected(),
+                        UIHelper.getComboText(okresoweBadaniaBhpUwagi),
+                        UIHelper.datePickerGetDate(okresoweBadaniaBhpData),
+                        drukZua.isSelected(),
+                        UIHelper.getComboText(drukZuaUwagi),
+                        oswiadczenieWypowiedzenie.isSelected(),
+                        UIHelper.getComboText(oswiadczenieWypowiedzenieUwagi),
+                        kopiaSwiadectwa.isSelected(),
+                        UIHelper.getComboText(kopiaSwiadectwaUwagi),
+                        drukZwua.isSelected(),
+                        UIHelper.getComboText(drukZwuaUwagi),
+                        UIHelper.getComboText(nazwa),
+                        obecnyPracodawca.getId()
+                );
+                UIHelper.displayMessage(this, "Umowa o pracę została dodana pomyślnie.");
+            } else if (!editMode && praca.getPracodawca().getId().equals(obecnyPracodawca.getId())) {
+                UIHelper.displayMessage(this, "Umowa o pracę o podanej nazwie dla tego pracodawcy już istnieje!");
+            } else {
+                String nazwaText = UIHelper.getComboText(nazwa);
+                pracaBean.uaktualnijPrace(
+                        obecnaPraca.getId(),
+                        kwsetionariuszOsobowyUbiegajacego.isSelected(),
+                        UIHelper.getComboText(kwsetionariuszOsobowyUbiegajacegoUwagi),
+                        podanieOPrace.isSelected(),
+                        UIHelper.getComboText(podanieOPraceUwagi),
+                        zyciorys.isSelected(),
+                        UIHelper.getComboText(zyciorysUwagi),
+                        swiadectwoPracy.isSelected(),
+                        UIHelper.getComboText(swiadectwoPracyUwagi),
+                        dokumentyPotwierdzajace.isSelected(),
+                        UIHelper.getComboText(dokumentyPotwierdzajaceUwagi),
+                        swiadectwoUkonczeniaGimnazjum.isSelected(),
+                        UIHelper.getComboText(swiadectwoUkonczeniaGimnazjumUwagi),
+                        podstawaUrlopu.isSelected(),
+                        UIHelper.getComboText(podstawaUrlopuUwagi),
+                        orzeczenieLekarskiePrzeciwskazania.isSelected(),
+                        UIHelper.getComboText(orzeczenieLekarskiePrzeciwskazaniaUwagi),
+                        UIHelper.datePickerGetDate(orzeczenieLekarskiePrzeciwskazaniaData),
+                        dowodOsobisty.isSelected(),
+                        UIHelper.getComboText(dowodOsobistyUwagi),
+                        kwsetionariuszOsobowyPracownika.isSelected(),
+                        UIHelper.getComboText(kwsetionariuszOsobowyPracownikaUwagi),
+                        umowaOPrace.isSelected(),
+                        UIHelper.getComboText(umowaOPraceUwagi),
+                        informacjaOWarunkach.isSelected(),
+                        UIHelper.getComboText(informacjaOWarunkachUwagi),
+                        oswiadczenieORyzyku.isSelected(),
+                        UIHelper.getComboText(oswiadczenieORyzykuUwagi),
+                        oswiadczenieOPrzepisach.isSelected(),
+                        UIHelper.getComboText(oswiadczenieOPrzepisachUwagi),
+                        oswiadczenieOBhp.isSelected(),
+                        UIHelper.getComboText(oswiadczenieOBhpUwagi),
+                        UIHelper.datePickerGetDate(oswiadczenieOBhpData),
+                        oswiadczenieOPozarze.isSelected(),
+                        UIHelper.getComboText(oswiadczenieOPozarzeUwagi),
+                        oswiadczenieOUprawnieniach.isSelected(),
+                        UIHelper.getComboText(oswiadczenieOUprawnieniachUwagi),
+                        pit.isSelected(),
+                        UIHelper.getComboText(pitUwagi),
+                        oswiadczenieUrzadSkarbowy.isSelected(),
+                        UIHelper.getComboText(oswiadczenieUrzadSkarbowyUwagi),
+                        oswiadczenieOKosztach.isSelected(),
+                        UIHelper.getComboText(oswiadczenieOKosztachUwagi),
+                        zgodaPracownika.isSelected(),
+                        UIHelper.getComboText(zgodaPracownikaUwagi),
+                        umowaOdpowiedzialnosci.isSelected(),
+                        UIHelper.getComboText(umowaOdpowiedzialnosciUwagi),
+                        umowaOZakazie.isSelected(),
+                        UIHelper.getComboText(umowaOZakazieUwagi),
+                        orzeczenieLekarskie.isSelected(),
+                        UIHelper.getComboText(orzeczenieLekarskieUwagi),
+                        UIHelper.datePickerGetDate(orzeczenieLekarskieData),
+                        okresoweBadaniaBhp.isSelected(),
+                        UIHelper.getComboText(okresoweBadaniaBhpUwagi),
+                        UIHelper.datePickerGetDate(okresoweBadaniaBhpData),
+                        drukZua.isSelected(),
+                        UIHelper.getComboText(drukZuaUwagi),
+                        oswiadczenieWypowiedzenie.isSelected(),
+                        UIHelper.getComboText(oswiadczenieWypowiedzenieUwagi),
+                        kopiaSwiadectwa.isSelected(),
+                        UIHelper.getComboText(kopiaSwiadectwaUwagi),
+                        drukZwua.isSelected(),
+                        UIHelper.getComboText(drukZwuaUwagi),
+                        nazwaText
+                );
+                nazwa.removeItem(obecnaPraca.getNazwa());
+                nazwa.addItem(nazwaText);
+                nazwa.setSelectedItem(nazwaText);
+                UIHelper.displayMessage(this, "Umowa o pracę została uaktualniona pomyślnie.");
+            }
         }
     }
 
@@ -454,57 +482,71 @@ public class PracaPanel extends FramePanel implements ActionListener {
         Praca praca = pracaDao.loadByName(zlecenieNazwa);
         if (praca != null && editMode) {
             obecnaPraca = praca;
-//
-//            kwestionariusz.setSelected(zlecenie.getKwestionariusz());
-//            kartaSzkolenia.setSelected(zlecenie.getKartaSzkolenia());
-//            szkolenieOgolne.setSelected(zlecenie.getSzkolenie());
-//            instruktaz.setSelected(zlecenie.getInstruktaz());
-//            ryzyko.setSelected(zlecenie.getRyzyko());
-//            instrukcje.setSelected(zlecenie.getInstrukcjeBhp());
-//            szkolenieOkresowe.setSelected(zlecenie.getSzkolenieBhp());
-//            rachunki.setSelected(zlecenie.getRachunki());
-//            umowa.setSelected(zlecenie.getUmowa());
-//            badania.setSelected(zlecenie.getBadania());
-//            odbior.setSelected(zlecenie.getOdbiorOdziezy());
-//            zua.setSelected(zlecenie.getZua());
-//            zus.setSelected(zlecenie.getZus());
-//            zza.setSelected(zlecenie.getZza());
-//            zwua.setSelected(zlecenie.getZwua());
-//            legitymacja.setSelected(zlecenie.getLegitymacja());
-//            dowod.setSelected(zlecenie.getDowod());
-//            zyciorys.setSelected(zlecenie.getZyciorys());
-//            zaswiadczenieSanitarne.setSelected(zlecenie.getZaswiadczenieSanitarne());
-//            zaswiadczenieStudent.setSelected(zlecenie.getZaswiadczenieStudent());
-//            wyciagKodeks.setSelected(zlecenie.getWyciagKodeks());
-//
-//            kwestionariuszUwagi.setSelectedItem(zlecenie.getKwestionariuszUwagi());
-//            kartaSzkoleniaUwagi.setSelectedItem(zlecenie.getKartaSzkoleniaUwagi());
-//            szkolenieOgolneUwagi.setSelectedItem(zlecenie.getSzkolenieUwagi());
-//            instruktazUwagi.setSelectedItem(zlecenie.getInstruktazUwagi());
-//            ryzykoUwagi.setSelectedItem(zlecenie.getRyzykoUwagi());
-//            instrukcjeUwagi.setSelectedItem(zlecenie.getInstrukcjeBhpUwagi());
-//            szkolenieOkresoweUwagi.setSelectedItem(zlecenie.getSzkolenieBhpUwagi());
-//            rachunkiUwagi.setSelectedItem(zlecenie.getRachunkiUwagi());
-//            umowaUwagi.setSelectedItem(zlecenie.getUmowaUwagi());
-//            badaniaUwagi.setSelectedItem(zlecenie.getBadaniaUwagi());
-//            odbiorUwagi.setSelectedItem(zlecenie.getOdbiorOdziezyUwagi());
-//            zuaUwagi.setSelectedItem(zlecenie.getZuaUwagi());
-//            zusUwagi.setSelectedItem(zlecenie.getZusUwagi());
-//            zzaUwagi.setSelectedItem(zlecenie.getZzaUwagi());
-//            zwuaUwagi.setSelectedItem(zlecenie.getZwuaUwagi());
-//            legitymacjaUwagi.setSelectedItem(zlecenie.getLegitymacjaUwagi());
-//            dowodUwagi.setSelectedItem(zlecenie.getDowodUwagi());
-//            zyciorysUwagi.setSelectedItem(zlecenie.getZyciorysUwagi());
-//            zaswiadczenieSanitarneUwagi.setSelectedItem(zlecenie.getZaswiadczenieSanitarneUwagi());
-//            zaswiadczenieStudentUwagi.setSelectedItem(zlecenie.getZaswiadczenieStudentUwagi());
-//            wyciagKodeksUwagi.setSelectedItem(zlecenie.getWyciagKodeksUwagi());
-//
-//            initDate(badaniaDatePicker, zlecenie.getBadaniaData());
-//            initDate(zwuaDatePicker, zlecenie.getZwuaData());
-//            initDate(odbiorDatePicker, zlecenie.getOdbiorOdziezyData());
-//            initDate(umowaDatePicker, zlecenie.getUmowaData());
-//            initDate(szkolenieOkresoweDatePicker, zlecenie.getSzkolenieBhpData());
-//            initDate(kartaSzkoleniaDatePicker, zlecenie.getKartaSzkoleniaData());
+
+            kwsetionariuszOsobowyUbiegajacego.setSelected(praca.getKwsetionariuszOsobowyUbiegajacego());
+            podanieOPrace.setSelected(praca.getPodanieOPrace());
+            zyciorys.setSelected(praca.getZyciorys());
+            swiadectwoPracy.setSelected(praca.getSwiadectwoPracy());
+            dokumentyPotwierdzajace.setSelected(praca.getDokumentyPotwierdzajace());
+            swiadectwoUkonczeniaGimnazjum.setSelected(praca.getSwiadectwoUkonczeniaGimnazjum());
+            podstawaUrlopu.setSelected(praca.getPodstawaUrlopu());
+            orzeczenieLekarskiePrzeciwskazania.setSelected(praca.getOrzeczenieLekarskiePrzeciwskazania());
+            dowodOsobisty.setSelected(praca.getDowodOsobisty());
+            kwsetionariuszOsobowyPracownika.setSelected(praca.getKwsetionariuszOsobowyPracownika());
+            umowaOPrace.setSelected(praca.getUmowaOPrace());
+            informacjaOWarunkach.setSelected(praca.getInformacjaOWarunkach());
+            oswiadczenieORyzyku.setSelected(praca.getOswiadczenieORyzyku());
+            oswiadczenieOPrzepisach.setSelected(praca.getOswiadczenieOPrzepisach());
+            oswiadczenieOBhp.setSelected(praca.getOswiadczenieOBhp());
+            oswiadczenieOPozarze.setSelected(praca.getOswiadczenieOPozarze());
+            oswiadczenieOUprawnieniach.setSelected(praca.getOswiadczenieOUprawnieniach());
+            pit.setSelected(praca.getPit());
+            oswiadczenieUrzadSkarbowy.setSelected(praca.getOswiadczenieUrzadSkarbowy());
+            oswiadczenieOKosztach.setSelected(praca.getOswiadczenieOKosztach());
+            zgodaPracownika.setSelected(praca.getZgodaPracownika());
+            umowaOdpowiedzialnosci.setSelected(praca.getUmowaOdpowiedzialnosci());
+            umowaOZakazie.setSelected(praca.getUmowaOZakazie());
+            orzeczenieLekarskie.setSelected(praca.getOrzeczenieLekarskie());
+            okresoweBadaniaBhp.setSelected(praca.getOkresoweBadaniaBhp());
+            drukZua.setSelected(praca.getDrukZua());
+            oswiadczenieWypowiedzenie.setSelected(praca.getOswiadczenieWypowiedzenie());
+            kopiaSwiadectwa.setSelected(praca.getKopiaSwiadectwa());
+            drukZwua.setSelected(praca.getDrukZwua());
+
+            kwsetionariuszOsobowyUbiegajacegoUwagi.setSelectedItem(praca.getKwsetionariuszOsobowyUbiegajacegoUwagi());
+            podanieOPraceUwagi.setSelectedItem(praca.getPodanieOPraceUwagi());
+            zyciorysUwagi.setSelectedItem(praca.getZyciorysUwagi());
+            swiadectwoPracyUwagi.setSelectedItem(praca.getSwiadectwoPracyUwagi());
+            dokumentyPotwierdzajaceUwagi.setSelectedItem(praca.getDokumentyPotwierdzajaceUwagi());
+            swiadectwoUkonczeniaGimnazjumUwagi.setSelectedItem(praca.getSwiadectwoUkonczeniaGimnazjumUwagi());
+            podstawaUrlopuUwagi.setSelectedItem(praca.getPodstawaUrlopuUwagi());
+            orzeczenieLekarskiePrzeciwskazaniaUwagi.setSelectedItem(praca.getOrzeczenieLekarskiePrzeciwskazaniaUwagi());
+            dowodOsobistyUwagi.setSelectedItem(praca.getDowodOsobistyUwagi());
+            kwsetionariuszOsobowyPracownikaUwagi.setSelectedItem(praca.getKwsetionariuszOsobowyPracownikaUwagi());
+            umowaOPraceUwagi.setSelectedItem(praca.getUmowaOPraceUwagi());
+            informacjaOWarunkachUwagi.setSelectedItem(praca.getInformacjaOWarunkachUwagi());
+            oswiadczenieORyzykuUwagi.setSelectedItem(praca.getOswiadczenieORyzykuUwagi());
+            oswiadczenieOPrzepisachUwagi.setSelectedItem(praca.getOswiadczenieOPrzepisachUwagi());
+            oswiadczenieOBhpUwagi.setSelectedItem(praca.getOswiadczenieOBhpUwagi());
+            oswiadczenieOPozarzeUwagi.setSelectedItem(praca.getOswiadczenieOPozarzeUwagi());
+            oswiadczenieOUprawnieniachUwagi.setSelectedItem(praca.getOswiadczenieOUprawnieniachUwagi());
+            pitUwagi.setSelectedItem(praca.getPitUwagi());
+            oswiadczenieUrzadSkarbowyUwagi.setSelectedItem(praca.getOswiadczenieUrzadSkarbowyUwagi());
+            oswiadczenieOKosztachUwagi.setSelectedItem(praca.getOswiadczenieOKosztachUwagi());
+            zgodaPracownikaUwagi.setSelectedItem(praca.getZgodaPracownikaUwagi());
+            umowaOdpowiedzialnosciUwagi.setSelectedItem(praca.getUmowaOdpowiedzialnosciUwagi());
+            umowaOZakazieUwagi.setSelectedItem(praca.getUmowaOZakazieUwagi());
+            orzeczenieLekarskieUwagi.setSelectedItem(praca.getOrzeczenieLekarskieUwagi());
+            okresoweBadaniaBhpUwagi.setSelectedItem(praca.getOkresoweBadaniaBhpUwagi());
+            drukZuaUwagi.setSelectedItem(praca.getDrukZuaUwagi());
+            oswiadczenieWypowiedzenieUwagi.setSelectedItem(praca.getOswiadczenieWypowiedzenieUwagi());
+            kopiaSwiadectwaUwagi.setSelectedItem(praca.getKopiaSwiadectwaUwagi());
+            drukZwuaUwagi.setSelectedItem(praca.getDrukZwuaUwagi());
+
+            UIHelper.initDate(orzeczenieLekarskiePrzeciwskazaniaData, praca.getOrzeczenieLekarskiePrzeciwskazaniaData());
+            UIHelper.initDate(oswiadczenieOBhpData, praca.getOswiadczenieOBhpData());
+            UIHelper.initDate(orzeczenieLekarskieData, praca.getOrzeczenieLekarskieData());
+            UIHelper.initDate(okresoweBadaniaBhpData, praca.getOkresoweBadaniaBhpData());
         }
     }
 

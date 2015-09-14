@@ -41,10 +41,6 @@ public class PracaPanel extends FramePanel implements ActionListener {
 
     JLabel pracodawcaNazwaLabel = new JLabel("Pracodawca:");
     JLabel nazwaLabel = new JLabel("Pracownik:");
-    JLabel uwagiLabel = new JLabel("Uwagi:                             ");
-    JLabel uwagiLabel2 = new JLabel("Uwagi:                             ");
-    JLabel dataLabel = new JLabel("Do kiedy:                          ");
-    JLabel dataLabel2 = new JLabel("Do kiedy:                          ");
 
     JComboBox<String> nazwa = new JComboBox<>();
 
@@ -58,7 +54,7 @@ public class PracaPanel extends FramePanel implements ActionListener {
     JComboBox<String> zyciorysUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox swiadectwoPracy = new JCheckBox(
             "<html>Świadectwo pracy z poprzednich miejsc pracy lub inne dokumenty " +
-                    "potwierdzające okresy zatrudnienia, w danym roku kalendarzowym</html>"
+                    "potwierdzające okresy zatrudnienia,<br> w danym roku kalendarzowym</html>"
     );
     JComboBox<String> swiadectwoPracyUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox dokumentyPotwierdzajace = new JCheckBox(
@@ -112,7 +108,7 @@ public class PracaPanel extends FramePanel implements ActionListener {
     JCheckBox oswiadczenieUrzadSkarbowy = new JCheckBox("Oświadczenie o podleganiu pod Urząd Skarbowy");
     JComboBox<String> oswiadczenieUrzadSkarbowyUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox oswiadczenieOKosztach = new JCheckBox(
-            "<html>Oświadczenie o podwyższonych kosztach uzyskania przychodów jeśli pracownik mieszka " +
+            "<html>Oświadczenie o podwyższonych kosztach uzyskania przychodów <br>jeśli pracownik mieszka " +
                     "poza miejscowowścią, w której jest siedziba pracodawcy</html>"
     );
     JComboBox<String> oswiadczenieOKosztachUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
@@ -132,12 +128,12 @@ public class PracaPanel extends FramePanel implements ActionListener {
     JComboBox<String> drukZuaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox oswiadczenieWypowiedzenie = new JCheckBox(
             "<html>Oświadczenie o wypowiedzeniu lub rozwiązaniu umowy o pracę, a także dokumenty potwierdzające " +
-                    "zaistnienie zdarzeń powodujących wygaśnięcie stosunku pracy</html>"
+                    "zaistnienie zdarzeń powodujących wygaśnięcie <br>stosunku pracy</html>"
     );
     JComboBox<String> oswiadczenieWypowiedzenieUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox kopiaSwiadectwa = new JCheckBox(
-            "<html>Kopia wydanego pracownikowi świadectwa pracy oraz ewentualny wniosek o sprostowanie świadectwa " +
-                    "i korespondencja w tej sprawie</html>"
+            "<html>Kopia wydanego pracownikowi świadectwa pracy oraz ewentualny wniosek o sprostowanie świadectwa" +
+                    " i korespondencja <br>w tej sprawie</html>"
     );
     JComboBox<String> kopiaSwiadectwaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox drukZwua = new JCheckBox("Druk ZWUA");
@@ -145,6 +141,11 @@ public class PracaPanel extends FramePanel implements ActionListener {
 
     JButton zapisz = new JButton("Zapisz");
     JButton wroc = new JButton("Wróć");
+
+    JTabbedPane panel = new JTabbedPane();
+    JPanel czescA = new JPanel();
+    JPanel czescB = new JPanel();
+    JPanel czescC = new JPanel();
 
     public PracaPanel() {
         super();
@@ -198,13 +199,26 @@ public class PracaPanel extends FramePanel implements ActionListener {
     }
 
     private void layoutComponents() {
-        int[] screenSize = UIHelper.getScreenSize();
-        int height = screenSize[1];
-
-        boolean twoColumns = height < 900;
-
         int wiersz = 0;
-        setLayout(new GridBagLayout());
+        GridBagLayout layout = new GridBagLayout();
+        setLayout(layout);
+
+        JPanel aPanel = new JPanel();
+        JPanel bPanel = new JPanel();
+        JPanel cPanel = new JPanel();
+        FlowLayout flowLayout = new FlowLayout();
+        flowLayout.setAlignment(FlowLayout.CENTER);
+        czescA.setLayout(flowLayout);
+        czescB.setLayout(flowLayout);
+        czescC.setLayout(flowLayout);
+        aPanel.setLayout(layout);
+        bPanel.setLayout(layout);
+        cPanel.setLayout(layout);
+        czescA.add(aPanel);
+        czescB.add(bPanel);
+        czescC.add(cPanel);
+
+
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(5, 5, 5, 5);
@@ -214,86 +228,88 @@ public class PracaPanel extends FramePanel implements ActionListener {
         // --------------
         c.gridx = 0;
         c.gridy = wiersz;
-        c.gridwidth = twoColumns ? 6 : 3;
+        c.gridwidth = 1;
         add(pracodawcaNazwaLabel, c);
 
         // --------------
         wiersz++;
         c.gridx = 0;
         c.gridy = wiersz;
-        c.gridwidth = twoColumns ? 2 : 1;
+        c.gridwidth = 1;
         add(nazwaLabel, c);
 
-        c.gridx = twoColumns ? 2 : 1;
+        c.gridx = 1;
         c.gridy = wiersz;
-        c.gridwidth = twoColumns ? 4 : 2;
+        c.gridwidth = 2;
         add(nazwa, c);
 
         // --------------
         wiersz++;
-        c.gridwidth = 1;
-        c.gridx = 1;
+        c.gridx = 0;
         c.gridy = wiersz;
-        add(uwagiLabel, c);
+        c.gridwidth = 3;
 
-        c.gridx = 2;
-        c.gridy = wiersz;
-        add(dataLabel, c);
+        add(panel, c);
+        panel.addTab("Część A", czescA);
+        panel.addTab("Część B", czescB);
+        panel.addTab("Część C", czescC);
 
-        if (twoColumns) {
-            c.gridwidth = 1;
-            c.gridx = 4;
-            c.gridy = wiersz;
-            add(uwagiLabel2, c);
-
-            c.gridx = 5;
-            c.gridy = wiersz;
-            add(dataLabel2, c);
-        }
-
-        // --------------
-        c.insets = new Insets(1, 5, 1, 5);
-
-
-        int wierszStart = wiersz + 1;
-        int gridxOffset = 0;
-        for (UIRow row : rows) {
-            wiersz++;
-            if (wiersz > 17 && twoColumns) {
-                wiersz = wierszStart;
-                gridxOffset = 3;
-            }
-
-            c.gridwidth = 1;
-            c.gridx = gridxOffset;
-            c.gridy = wiersz;
-            add(row.getCheckBox(), c);
-
-            c.gridx = 1 + gridxOffset;
-            c.gridy = wiersz;
-            add(row.getComboBox(), c);
-            row.getComboBox().setEditable(true);
-
-            if (row.getDatePicker() != null) {
-                c.gridx = 2 + gridxOffset;
-                c.gridy = wiersz;
-                add(row.getDatePicker(), c);
-            }
-        }
+        addPart(wiersz, c, aPanel, 0, 9, true);
+        addPart(wiersz, c, bPanel, 9, 26, true);
+        addPart(wiersz, c, cPanel, 26, 29, false);
 
         // --------------
         wiersz++;
         wiersz++;
-        c.insets = new Insets(5, 5, 5, 5);
-        c.gridwidth = twoColumns ? 4 : 2;
+        c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = wiersz;
         add(zapisz, c);
 
-        c.gridwidth = twoColumns ? 2 : 1;
-        c.gridx = twoColumns ? 4 : 2;
+        c.gridwidth = 1;
+        c.gridx = 2;
         c.gridy = wiersz;
         add(wroc, c);
+    }
+
+    private void addPart(int wiersz, GridBagConstraints c, JPanel panel, int start, int end, boolean labels) {
+        if (labels) {
+            // --------------
+            wiersz++;
+
+            panel.add(new JLabel(), c);
+
+            c.gridwidth = 1;
+            c.gridx = 1;
+            c.gridy = wiersz;
+            panel.add(new JLabel("Uwagi:"), c);
+
+            c.gridx = 2;
+            c.gridy = wiersz;
+            panel.add(new JLabel("Do kiedy:"), c);
+        }
+
+        for (int i = start; i < end; i++) {
+            wiersz++;
+            UIRow row = rows.get(i);
+            c.gridwidth = 1;
+            c.gridx = 0;
+            c.gridy = wiersz;
+            panel.add(row.getCheckBox(), c);
+
+            c.gridx = 1;
+            c.gridy = wiersz;
+            panel.add(row.getComboBox(), c);
+            row.getComboBox().setEditable(true);
+
+            if (row.getDatePicker() != null) {
+                c.gridx = 2;
+                c.gridy = wiersz;
+                panel.add(row.getDatePicker(), c);
+            } else if (labels) {
+                panel.add(new JLabel(), c);
+            }
+        }
     }
 
 

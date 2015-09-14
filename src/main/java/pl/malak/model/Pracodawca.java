@@ -59,6 +59,9 @@ public class Pracodawca {
     @OneToMany(mappedBy = "pracodawca")
     protected Set<Zlecenie> zlecenia = new HashSet<>();
 
+    @OneToMany(mappedBy = "pracodawca")
+    protected Set<Praca> prace = new HashSet<>();
+
     @Column(name = "data_usuniecia")
     private Date dataUsuniecia;
 
@@ -197,6 +200,10 @@ public class Pracodawca {
 
     public void addZlecenie(Zlecenie zlecenie) {
         this.zlecenia.add(zlecenie);
+    }
+
+    public void addPraca(Praca praca) {
+        this.prace.add(praca);
     }
 
     public void setZlecenia(Set<Zlecenie> zlecenia) {

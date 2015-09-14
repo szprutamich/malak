@@ -5,9 +5,9 @@ import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
 import pl.malak.beans.dao.PracodawcaDao;
 import pl.malak.beans.dao.ZlecenieDao;
+import pl.malak.model.Praca;
 import pl.malak.model.Pracodawca;
 import pl.malak.model.Zlecenie;
-import pl.malak.sheets.Work;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -58,7 +58,7 @@ public class Migration {
         String error = "";
         long time = System.currentTimeMillis();
         Map<String, Zlecenie> zlecenia = new TreeMap<>();
-        List<Work> workList = new ArrayList<>();
+        Map<String, Praca> prace = new TreeMap<>();
         try {
             Workbook wb = WorkbookFactory.create(file);
             int sheetSize = wb.getNumberOfSheets();
@@ -73,8 +73,8 @@ public class Migration {
                         zlecenia.put(zlecenie.getNazwa(), zlecenie);
                         break;
                     case "CZĘŚĆ":
-                        Work work = new Work(sheet);
-                        workList.add(work);
+                        Praca praca = new Praca(sheet);
+                        prace.put(praca.getNazwa(), praca);
                         break;
                     case "Lp.":
                         employer = new Pracodawca(sheet);
@@ -93,7 +93,8 @@ public class Migration {
             } else {
                 employer = getEmployer(zlecenie.getPracodawcaNazwa());
                 if (employer == null) {
-                    error += String.format("Arkusz pracodawcy nie istnieje: %s\n", zlecenie.getPracodawcaNazwa());
+                    error += String.format("Arkusz pracodawcy nie istnieje: %s Błąd w arkuszu: %s\n",
+                            zlecenie.getPracodawcaNazwa(), zlecenie.getSheetName());
                 } else {
                     System.out.println(String.format("Zlecenie: %s, pracodawca: %s jest ok", zlecenie.getNazwa(),
                             zlecenie.getPracodawcaNazwa()));
@@ -102,18 +103,23 @@ public class Migration {
                 }
             }
         }
-//        for (Work work : workList) {
-//            if (work.getEmployerName() == null) {
-//                System.out.println(String.format("Arkusz %s jest nieprawidłowy", work.getSheetName()));
-//            } else {
-//                employer = getEmployer(work.getEmployerName());
-//                if (employer == null) {
-//                    employer = new Pracodawca(null);
-//                    addEmployer(work.getEmployerName(), employer);
-//                }
-//                employer.addWorker(work);
-//            }
-//        }
+        for (Praca praca : prace.values()) {
+            if (praca.getPracodawcaNazwa() == null) {
+                error += String.format("Arkusz %s jest nieprawidłowy\n", praca.getSheetName());
+                System.out.println();
+            } else {
+                employer = getEmployer(praca.getPracodawcaNazwa());
+                if (employer == null) {
+                    error += String.format("Arkusz pracodawcy nie istnieje: %s. Błąd w arkuszu: %s\n",
+                            praca.getPracodawcaNazwa(), praca.getSheetName());
+                } else {
+                    System.out.println(String.format("Praca: %s, pracodawca: %s jest ok", praca.getNazwa(),
+                            praca.getPracodawcaNazwa()));
+                    employer.addPraca(praca);
+                    praca.setPracodawca(employer);
+                }
+            }
+        }
         System.out.println("Time: " + (System.currentTimeMillis() - time));
 
         if (error.isEmpty()) {

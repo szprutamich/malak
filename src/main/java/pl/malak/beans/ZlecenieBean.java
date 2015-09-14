@@ -23,26 +23,23 @@ public class ZlecenieBean {
 
     @Transactional
     public Zlecenie stworzZlecenie(
-            Boolean kwestionariusz, String kwestionariuszUwagi, Boolean kartaSzkolenia,
-            String kartaSzkoleniaUwagi, Date kartaSzkoleniaData, Boolean szkolenie, String szkolenieUwagi,
-            Boolean instruktaz, String instruktazUwagi, Boolean ryzyko, String ryzykoUwagi, Boolean instrukcjeBhp,
+            Boolean kwestionariusz, String kwestionariuszUwagi, Boolean kartaSzkolenia, String kartaSzkoleniaUwagi,
+            Date kartaSzkoleniaData, Boolean szkolenie, String szkolenieUwagi, Boolean instruktaz,
+            String instruktazUwagi, Boolean ryzyko, String ryzykoUwagi, Boolean instrukcjeBhp,
             String instrukcjeBhpUwagi, Boolean szkolenieBhp, String szkolenieBhpUwagi, Date szkolenieBhpData,
             Boolean rachunki, String rachunkiUwagi, Boolean umowa, String umowaUwagi, Date umowaData,
-            Boolean odbiorOdziezy, String odbiorOdziezyUwagi, Date odbiorOdziezyData, Boolean zua,
-            String zuaUwagi, Boolean zus, String zusUwagi, Boolean zza, String zzaUwagi, Boolean zwua,
-            String zwuaUwagi, Date zwuaData, String nazwa, Boolean badania,
-            String badaniaUwagi, Date badaniaData, Boolean legitymacja, String legitymacjaUwagi, Boolean dowod,
-            String dowodUwagi, Boolean zyciorys, String zyciorysUwagi, Boolean zaswiadczenieSanitarne,
-            String zaswiadczenieSanitarneUwagi, Boolean zaswiadczenieStudent, String zaswiadczenieStudentUwagi,
-            Boolean wyciagKodeks, String wyciagKodeksUwagi, Long pracodawcaId) {
+            Boolean odbiorOdziezy, String odbiorOdziezyUwagi, Date odbiorOdziezyData, Boolean zua, String zuaUwagi,
+            Boolean zza, String zzaUwagi, Boolean zwua, String zwuaUwagi, String nazwa, Boolean badania,
+            String badaniaUwagi, Date badaniaData, Boolean dowod, String dowodUwagi, Boolean zyciorys,
+            String zyciorysUwagi, Boolean zaswiadczenieStudent, String zaswiadczenieStudentUwagi, Long pracodawcaId) {
         Zlecenie zlecenie = new Zlecenie(kwestionariusz, kwestionariuszUwagi, kartaSzkolenia, kartaSzkoleniaUwagi,
                 kartaSzkoleniaData, szkolenie, szkolenieUwagi, instruktaz, instruktazUwagi, ryzyko, ryzykoUwagi,
                 instrukcjeBhp, instrukcjeBhpUwagi, szkolenieBhp, szkolenieBhpUwagi, szkolenieBhpData, rachunki,
                 rachunkiUwagi, umowa, umowaUwagi, umowaData, odbiorOdziezy, odbiorOdziezyUwagi, odbiorOdziezyData, zua,
-                zuaUwagi, zus, zusUwagi, zza, zzaUwagi, zwua, zwuaUwagi, zwuaData, nazwa, badania, badaniaUwagi,
-                badaniaData, legitymacja, legitymacjaUwagi, dowod, dowodUwagi, zyciorys, zyciorysUwagi,
-                zaswiadczenieSanitarne, zaswiadczenieSanitarneUwagi, zaswiadczenieStudent, zaswiadczenieStudentUwagi,
-                wyciagKodeks, wyciagKodeksUwagi);
+                zuaUwagi, zza, zzaUwagi, zwua, zwuaUwagi, nazwa, badania, badaniaUwagi,
+                badaniaData, dowod, dowodUwagi, zyciorys, zyciorysUwagi,
+                zaswiadczenieStudent, zaswiadczenieStudentUwagi
+        );
 
         zlecenie.setPracodawca(pracodawcaDao.lazyLoad(pracodawcaId));
         zlecenieDao.create(zlecenie);
@@ -57,12 +54,9 @@ public class ZlecenieBean {
             String instrukcjeBhpUwagi, Boolean szkolenieBhp, String szkolenieBhpUwagi, Date szkolenieBhpData,
             Boolean rachunki, String rachunkiUwagi, Boolean umowa, String umowaUwagi, Date umowaData,
             Boolean odbiorOdziezy, String odbiorOdziezyUwagi, Date odbiorOdziezyData, Boolean zua,
-            String zuaUwagi, Boolean zus, String zusUwagi, Boolean zza, String zzaUwagi, Boolean zwua,
-            String zwuaUwagi, Date zwuaData, String nazwa, Boolean badania,
-            String badaniaUwagi, Date badaniaData, Boolean legitymacja, String legitymacjaUwagi, Boolean dowod,
-            String dowodUwagi, Boolean zyciorys, String zyciorysUwagi, Boolean zaswiadczenieSanitarne,
-            String zaswiadczenieSanitarneUwagi, Boolean zaswiadczenieStudent, String zaswiadczenieStudentUwagi,
-            Boolean wyciagKodeks, String wyciagKodeksUwagi) {
+            String zuaUwagi, Boolean zza, String zzaUwagi, Boolean zwua, String zwuaUwagi, String nazwa,
+            Boolean badania, String badaniaUwagi, Date badaniaData, Boolean dowod, String dowodUwagi, Boolean zyciorys,
+            String zyciorysUwagi, Boolean zaswiadczenieStudent, String zaswiadczenieStudentUwagi) {
         Zlecenie zlecenie = zlecenieDao.load(id);
 
         zlecenie.setNazwa(nazwa);
@@ -94,25 +88,15 @@ public class ZlecenieBean {
         zlecenie.setZuaUwagi(zuaUwagi);
         zlecenie.setZwua(zwua);
         zlecenie.setZwuaUwagi(zwuaUwagi);
-        zlecenie.setZwuaData(zwuaData);
         zlecenie.setBadania(badania);
         zlecenie.setBadaniaData(badaniaData);
         zlecenie.setBadaniaUwagi(badaniaUwagi);
         zlecenie.setDowod(dowod);
         zlecenie.setDowodUwagi(dowodUwagi);
-        zlecenie.setLegitymacja(legitymacja);
-        zlecenie.setLegitymacjaUwagi(legitymacjaUwagi);
         zlecenie.setNazwa(nazwa);
-        zlecenie.setWyciagKodeks(wyciagKodeks);
-        zlecenie.setWyciagKodeksUwagi(wyciagKodeksUwagi);
-        zlecenie.setZaswiadczenieSanitarne(zaswiadczenieSanitarne);
-        zlecenie.setZaswiadczenieSanitarneUwagi(zaswiadczenieSanitarneUwagi);
         zlecenie.setZaswiadczenieStudent(zaswiadczenieStudent);
         zlecenie.setZaswiadczenieStudentUwagi(zaswiadczenieStudentUwagi);
-        zlecenie.setZus(zus);
-        zlecenie.setZusUwagi(zusUwagi);
         zlecenie.setZwua(zwua);
-        zlecenie.setZwuaData(zwuaData);
         zlecenie.setZwuaUwagi(zwuaUwagi);
         zlecenie.setZyciorys(zyciorys);
         zlecenie.setZyciorysUwagi(zyciorysUwagi);

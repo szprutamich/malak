@@ -58,15 +58,11 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
     JCheckBox badania = new JCheckBox("Badania lekarskie");
     JCheckBox odbior = new JCheckBox("Odbiór odzieży");
     JCheckBox zua = new JCheckBox("Zua");
-    JCheckBox zus = new JCheckBox("Zus");
     JCheckBox zza = new JCheckBox("Zza");
     JCheckBox zwua = new JCheckBox("Zwua");
-    JCheckBox legitymacja = new JCheckBox("Legitymacja szkolna");
     JCheckBox dowod = new JCheckBox("Dowód osobisty");
     JCheckBox zyciorys = new JCheckBox("Życiorys");
-    JCheckBox zaswiadczenieSanitarne = new JCheckBox("<html>Zaświadczenie<br> sanitarno-epidemiologiczne</html>");
     JCheckBox zaswiadczenieStudent = new JCheckBox("Zaświadczenie - student");
-    JCheckBox wyciagKodeks = new JCheckBox("Wyciąg z kodeksu pracy");
 
     JComboBox<String> kwestionariuszUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JComboBox<String> kartaSzkoleniaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
@@ -80,18 +76,13 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
     JComboBox<String> badaniaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JComboBox<String> odbiorUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JComboBox<String> zuaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JComboBox<String> zusUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JComboBox<String> zzaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JComboBox<String> zwuaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JComboBox<String> legitymacjaUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JComboBox<String> dowodUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JComboBox<String> zyciorysUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JComboBox<String> zaswiadczenieSanitarneUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JComboBox<String> zaswiadczenieStudentUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JComboBox<String> wyciagKodeksUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
 
     JDatePickerImpl badaniaDatePicker = UIHelper.getJDatePicker();
-    JDatePickerImpl zwuaDatePicker = UIHelper.getJDatePicker();
     JDatePickerImpl odbiorDatePicker = UIHelper.getJDatePicker();
     JDatePickerImpl umowaDatePicker = UIHelper.getJDatePicker();
     JDatePickerImpl szkolenieOkresoweDatePicker = UIHelper.getJDatePicker();
@@ -115,15 +106,11 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
         rows.add(new UIRow(badania, badaniaUwagi, badaniaDatePicker));
         rows.add(new UIRow(odbior, odbiorUwagi, odbiorDatePicker));
         rows.add(new UIRow(zua, zuaUwagi, null));
-        rows.add(new UIRow(zus, zusUwagi, null));
         rows.add(new UIRow(zza, zzaUwagi, null));
-        rows.add(new UIRow(zwua, zwuaUwagi, zwuaDatePicker));
-        rows.add(new UIRow(legitymacja, legitymacjaUwagi, null));
+        rows.add(new UIRow(zwua, zwuaUwagi, null));
         rows.add(new UIRow(dowod, dowodUwagi, null));
         rows.add(new UIRow(zyciorys, zyciorysUwagi, null));
-        rows.add(new UIRow(zaswiadczenieSanitarne, zaswiadczenieSanitarneUwagi, null));
         rows.add(new UIRow(zaswiadczenieStudent, zaswiadczenieStudentUwagi, null));
-        rows.add(new UIRow(wyciagKodeks, wyciagKodeksUwagi, null));
 
         Font font = new Font(pracodawcaNazwaLabel.getFont().getFamily(), Font.BOLD, 18);
         Map<TextAttribute, Object> attributes = new HashMap<>();
@@ -278,29 +265,20 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
                         UIHelper.datePickerGetDate(odbiorDatePicker),
                         zua.isSelected(),
                         UIHelper.getComboText(zuaUwagi),
-                        zus.isSelected(),
-                        UIHelper.getComboText(zusUwagi),
                         zza.isSelected(),
                         UIHelper.getComboText(zzaUwagi),
                         zwua.isSelected(),
                         UIHelper.getComboText(zwuaUwagi),
-                        UIHelper.datePickerGetDate(zwuaDatePicker),
                         UIHelper.getComboText(nazwa),
                         badania.isSelected(),
                         UIHelper.getComboText(badaniaUwagi),
                         UIHelper.datePickerGetDate(badaniaDatePicker),
-                        legitymacja.isSelected(),
-                        UIHelper.getComboText(legitymacjaUwagi),
                         dowod.isSelected(),
                         UIHelper.getComboText(dowodUwagi),
                         zyciorys.isSelected(),
                         UIHelper.getComboText(zyciorysUwagi),
-                        zaswiadczenieSanitarne.isSelected(),
-                        UIHelper.getComboText(zaswiadczenieSanitarneUwagi),
                         zaswiadczenieStudent.isSelected(),
                         UIHelper.getComboText(zaswiadczenieStudentUwagi),
-                        wyciagKodeks.isSelected(),
-                        UIHelper.getComboText(wyciagKodeksUwagi),
                         obecnyPracodawca.getId()
                 );
                 UIHelper.displayMessage(this, "Zlecenie zostało dodane pomyślnie.");
@@ -336,29 +314,20 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
                         UIHelper.datePickerGetDate(odbiorDatePicker),
                         zua.isSelected(),
                         UIHelper.getComboText(zuaUwagi),
-                        zus.isSelected(),
-                        UIHelper.getComboText(zusUwagi),
                         zza.isSelected(),
                         UIHelper.getComboText(zzaUwagi),
                         zwua.isSelected(),
                         UIHelper.getComboText(zwuaUwagi),
-                        UIHelper.datePickerGetDate(zwuaDatePicker),
                         nazwaText,
                         badania.isSelected(),
                         UIHelper.getComboText(badaniaUwagi),
                         UIHelper.datePickerGetDate(badaniaDatePicker),
-                        legitymacja.isSelected(),
-                        UIHelper.getComboText(legitymacjaUwagi),
                         dowod.isSelected(),
                         UIHelper.getComboText(dowodUwagi),
                         zyciorys.isSelected(),
                         UIHelper.getComboText(zyciorysUwagi),
-                        zaswiadczenieSanitarne.isSelected(),
-                        UIHelper.getComboText(zaswiadczenieSanitarneUwagi),
                         zaswiadczenieStudent.isSelected(),
-                        UIHelper.getComboText(zaswiadczenieStudentUwagi),
-                        wyciagKodeks.isSelected(),
-                        UIHelper.getComboText(wyciagKodeksUwagi)
+                        UIHelper.getComboText(zaswiadczenieStudentUwagi)
                 );
                 nazwa.removeItem(obecneZlecenie.getNazwa());
                 nazwa.addItem(nazwaText);
@@ -388,15 +357,11 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
             badania.setSelected(zlecenie.getBadania());
             odbior.setSelected(zlecenie.getOdbiorOdziezy());
             zua.setSelected(zlecenie.getZua());
-            zus.setSelected(zlecenie.getZus());
             zza.setSelected(zlecenie.getZza());
             zwua.setSelected(zlecenie.getZwua());
-            legitymacja.setSelected(zlecenie.getLegitymacja());
             dowod.setSelected(zlecenie.getDowod());
             zyciorys.setSelected(zlecenie.getZyciorys());
-            zaswiadczenieSanitarne.setSelected(zlecenie.getZaswiadczenieSanitarne());
             zaswiadczenieStudent.setSelected(zlecenie.getZaswiadczenieStudent());
-            wyciagKodeks.setSelected(zlecenie.getWyciagKodeks());
 
             kwestionariuszUwagi.setSelectedItem(zlecenie.getKwestionariuszUwagi());
             kartaSzkoleniaUwagi.setSelectedItem(zlecenie.getKartaSzkoleniaUwagi());
@@ -410,18 +375,13 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
             badaniaUwagi.setSelectedItem(zlecenie.getBadaniaUwagi());
             odbiorUwagi.setSelectedItem(zlecenie.getOdbiorOdziezyUwagi());
             zuaUwagi.setSelectedItem(zlecenie.getZuaUwagi());
-            zusUwagi.setSelectedItem(zlecenie.getZusUwagi());
             zzaUwagi.setSelectedItem(zlecenie.getZzaUwagi());
             zwuaUwagi.setSelectedItem(zlecenie.getZwuaUwagi());
-            legitymacjaUwagi.setSelectedItem(zlecenie.getLegitymacjaUwagi());
             dowodUwagi.setSelectedItem(zlecenie.getDowodUwagi());
             zyciorysUwagi.setSelectedItem(zlecenie.getZyciorysUwagi());
-            zaswiadczenieSanitarneUwagi.setSelectedItem(zlecenie.getZaswiadczenieSanitarneUwagi());
             zaswiadczenieStudentUwagi.setSelectedItem(zlecenie.getZaswiadczenieStudentUwagi());
-            wyciagKodeksUwagi.setSelectedItem(zlecenie.getWyciagKodeksUwagi());
 
             UIHelper.initDate(badaniaDatePicker, zlecenie.getBadaniaData());
-            UIHelper.initDate(zwuaDatePicker, zlecenie.getZwuaData());
             UIHelper.initDate(odbiorDatePicker, zlecenie.getOdbiorOdziezyData());
             UIHelper.initDate(umowaDatePicker, zlecenie.getUmowaData());
             UIHelper.initDate(szkolenieOkresoweDatePicker, zlecenie.getSzkolenieBhpData());

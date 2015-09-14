@@ -92,12 +92,6 @@ public class Zlecenie {
     @Column(name = "zua_uwagi")
     private String zuaUwagi;
 
-    @Column(name = "zus")
-    private Boolean zus;
-
-    @Column(name = "zus_uwagi")
-    private String zusUwagi;
-
     @Column(name = "zza")
     private Boolean zza;
 
@@ -109,9 +103,6 @@ public class Zlecenie {
 
     @Column(name = "zwua_uwagi")
     private String zwuaUwagi;
-
-    @Column(name = "zwua_data")
-    private Date zwuaData;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -135,12 +126,6 @@ public class Zlecenie {
     @Column(name = "badania_data")
     private Date badaniaData;
 
-    @Column(name = "legitymacja")
-    private Boolean legitymacja;
-
-    @Column(name = "legitymacja_uwagi")
-    private String legitymacjaUwagi;
-
     @Column(name = "dowod")
     private Boolean dowod;
 
@@ -153,23 +138,11 @@ public class Zlecenie {
     @Column(name = "zyciorys_uwagi")
     private String zyciorysUwagi;
 
-    @Column(name = "zaswiadczenie_sanitarne")
-    private Boolean zaswiadczenieSanitarne;
-
-    @Column(name = "zaswiadczenie_sanitarne_uwagi")
-    private String zaswiadczenieSanitarneUwagi;
-
     @Column(name = "zaswiadczenie_student")
     private Boolean zaswiadczenieStudent;
 
     @Column(name = "zaswiadczenie_student_uwagi")
     private String zaswiadczenieStudentUwagi;
-
-    @Column(name = "wyciag_kodeks")
-    private Boolean wyciagKodeks;
-
-    @Column(name = "wyciag_kodeks_uwagi")
-    private String wyciagKodeksUwagi;
 
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "pracodawca_id", nullable = false)
@@ -193,12 +166,9 @@ public class Zlecenie {
             String instrukcjeBhpUwagi, Boolean szkolenieBhp, String szkolenieBhpUwagi, Date szkolenieBhpData,
             Boolean rachunki, String rachunkiUwagi, Boolean umowa, String umowaUwagi, Date umowaData,
             Boolean odbiorOdziezy, String odbiorOdziezyUwagi, Date odbiorOdziezyData, Boolean zua,
-            String zuaUwagi, Boolean zus, String zusUwagi, Boolean zza, String zzaUwagi, Boolean zwua,
-            String zwuaUwagi, Date zwuaData, String nazwa, Boolean badania,
-            String badaniaUwagi, Date badaniaData, Boolean legitymacja, String legitymacjaUwagi, Boolean dowod,
-            String dowodUwagi, Boolean zyciorys, String zyciorysUwagi, Boolean zaswiadczenieSanitarne,
-            String zaswiadczenieSanitarneUwagi, Boolean zaswiadczenieStudent, String zaswiadczenieStudentUwagi,
-            Boolean wyciagKodeks, String wyciagKodeksUwagi) {
+            String zuaUwagi, Boolean zza, String zzaUwagi, Boolean zwua, String zwuaUwagi, String nazwa,
+            Boolean badania, String badaniaUwagi, Date badaniaData, Boolean dowod, String dowodUwagi, Boolean zyciorys,
+            String zyciorysUwagi, Boolean zaswiadczenieStudent, String zaswiadczenieStudentUwagi) {
         this.kwestionariusz = kwestionariusz;
         this.kwestionariuszUwagi = kwestionariuszUwagi;
         this.kartaSzkolenia = kartaSzkolenia;
@@ -225,29 +195,20 @@ public class Zlecenie {
         this.odbiorOdziezyData = odbiorOdziezyData;
         this.zua = zua;
         this.zuaUwagi = zuaUwagi;
-        this.zus = zus;
-        this.zusUwagi = zusUwagi;
         this.zza = zza;
         this.zzaUwagi = zzaUwagi;
         this.zwua = zwua;
         this.zwuaUwagi = zwuaUwagi;
-        this.zwuaData = zwuaData;
         this.nazwa = nazwa;
         this.badania = badania;
         this.badaniaUwagi = badaniaUwagi;
         this.badaniaData = badaniaData;
-        this.legitymacja = legitymacja;
-        this.legitymacjaUwagi = legitymacjaUwagi;
         this.dowod = dowod;
         this.dowodUwagi = dowodUwagi;
         this.zyciorys = zyciorys;
         this.zyciorysUwagi = zyciorysUwagi;
-        this.zaswiadczenieSanitarne = zaswiadczenieSanitarne;
-        this.zaswiadczenieSanitarneUwagi = zaswiadczenieSanitarneUwagi;
         this.zaswiadczenieStudent = zaswiadczenieStudent;
         this.zaswiadczenieStudentUwagi = zaswiadczenieStudentUwagi;
-        this.wyciagKodeks = wyciagKodeks;
-        this.wyciagKodeksUwagi = wyciagKodeksUwagi;
     }
 
     public boolean getBadania() {
@@ -272,22 +233,6 @@ public class Zlecenie {
 
     public void setBadaniaData(Date badaniaData) {
         this.badaniaData = badaniaData;
-    }
-
-    public Boolean getLegitymacja() {
-        return legitymacja;
-    }
-
-    public void setLegitymacja(Boolean legitymacja) {
-        this.legitymacja = legitymacja;
-    }
-
-    public String getLegitymacjaUwagi() {
-        return legitymacjaUwagi;
-    }
-
-    public void setLegitymacjaUwagi(String legitymacjaUwagi) {
-        this.legitymacjaUwagi = legitymacjaUwagi;
     }
 
     public Boolean getDowod() {
@@ -322,22 +267,6 @@ public class Zlecenie {
         this.zyciorysUwagi = zyciorysUwagi;
     }
 
-    public Boolean getZaswiadczenieSanitarne() {
-        return zaswiadczenieSanitarne;
-    }
-
-    public void setZaswiadczenieSanitarne(Boolean zaswiadczenieSanitarne) {
-        this.zaswiadczenieSanitarne = zaswiadczenieSanitarne;
-    }
-
-    public String getZaswiadczenieSanitarneUwagi() {
-        return zaswiadczenieSanitarneUwagi;
-    }
-
-    public void setZaswiadczenieSanitarneUwagi(String zaswiadczenieSanitarneUwagi) {
-        this.zaswiadczenieSanitarneUwagi = zaswiadczenieSanitarneUwagi;
-    }
-
     public Boolean getZaswiadczenieStudent() {
         return zaswiadczenieStudent;
     }
@@ -352,22 +281,6 @@ public class Zlecenie {
 
     public void setZaswiadczenieStudentUwagi(String zaswiadczenieStudentUwagi) {
         this.zaswiadczenieStudentUwagi = zaswiadczenieStudentUwagi;
-    }
-
-    public Boolean getWyciagKodeks() {
-        return wyciagKodeks;
-    }
-
-    public void setWyciagKodeks(Boolean wyciagKodeks) {
-        this.wyciagKodeks = wyciagKodeks;
-    }
-
-    public String getWyciagKodeksUwagi() {
-        return wyciagKodeksUwagi;
-    }
-
-    public void setWyciagKodeksUwagi(String wyciagKodeksUwagi) {
-        this.wyciagKodeksUwagi = wyciagKodeksUwagi;
     }
 
     public Pracodawca getPracodawca() {
@@ -594,22 +507,6 @@ public class Zlecenie {
         this.zuaUwagi = zuaUwagi;
     }
 
-    public Boolean getZus() {
-        return zus;
-    }
-
-    public void setZus(Boolean zus) {
-        this.zus = zus;
-    }
-
-    public String getZusUwagi() {
-        return zusUwagi;
-    }
-
-    public void setZusUwagi(String zusUwagi) {
-        this.zusUwagi = zusUwagi;
-    }
-
     public Boolean getZza() {
         return zza;
     }
@@ -640,14 +537,6 @@ public class Zlecenie {
 
     public void setZwuaUwagi(String zwuaUwagi) {
         this.zwuaUwagi = zwuaUwagi;
-    }
-
-    public Date getZwuaData() {
-        return zwuaData;
-    }
-
-    public void setZwuaData(Date zwuaData) {
-        this.zwuaData = zwuaData;
     }
 
     public Long getId() {
@@ -726,10 +615,6 @@ public class Zlecenie {
                         this.badaniaUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         this.badaniaData = SheetHelper.getDate(sheet, wiersz, Field.F);
                         break;
-                    case "Legitymacja szkolna":
-                        this.legitymacja = SheetHelper.getBoolean(sheet, wiersz);
-                        this.legitymacjaUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
-                        break;
                     case "DOWÓD OSOBISTY":
                         this.dowod = SheetHelper.getBoolean(sheet, wiersz);
                         this.dowodUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
@@ -738,17 +623,9 @@ public class Zlecenie {
                         this.zyciorys = SheetHelper.getBoolean(sheet, wiersz);
                         this.zyciorysUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         break;
-                    case "Zaświadczenie sanitarno-epidemiologiczne":
-                        this.zaswiadczenieSanitarne = SheetHelper.getBoolean(sheet, wiersz);
-                        this.zaswiadczenieSanitarneUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
-                        break;
                     case "ZUA":
                         this.zua = SheetHelper.getBoolean(sheet, wiersz);
                         this.zuaUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
-                        break;
-                    case "ZUS":
-                        this.zus = SheetHelper.getBoolean(sheet, wiersz);
-                        this.zusUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         break;
                     case "ZZA":
                         this.zza = SheetHelper.getBoolean(sheet, wiersz);
@@ -761,10 +638,6 @@ public class Zlecenie {
                     case "ZWUA":
                         this.zwua = SheetHelper.getBoolean(sheet, wiersz);
                         this.zwuaUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
-                        break;
-                    case "Wyciąg z kodeksu pracy":
-                        this.wyciagKodeks = SheetHelper.getBoolean(sheet, wiersz);
-                        this.wyciagKodeksUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
                         break;
                     case "ODBIÓR ODZIEŻY":
                         this.odbiorOdziezy = SheetHelper.getBoolean(sheet, wiersz);

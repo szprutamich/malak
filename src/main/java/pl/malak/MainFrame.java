@@ -23,8 +23,8 @@ public class MainFrame extends JFrame implements ActionListener {
 
     private enum MinPanelSize {
         PRACODAWCA(650, 450),
-        PRACA(1250, 760),
-        ZLECENIE(650, 760);
+        PRACA(1000, 850),
+        ZLECENIE(650, 650);
 
         private int minWidth;
         private int minHeight;

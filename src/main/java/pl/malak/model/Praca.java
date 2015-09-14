@@ -857,117 +857,164 @@ public class Praca {
     }
 
     public void parse(Sheet sheet) {
-//        this.pracodawcaNazwa = getTextOrNull(sheet, Field.W_1, Field.C);
-//        this.nazwa = getTextOrNull(sheet, Field.W_2, Field.C);
-//
-//        this.kwestionariusz = getBoolean(sheet, Field.W_5);
-//        this.kwestionariuszUwagi = getTextOrNull(sheet, Field.W_5, Field.E);
-//
-//        this.kartaSzkolenia = getBoolean(sheet, Field.W_6);
-//        this.kartaSzkoleniaUwagi = getTextOrNull(sheet, Field.W_6, Field.E);
-//        this.kartaSzkoleniaData = getDate(sheet, Field.W_6, Field.F);
-//
-//        this.szkolenie = getBoolean(sheet, Field.W_7);
-//        this.szkolenieUwagi = getTextOrNull(sheet, Field.W_7, Field.E);
-//
-//        this.instruktaz = getBoolean(sheet, Field.W_8);
-//        this.instruktazUwagi = getTextOrNull(sheet, Field.W_8, Field.E);
-//
-//        this.ryzyko = getBoolean(sheet, Field.W_9);
-//        this.ryzykoUwagi = getTextOrNull(sheet, Field.W_9, Field.E);
-//
-//        this.instrukcjeBhp = getBoolean(sheet, Field.W_10);
-//        this.instrukcjeBhpUwagi = getTextOrNull(sheet, Field.W_10, Field.E);
-//
-//        this.szkolenieBhp = getBoolean(sheet, Field.W_11);
-//        this.szkolenieBhpUwagi = getTextOrNull(sheet, Field.W_11, Field.E);
-//        this.szkolenieBhpData = getDate(sheet, Field.W_11, Field.F);
-//
-//        this.rachunki = getBoolean(sheet, Field.W_12);
-//        this.rachunkiUwagi = getTextOrNull(sheet, Field.W_12, Field.E);
-//
-//        this.umowa = getBoolean(sheet, Field.W_13);
-//        this.umowaUwagi = getTextOrNull(sheet, Field.W_13, Field.E);
-//        this.umowaData = getDate(sheet, Field.W_13, Field.F);
-//
-//        for (int wiersz = 13; wiersz <= 16; wiersz++) {
-//            String dokument = getTextOrNull(sheet, wiersz, Field.B);
-//            if (dokument != null) {
-//                switch (dokument.trim()) {
-//                    case "BADANIA LEKARSKIE":
-//                    case "Zaświadczenie lekarskie":
-//                        this.badania = getBoolean(sheet, wiersz);
-//                        this.badaniaUwagi = getTextOrNull(sheet, wiersz, Field.E);
-//                        this.badaniaData = getDate(sheet, wiersz, Field.F);
-//                        break;
-//                    case "Legitymacja szkolna":
-//                        this.legitymacja = getBoolean(sheet, wiersz);
-//                        this.legitymacjaUwagi = getTextOrNull(sheet, wiersz, Field.E);
-//                        break;
-//                    case "DOWÓD OSOBISTY":
-//                        this.dowod = getBoolean(sheet, wiersz);
-//                        this.dowodUwagi = getTextOrNull(sheet, wiersz, Field.E);
-//                        break;
-//                    case "Życiorys":
-//                        this.zyciorys = getBoolean(sheet, wiersz);
-//                        this.zyciorysUwagi = getTextOrNull(sheet, wiersz, Field.E);
-//                        break;
-//                    case "Zaświadczenie sanitarno-epidemiologiczne":
-//                        this.zaswiadczenieSanitarne = getBoolean(sheet, wiersz);
-//                        this.zaswiadczenieSanitarneUwagi = getTextOrNull(sheet, wiersz, Field.E);
-//                        break;
-//                    case "ZUA":
-//                    case "ZUS":
-//                    case "ZZA":
-//                        this.zua = getBoolean(sheet, wiersz);
-//                        this.zuaUwagi = getTextOrNull(sheet, wiersz, Field.E);
-//                        break;
-//                    case "Zaświadczenie  - student":
-//                        this.zaswiadczenieStudent = getBoolean(sheet, wiersz);
-//                        this.zaswiadczenieStudentUwagi = getTextOrNull(sheet, wiersz, Field.E);
-//                        break;
-//                    case "ZWUA":
-//                        this.zwua = getBoolean(sheet, wiersz);
-//                        this.zwuaUwagi = getTextOrNull(sheet, wiersz, Field.E);
-//                        break;
-//                    case "Wyciąg z kodeksu pracy":
-//                        this.wyciagKodeks = getBoolean(sheet, wiersz);
-//                        this.wyciagKodeksUwagi = getTextOrNull(sheet, wiersz, Field.E);
-//                        break;
-//                    case "ODBIÓR ODZIEŻY":
-//                        this.odbiorOdziezy = getBoolean(sheet, wiersz);
-//                        this.odbiorOdziezyUwagi = getTextOrNull(sheet, wiersz, Field.E);
-//                        this.odbiorOdziezyData = getDate(sheet, wiersz, Field.F);
-//                        break;
-//                    default:
-//                }
-//            }
-//        }
+        this.pracodawcaNazwa = getTextOrNull(sheet, Field.W_1, Field.C);
+        this.nazwa = getTextOrNull(sheet, Field.W_2, Field.C);
+
+        //region Czesc A
+
+        int wiersz = Field.W_4.getValue();
+        this.kwsetionariuszOsobowyUbiegajacego = getBoolean(sheet, wiersz);
+        this.kwsetionariuszOsobowyUbiegajacegoUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.podanieOPrace = getBoolean(sheet, wiersz);
+        this.podanieOPraceUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.zyciorys = getBoolean(sheet, wiersz);
+        this.zyciorysUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.swiadectwoPracy = getBoolean(sheet, wiersz);
+        this.swiadectwoPracyUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.dokumentyPotwierdzajace = getBoolean(sheet, wiersz);
+        this.dokumentyPotwierdzajaceUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.swiadectwoUkonczeniaGimnazjum = getBoolean(sheet, wiersz);
+        this.swiadectwoUkonczeniaGimnazjumUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.podstawaUrlopu = getBoolean(sheet, wiersz);
+        this.podstawaUrlopuUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.orzeczenieLekarskiePrzeciwskazania = getBoolean(sheet, wiersz);
+        this.orzeczenieLekarskiePrzeciwskazaniaUwagi = getUwagi(sheet, wiersz);
+        this.orzeczenieLekarskiePrzeciwskazaniaData = getDate(sheet, wiersz);
+
+        wiersz++;
+        this.dowodOsobisty = getBoolean(sheet, wiersz);
+        this.dowodOsobistyUwagi = getUwagi(sheet, wiersz);
+
+        //endregion
+
+        //region Czesc B
+
+        wiersz = Field.W_16.getValue();
+        this.kwsetionariuszOsobowyPracownika = getBoolean(sheet, wiersz);
+        this.kwsetionariuszOsobowyPracownikaUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.umowaOPrace = getBoolean(sheet, wiersz);
+        this.umowaOPraceUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.informacjaOWarunkach = getBoolean(sheet, wiersz);
+        this.informacjaOWarunkachUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        wiersz++;
+        this.oswiadczenieORyzyku = getBoolean(sheet, wiersz);
+        this.oswiadczenieORyzykuUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.oswiadczenieOPrzepisach = getBoolean(sheet, wiersz);
+        this.oswiadczenieOPrzepisachUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.oswiadczenieOBhp = getBoolean(sheet, wiersz);
+        this.oswiadczenieOBhpUwagi = getUwagi(sheet, wiersz);
+        this.oswiadczenieOBhpData = getDate(sheet, wiersz);
+
+        wiersz++;
+        this.oswiadczenieOPozarze = getBoolean(sheet, wiersz);
+        this.oswiadczenieOPozarzeUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.oswiadczenieOUprawnieniach = getBoolean(sheet, wiersz);
+        this.oswiadczenieOUprawnieniachUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.pit = getBoolean(sheet, wiersz);
+        this.pitUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.oswiadczenieUrzadSkarbowy = getBoolean(sheet, wiersz);
+        this.oswiadczenieUrzadSkarbowyUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.oswiadczenieOKosztach = getBoolean(sheet, wiersz);
+        this.oswiadczenieOKosztachUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.zgodaPracownika = getBoolean(sheet, wiersz);
+        this.zgodaPracownikaUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.umowaOdpowiedzialnosci = getBoolean(sheet, wiersz);
+        this.umowaOdpowiedzialnosciUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.umowaOZakazie = getBoolean(sheet, wiersz);
+        this.umowaOZakazieUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.orzeczenieLekarskie = getBoolean(sheet, wiersz);
+        this.orzeczenieLekarskieUwagi = getUwagi(sheet, wiersz);
+        this.orzeczenieLekarskieData = getDate(sheet, wiersz);
+
+        wiersz++;
+        this.okresoweBadaniaBhp = getBoolean(sheet, wiersz);
+        this.okresoweBadaniaBhpUwagi = getUwagi(sheet, wiersz);
+        this.okresoweBadaniaBhpData = getDate(sheet, wiersz);
+
+        wiersz++;
+        this.drukZua = getBoolean(sheet, wiersz);
+        this.drukZuaUwagi = getUwagi(sheet, wiersz);
+
+        //endregion
+
+        //region C
+
+        wiersz++;
+        this.oswiadczenieWypowiedzenie = getBoolean(sheet, wiersz);
+        this.oswiadczenieWypowiedzenieUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.kopiaSwiadectwa = getBoolean(sheet, wiersz);
+        this.kopiaSwiadectwaUwagi = getUwagi(sheet, wiersz);
+
+        wiersz++;
+        this.drukZwua = getBoolean(sheet, wiersz);
+        this.drukZwuaUwagi = getUwagi(sheet, wiersz);
+
+        //endregion
+
     }
 
-    private Date getDate(Sheet sheet, int wiersz, Field kolumna) {
-        String text = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(kolumna.getValue()));
+    private Date getDate(Sheet sheet, int wiersz) {
+        String text = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.C.getValue()));
         String[] dates = text.split("-");
         if (dates.length == 3) {
             int i = 0;
-            return new Date(Integer.parseInt(dates[i++]) - 1900, Integer.parseInt(dates[i++]), Integer.parseInt(dates[i]));
+            return new Date(Integer.parseInt(dates[i++].trim()) - 1900, Integer.parseInt(dates[i++].trim()),
+                    Integer.parseInt(dates[i].trim()));
         }
         return null;
     }
 
-    private Date getDate(Sheet sheet, Field wiersz, Field kolumna) {
-        return getDate(sheet, wiersz.getValue(), kolumna);
-    }
-
     private boolean getBoolean(Sheet sheet, int wiersz) {
-        String kolumnaJest = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.C.getValue()));
-        String kolumnaBrak = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.D.getValue()));
+        String kolumnaJest = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.D.getValue()));
+        String kolumnaBrak = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.E.getValue()));
         return !kolumnaBrak.trim().equalsIgnoreCase("BRAK")
                 && (kolumnaJest.trim().equalsIgnoreCase("JEST") || kolumnaJest.trim().equalsIgnoreCase("TAK"));
     }
 
-    private boolean getBoolean(Sheet sheet, Field wiersz) {
-        return getBoolean(sheet, wiersz.getValue());
+    private String getUwagi(Sheet sheet, int wiersz) {
+        return getTextOrNull(sheet, wiersz, Field.F);
     }
 
     private String getTextOrNull(Sheet sheet, int wiersz, Field kolumna) {

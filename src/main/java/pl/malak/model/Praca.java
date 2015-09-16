@@ -15,49 +15,49 @@ import java.util.Date;
 public class Praca {
 
     @Column(name = "kwestionariusz_osobowy_ubiegajacego")
-    private Boolean kwsetionariuszOsobowyUbiegajacego;
+    private Boolean kwsetionariuszOsobowyUbiegajacego = false;
 
     @Column(name = "kwestionariusz_osobowy_ubiegajacego_uwagi")
     private String kwsetionariuszOsobowyUbiegajacegoUwagi;
 
     @Column(name = "podanie_o_prace")
-    private Boolean podanieOPrace;
+    private Boolean podanieOPrace = false;
 
     @Column(name = "podanie_o_prace_uwagi")
     private String podanieOPraceUwagi;
 
     @Column(name = "zyciorys")
-    private Boolean zyciorys;
+    private Boolean zyciorys = false;
 
     @Column(name = "zyciorys_uwagi")
     private String zyciorysUwagi;
 
     @Column(name = "swiadectwo_pracy")
-    private Boolean swiadectwoPracy;
+    private Boolean swiadectwoPracy = false;
 
     @Column(name = "swiadectwo_pracy_uwagi")
     private String swiadectwoPracyUwagi;
 
     @Column(name = "dokumenty_potwierdzajace")
-    private Boolean dokumentyPotwierdzajace;
+    private Boolean dokumentyPotwierdzajace = false;
 
     @Column(name = "dokumenty_potwierdzajace_uwagi")
     private String dokumentyPotwierdzajaceUwagi;
 
     @Column(name = "swiadectwo_ukonczenia_gimnazjum")
-    private Boolean swiadectwoUkonczeniaGimnazjum;
+    private Boolean swiadectwoUkonczeniaGimnazjum = false;
 
     @Column(name = "swiadectwo_ukonczenia_gimnazjum_uwagi")
     private String swiadectwoUkonczeniaGimnazjumUwagi;
 
     @Column(name = "podstawa_urlopu")
-    private Boolean podstawaUrlopu;
+    private Boolean podstawaUrlopu = false;
 
     @Column(name = "podstawa_urlopu_uwagi")
     private String podstawaUrlopuUwagi;
 
     @Column(name = "orzeczenie_lekarskie_przeciwskazania")
-    private Boolean orzeczenieLekarskiePrzeciwskazania;
+    private Boolean orzeczenieLekarskiePrzeciwskazania = false;
 
     @Column(name = "orzeczenie_lekarskie_przeciwskazania_uwagi")
     private String orzeczenieLekarskiePrzeciwskazaniaUwagi;
@@ -66,43 +66,43 @@ public class Praca {
     private Date orzeczenieLekarskiePrzeciwskazaniaData;
 
     @Column(name = "dowod_osobisty")
-    private Boolean dowodOsobisty;
+    private Boolean dowodOsobisty = false;
 
     @Column(name = "dowod_osobisty_uwagi")
     private String dowodOsobistyUwagi;
 
     @Column(name = "kwestionariusz_osobowy_pracownika")
-    private Boolean kwsetionariuszOsobowyPracownika;
+    private Boolean kwsetionariuszOsobowyPracownika = false;
 
     @Column(name = "kwestionariusz_osobowy_pracownika_uwagi")
     private String kwsetionariuszOsobowyPracownikaUwagi;
 
     @Column(name = "umowa_o_prace")
-    private Boolean umowaOPrace;
+    private Boolean umowaOPrace = false;
 
     @Column(name = "umowa_o_prace_uwagi")
     private String umowaOPraceUwagi;
 
     @Column(name = "informacja_o_warunkach")
-    private Boolean informacjaOWarunkach;
+    private Boolean informacjaOWarunkach = false;
 
     @Column(name = "informacja_o_warunkach_uwagi")
     private String informacjaOWarunkachUwagi;
 
     @Column(name = "oswiadczenie_o_ryzyku")
-    private Boolean oswiadczenieORyzyku;
+    private Boolean oswiadczenieORyzyku = false;
 
     @Column(name = "oswiadczenie_o_ryzyku_uwagi")
     private String oswiadczenieORyzykuUwagi;
 
     @Column(name = "oswiadczenie_o_przepisach")
-    private Boolean oswiadczenieOPrzepisach;
+    private Boolean oswiadczenieOPrzepisach = false;
 
     @Column(name = "oswiadczenie_o_przepisach_uwagi")
     private String oswiadczenieOPrzepisachUwagi;
 
     @Column(name = "oswiadczenie_o_bhp")
-    private Boolean oswiadczenieOBhp;
+    private Boolean oswiadczenieOBhp = false;
 
     @Column(name = "oswiadczenie_o_bhp_uwagi")
     private String oswiadczenieOBhpUwagi;
@@ -111,55 +111,55 @@ public class Praca {
     private Date oswiadczenieOBhpData;
 
     @Column(name = "oswiadczenie_o_pozarze")
-    private Boolean oswiadczenieOPozarze;
+    private Boolean oswiadczenieOPozarze = false;
 
     @Column(name = "oswiadczenie_o_pozarze_uwagi")
     private String oswiadczenieOPozarzeUwagi;
 
     @Column(name = "oswiadczenie_o_uprawnieniach")
-    private Boolean oswiadczenieOUprawnieniach;
+    private Boolean oswiadczenieOUprawnieniach = false;
 
     @Column(name = "oswiadczenie_o_uprawnieniach_uwagi")
     private String oswiadczenieOUprawnieniachUwagi;
 
     @Column(name = "pit")
-    private Boolean pit;
+    private Boolean pit = false;
 
     @Column(name = "pit_uwagi")
     private String pitUwagi;
 
     @Column(name = "oswiadczenie_urzad_skarbowy")
-    private Boolean oswiadczenieUrzadSkarbowy;
+    private Boolean oswiadczenieUrzadSkarbowy = false;
 
     @Column(name = "oswiadczenie_urzad_skarbowy_uwagi")
     private String oswiadczenieUrzadSkarbowyUwagi;
 
     @Column(name = "oswiadczenie_o_kosztach")
-    private Boolean oswiadczenieOKosztach;
+    private Boolean oswiadczenieOKosztach = false;
 
     @Column(name = "oswiadczenie_o_kosztach_uwagi")
     private String oswiadczenieOKosztachUwagi;
 
     @Column(name = "zgoda_pracownika")
-    private Boolean zgodaPracownika;
+    private Boolean zgodaPracownika = false;
 
     @Column(name = "zgoda_pracownika_uwagi")
     private String zgodaPracownikaUwagi;
 
     @Column(name = "umowa_odpowiedzialnosci")
-    private Boolean umowaOdpowiedzialnosci;
+    private Boolean umowaOdpowiedzialnosci = false;
 
     @Column(name = "umowa_odpowiedzialnosci_uwagi")
     private String umowaOdpowiedzialnosciUwagi;
 
     @Column(name = "umowa_o_zakazie")
-    private Boolean umowaOZakazie;
+    private Boolean umowaOZakazie = false;
 
     @Column(name = "umowa_o_zakazie_uwagi")
     private String umowaOZakazieUwagi;
 
     @Column(name = "orzeczenie_lekarskie")
-    private Boolean orzeczenieLekarskie;
+    private Boolean orzeczenieLekarskie = false;
 
     @Column(name = "orzeczenie_lekarskie_uwagi")
     private String orzeczenieLekarskieUwagi;
@@ -168,7 +168,7 @@ public class Praca {
     private Date orzeczenieLekarskieData;
 
     @Column(name = "okresowe_badania_bhp")
-    private Boolean okresoweBadaniaBhp;
+    private Boolean okresoweBadaniaBhp = false;
 
     @Column(name = "okresowe_badania_bhp_uwagi")
     private String okresoweBadaniaBhpUwagi;
@@ -177,25 +177,25 @@ public class Praca {
     private Date okresoweBadaniaBhpData;
 
     @Column(name = "druk_zua")
-    private Boolean drukZua;
+    private Boolean drukZua = false;
 
     @Column(name = "druk_zua_uwagi")
     private String drukZuaUwagi;
 
     @Column(name = "oswiadczenie_wypowiedzenie")
-    private Boolean oswiadczenieWypowiedzenie;
+    private Boolean oswiadczenieWypowiedzenie = false;
 
     @Column(name = "oswiadczenie_wypowiedzenie_uwagi")
     private String oswiadczenieWypowiedzenieUwagi;
 
     @Column(name = "kopia_swiadectwa")
-    private Boolean kopiaSwiadectwa;
+    private Boolean kopiaSwiadectwa = false;
 
     @Column(name = "kopia_swiadectwa_uwagi")
     private String kopiaSwiadectwaUwagi;
 
     @Column(name = "druk_zwua")
-    private Boolean drukZwua;
+    private Boolean drukZwua = false;
 
     @Column(name = "druk_zwua_uwagi")
     private String drukZwuaUwagi;

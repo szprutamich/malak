@@ -3,6 +3,8 @@ package pl.malak;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import pl.malak.beans.dao.PracaDao;
 import pl.malak.beans.dao.PracodawcaDao;
 import pl.malak.beans.dao.ZlecenieDao;
 import pl.malak.model.Praca;
@@ -12,7 +14,9 @@ import pl.malak.model.Zlecenie;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author Michał Szpruta - szprutamich@gmail.com
@@ -25,6 +29,9 @@ public class Migration {
 
     @Resource
     private ZlecenieDao zlecenieDao;
+
+    @Resource
+    private PracaDao pracaDao;
 
     private Map<String, Pracodawca> employers = new TreeMap<>();
 
@@ -54,6 +61,7 @@ public class Migration {
         return employers.get(name);
     }
 
+    @Transactional
     public String migrate(File file) {
         String error = "";
         long time = System.currentTimeMillis();
@@ -65,6 +73,11 @@ public class Migration {
             Sheet sheet;
             for (int i = 0; i < sheetSize; i++) {
                 sheet = wb.getSheetAt(i);
+                System.out.println("Sheet: " + sheet.getSheetName());
+                if ("Pracodawca".equals(sheet.getSheetName()) || "Umowa o pracę".equals(sheet.getSheetName()) ||
+                        "Zlecenie, dzieło".equals(sheet.getSheetName())) {
+                    continue;
+                }
                 String text = getCell(sheet, Field.A, Field.W_3);
                 Pracodawca employer;
                 switch (text) {
@@ -78,7 +91,11 @@ public class Migration {
                         break;
                     case "Lp.":
                         employer = new Pracodawca(sheet);
-                        addEmployer(employer.getNazwa(), employer);
+                        if (employer.getNazwa() != null) {
+                            addEmployer(employer.getNazwa(), employer);
+                        } else {
+                            error += String.format("Arkusz pracodawcy '%s' jest nieprawidłowy\n", sheet.getSheetName());
+                        }
                         break;
                 }
             }
@@ -124,12 +141,18 @@ public class Migration {
 
         if (error.isEmpty()) {
             zlecenieDao.deleteAll();
+            pracaDao.deleteAll();
             pracodawcaDao.deleteAll();
             for (Pracodawca pracodawca : getEmployers()) {
                 pracodawcaDao.create(pracodawca);
                 for (Zlecenie zlecenie : pracodawca.getZlecenia()) {
                     if (zlecenie.getPracodawca() != null) {
                         zlecenieDao.create(zlecenie);
+                    }
+                }
+                for (Praca praca : pracodawca.getPrace()) {
+                    if (praca.getPracodawca() != null) {
+                        pracaDao.create(praca);
                     }
                 }
             }

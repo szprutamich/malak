@@ -25,24 +25,25 @@ public class Pracodawca {
     private String nazwa;
 
     @Column(name = "teczka")
-    private Boolean teczka;
+    private Boolean teczka = false;
 
     @Column(name = "teczka_uwagi")
     private String teczkaUwagi;
 
     @Column(name = "ocena")
-    private Boolean ocena;
+    private Boolean ocena = false;
 
     @Column(name = "ocena_uwagi")
     private String ocenaUwagi;
 
     @Column(name = "szkolenia_okresowe")
-    private Boolean szkoleniaOkresowe;
+    private Boolean szkoleniaOkresowe = false;
 
     @Column(name = "szkolenia_okresowe_uwagi")
     private String szkoleniaOkresoweUwagi;
+
     @Column(name = "szkolenia_pracodawcy")
-    private Boolean szkoleniaPracodawcy;
+    private Boolean szkoleniaPracodawcy = false;
 
     @Column(name = "szkolenia_pracodawcy_data")
     private Date szkoleniaPracodawcyData;
@@ -51,7 +52,7 @@ public class Pracodawca {
     private String szkoleniaPracodawcyUwagi;
 
     @Column(name = "odziezowka")
-    private Boolean odziezowka;
+    private Boolean odziezowka = false;
 
     @Column(name = "odziezowka_uwagi")
     private String odziezowkaUwagi;
@@ -196,6 +197,10 @@ public class Pracodawca {
 
     public Set<Zlecenie> getZlecenia() {
         return zlecenia;
+    }
+
+    public Set<Praca> getPrace() {
+        return prace;
     }
 
     public void addZlecenie(Zlecenie zlecenie) {

@@ -63,6 +63,9 @@ public class MainFrame extends JFrame implements ActionListener {
     @Resource
     private PracaPanel pracaPanel;
 
+    @Resource
+    private Migration migration;
+
     public MainFrame() {
         super();
         setLayout(new BorderLayout());
@@ -154,12 +157,11 @@ public class MainFrame extends JFrame implements ActionListener {
             fileChooser.setFileFilter(filter);
             int returnVal = fileChooser.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                Migration migration = new Migration();
                 String error = migration.migrate(fileChooser.getSelectedFile());
                 if (!error.isEmpty()) {
                     UIHelper.displayMessage(this, "Nie udało się wczytać pliku, ponieważ:\n" + error);
                 } else {
-                    UIHelper.displayMessage(this, "Dane wczytane pomyślnie");
+                    UIHelper.displayMessage(this, "Dane wczytane pomyślnie :D");
                     initPrzegladaniePracodawcow();
                 }
             }

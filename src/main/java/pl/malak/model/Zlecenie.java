@@ -15,13 +15,13 @@ import java.util.Date;
 public class Zlecenie {
 
     @Column(name = "kwestionariusz")
-    private Boolean kwestionariusz;
+    private Boolean kwestionariusz = false;
 
     @Column(name = "kwestionariusz_uwagi")
     private String kwestionariuszUwagi;
 
     @Column(name = "karta_szkolenia")
-    private Boolean kartaSzkolenia;
+    private Boolean kartaSzkolenia = false;
 
     @Column(name = "karta_szkolenia_uwagi")
     private String kartaSzkoleniaUwagi;
@@ -30,31 +30,31 @@ public class Zlecenie {
     private Date kartaSzkoleniaData;
 
     @Column(name = "szkolenie")
-    private Boolean szkolenie;
+    private Boolean szkolenie = false;
 
     @Column(name = "szkolenie_uwagi")
     private String szkolenieUwagi;
 
     @Column(name = "instruktaz")
-    private Boolean instruktaz;
+    private Boolean instruktaz = false;
 
     @Column(name = "instruktaz_uwagi")
     private String instruktazUwagi;
 
     @Column(name = "ryzyko")
-    private Boolean ryzyko;
+    private Boolean ryzyko = false;
 
     @Column(name = "ryzyko_uwagi")
     private String ryzykoUwagi;
 
     @Column(name = "instrukcje_bhp")
-    private Boolean instrukcjeBhp;
+    private Boolean instrukcjeBhp = false;
 
     @Column(name = "instrukcje_bhp_uwagi")
     private String instrukcjeBhpUwagi;
 
     @Column(name = "szkolenie_bhp")
-    private Boolean szkolenieBhp;
+    private Boolean szkolenieBhp = false;
 
     @Column(name = "szkolenie_bhp_uwagi")
     private String szkolenieBhpUwagi;
@@ -63,13 +63,13 @@ public class Zlecenie {
     private Date szkolenieBhpData;
 
     @Column(name = "rachunki")
-    private Boolean rachunki;
+    private Boolean rachunki = false;
 
     @Column(name = "rachunki_uwagi")
     private String rachunkiUwagi;
 
     @Column(name = "umowa")
-    private Boolean umowa;
+    private Boolean umowa = false;
 
     @Column(name = "umowa_uwagi")
     private String umowaUwagi;
@@ -78,7 +78,7 @@ public class Zlecenie {
     private Date umowaData;
 
     @Column(name = "odbior_odziezy")
-    private Boolean odbiorOdziezy;
+    private Boolean odbiorOdziezy = false;
 
     @Column(name = "odbior_odziezy_uwagi")
     private String odbiorOdziezyUwagi;
@@ -87,19 +87,19 @@ public class Zlecenie {
     private Date odbiorOdziezyData;
 
     @Column(name = "zua")
-    private Boolean zua;
+    private Boolean zua = false;
 
     @Column(name = "zua_uwagi")
     private String zuaUwagi;
 
     @Column(name = "zza")
-    private Boolean zza;
+    private Boolean zza = false;
 
     @Column(name = "zza_uwagi")
     private String zzaUwagi;
 
     @Column(name = "zwua")
-    private Boolean zwua;
+    private Boolean zwua = false;
 
     @Column(name = "zwua_uwagi")
     private String zwuaUwagi;
@@ -118,7 +118,7 @@ public class Zlecenie {
     private String sheetName;
 
     @Column(name = "badania")
-    private Boolean badania;
+    private Boolean badania = false;
 
     @Column(name = "badania_uwagi")
     private String badaniaUwagi;
@@ -127,19 +127,19 @@ public class Zlecenie {
     private Date badaniaData;
 
     @Column(name = "dowod")
-    private Boolean dowod;
+    private Boolean dowod = false;
 
     @Column(name = "dowod_uwagi")
     private String dowodUwagi;
 
     @Column(name = "zyciorys")
-    private Boolean zyciorys;
+    private Boolean zyciorys = false;
 
     @Column(name = "zyciorys_uwagi")
     private String zyciorysUwagi;
 
     @Column(name = "zaswiadczenie_student")
-    private Boolean zaswiadczenieStudent;
+    private Boolean zaswiadczenieStudent = false;
 
     @Column(name = "zaswiadczenie_student_uwagi")
     private String zaswiadczenieStudentUwagi;

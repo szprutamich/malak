@@ -1007,10 +1007,7 @@ public class Praca {
     }
 
     private boolean getBoolean(Sheet sheet, int wiersz) {
-        String kolumnaJest = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.D.getValue()));
-        String kolumnaBrak = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.E.getValue()));
-        return !kolumnaBrak.trim().equalsIgnoreCase("BRAK")
-                && (kolumnaJest.trim().equalsIgnoreCase("JEST") || kolumnaJest.trim().equalsIgnoreCase("TAK"));
+        return SheetHelper.getBoolean(sheet, wiersz, Field.D.getValue(), Field.E.getValue());
     }
 
     private String getUwagi(Sheet sheet, int wiersz) {

@@ -44,14 +44,17 @@ public class SheetHelper {
     }
 
     public static boolean getBoolean(Sheet sheet, int wiersz) {
-        String kolumnaJest = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.C.getValue()));
-        String kolumnaBrak = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.D.getValue()));
-        return !kolumnaBrak.trim().equalsIgnoreCase("BRAK")
-                && (kolumnaJest.trim().equalsIgnoreCase("JEST") || kolumnaJest.trim().equalsIgnoreCase("TAK"));
+        return getBoolean(sheet, wiersz, Field.C.getValue(), Field.D.getValue());
     }
 
     public static boolean getBoolean(Sheet sheet, Field wiersz) {
         return getBoolean(sheet, wiersz.getValue());
+    }
+
+    public static boolean getBoolean(Sheet sheet, int wiersz, int colY, int colL) {
+        String kolumnaJest = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(colY)).trim().toUpperCase();
+        String kolumnaBrak = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(colL)).trim().toUpperCase();
+        return !kolumnaBrak.contains("BRAK") && (kolumnaJest.contains("JEST") || kolumnaJest.contains("TAK"));
     }
 
     public static String getTextOrNull(Sheet sheet, int wiersz, Field kolumna) {

@@ -23,7 +23,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
     private enum MinPanelSize {
         PRACODAWCA(650, 450),
-        PRACA(1000, 850),
+        PRACA(1000, 750),
         ZLECENIE(650, 650);
 
         private int minWidth;
@@ -109,9 +109,13 @@ public class MainFrame extends JFrame implements ActionListener {
     }
 
     public void initPrzegladaniePracodawcow() {
+        initPrzegladaniePracodawcow(null);
+    }
+
+    public void initPrzegladaniePracodawcow(Pracodawca pracodawca) {
         removeAllPanels();
         add(pracodawcaPanel);
-        pracodawcaPanel.initPrzegladanie();
+        pracodawcaPanel.initPrzegladanie(pracodawca);
         refreshView(MinPanelSize.PRACODAWCA);
     }
 
@@ -162,11 +166,11 @@ public class MainFrame extends JFrame implements ActionListener {
                     UIHelper.displayMessage(this, "Nie udało się wczytać pliku, ponieważ:\n" + error);
                 } else {
                     UIHelper.displayMessage(this, "Dane wczytane pomyślnie :D");
-                    initPrzegladaniePracodawcow();
+                    initPrzegladaniePracodawcow(null);
                 }
             }
         } else if (source == przegladaj) {
-            initPrzegladaniePracodawcow();
+            initPrzegladaniePracodawcow(null);
         } else if (source == dodaj) {
             initDodajPracodawce();
         } else if (source == zakoncz) {

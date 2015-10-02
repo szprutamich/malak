@@ -229,7 +229,7 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
         if (e.getSource() == nazwa) {
             init(obecnyPracodawca);
         } else if (e.getSource() == wroc) {
-            getFrame().initPrzegladaniePracodawcow();
+            getFrame().initPrzegladaniePracodawcow(obecnyPracodawca);
         } else if (e.getSource() == zapisz) {
             String zlecenieNazwa = UIHelper.getComboText(nazwa);
             if (zlecenieNazwa == null) {

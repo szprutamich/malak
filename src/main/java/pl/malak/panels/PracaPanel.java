@@ -221,7 +221,7 @@ public class PracaPanel extends FramePanel implements ActionListener {
 
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(5, 5, 5, 5);
+        c.insets = new Insets(3, 5, 3, 5);
         c.ipady = 0;
         c.ipadx = 0;
 
@@ -337,7 +337,7 @@ public class PracaPanel extends FramePanel implements ActionListener {
         if (e.getSource() == nazwa) {
             init(obecnyPracodawca);
         } else if (e.getSource() == wroc) {
-            getFrame().initPrzegladaniePracodawcow();
+            getFrame().initPrzegladaniePracodawcow(obecnyPracodawca);
         } else if (e.getSource() == zapisz) {
             String pracaNazwa = UIHelper.getComboText(nazwa);
             if (pracaNazwa == null) {

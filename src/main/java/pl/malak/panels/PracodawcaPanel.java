@@ -236,8 +236,11 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
         }
     }
 
-    public void initPrzegladanie() {
+    public void initPrzegladanie(Pracodawca pracodawca) {
         refreshNazwaList();
+        if (pracodawca != null) {
+            nazwa.setSelectedItem(pracodawca.getNazwa());
+        }
         editMode = true;
         init();
         dodajZlecenie.setVisible(true);

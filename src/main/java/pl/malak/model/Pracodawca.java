@@ -2,7 +2,6 @@ package pl.malak.model;
 
 import org.apache.poi.ss.usermodel.Sheet;
 import pl.malak.Field;
-import pl.malak.helpers.Helper;
 import pl.malak.helpers.SheetHelper;
 
 import javax.persistence.*;
@@ -224,23 +223,17 @@ public class Pracodawca {
     }
 
     public void parse(Sheet sheet) {
-        this.nazwa = Helper.getTextOrNull(SheetHelper.getCellText(sheet.getRow(Field.W_1.getValue()).getCell(Field.C.getValue())));
-        this.teczka = Helper.getBoolean(SheetHelper.getCellText(sheet.getRow(Field.W_4.getValue()).getCell(Field.C.getValue())),
-                SheetHelper.getCellText(sheet.getRow(Field.W_4.getValue()).getCell(Field.D.getValue())));
-        this.teczkaUwagi = Helper.getTextOrNull(SheetHelper.getCellText(sheet.getRow(Field.W_4.getValue()).getCell(Field.E.getValue())));
-        this.ocena = Helper.getBoolean(SheetHelper.getCellText(sheet.getRow(Field.W_5.getValue()).getCell(Field.C.getValue())),
-                SheetHelper.getCellText(sheet.getRow(Field.W_5.getValue()).getCell(Field.D.getValue())));
-        this.ocenaUwagi = Helper.getTextOrNull(SheetHelper.getCellText(sheet.getRow(Field.W_5.getValue()).getCell(Field.E.getValue())));
-        this.szkoleniaOkresowe = Helper.getBoolean(SheetHelper.getCellText(sheet.getRow(Field.W_6.getValue()).getCell(Field.C.getValue())),
-                SheetHelper.getCellText(sheet.getRow(Field.W_6.getValue()).getCell(Field.D.getValue())));
-        this.szkoleniaOkresoweUwagi = Helper.getTextOrNull(SheetHelper.getCellText(sheet.getRow(Field.W_6.getValue()).getCell(Field.E.getValue())));
-        this.szkoleniaPracodawcy = Helper.getBoolean(SheetHelper.getCellText(sheet.getRow(Field.W_7.getValue()).getCell(Field.C.getValue())),
-                SheetHelper.getCellText(sheet.getRow(Field.W_7.getValue()).getCell(Field.D.getValue())));
-        this.szkoleniaPracodawcyData = Helper.getDate(SheetHelper.getCellText(sheet.getRow(Field.W_7.getValue()).getCell(Field.E.getValue())));
-        this.szkoleniaPracodawcyUwagi = Helper.getTextOrNull(SheetHelper.getCellText(sheet.getRow(Field.W_7.getValue()).getCell(Field.E.getValue())));
-        this.odziezowka = Helper.getBoolean(SheetHelper.getCellText(sheet.getRow(Field.W_8.getValue()).getCell(Field.C.getValue())),
-                SheetHelper.getCellText(sheet.getRow(Field.W_8.getValue()).getCell(Field.D.getValue())));
-        this.odziezowkaUwagi = Helper.getTextOrNull(SheetHelper.getCellText(sheet.getRow(Field.W_8.getValue()).getCell
-                (Field.E.getValue())));
+        this.nazwa = SheetHelper.getTextOrNull(sheet, Field.W_1, Field.C);
+        this.teczka = SheetHelper.getBoolean(sheet, Field.W_4);
+        this.teczkaUwagi = SheetHelper.getTextOrNull(sheet, Field.W_4, Field.E);
+        this.ocena = SheetHelper.getBoolean(sheet, Field.W_5);
+        this.ocenaUwagi = SheetHelper.getTextOrNull(sheet, Field.W_5, Field.E);
+        this.szkoleniaOkresowe = SheetHelper.getBoolean(sheet, Field.W_6);
+        this.szkoleniaOkresoweUwagi = SheetHelper.getTextOrNull(sheet, Field.W_6, Field.E);
+        this.szkoleniaPracodawcy = SheetHelper.getBoolean(sheet, Field.W_7);
+        this.szkoleniaPracodawcyData = SheetHelper.getDate(sheet, Field.W_7, Field.E);
+        this.szkoleniaPracodawcyUwagi = SheetHelper.getTextOrNull(sheet, Field.W_7, Field.E);
+        this.odziezowka = SheetHelper.getBoolean(sheet, Field.W_8);
+        this.odziezowkaUwagi = SheetHelper.getTextOrNull(sheet, Field.W_8, Field.E);
     }
 }

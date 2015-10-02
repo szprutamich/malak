@@ -492,6 +492,7 @@ public class PracaPanel extends FramePanel implements ActionListener {
     }
 
     protected void init(Pracodawca pracodawca) {
+        panel.setSelectedIndex(0);
         obecnyPracodawca = pracodawca;
         pracodawcaNazwaLabel.setText("Pracodawca: " + pracodawca.getNazwa());
         String zlecenieNazwa = UIHelper.getComboText(nazwa);

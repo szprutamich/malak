@@ -896,6 +896,7 @@ public class Praca {
         this.orzeczenieLekarskiePrzeciwskazaniaData = getDate(sheet, wiersz);
 
         wiersz++;
+        wiersz++;
         this.dowodOsobisty = getBoolean(sheet, wiersz);
         this.dowodOsobistyUwagi = getUwagi(sheet, wiersz);
 
@@ -932,6 +933,9 @@ public class Praca {
         wiersz++;
         this.oswiadczenieOPozarze = getBoolean(sheet, wiersz);
         this.oswiadczenieOPozarzeUwagi = getUwagi(sheet, wiersz);
+        if (oswiadczenieOBhpData == null) {
+            this.oswiadczenieOBhpData = getDate(sheet, wiersz);
+        }
 
         wiersz++;
         this.oswiadczenieOUprawnieniach = getBoolean(sheet, wiersz);
@@ -965,6 +969,9 @@ public class Praca {
         this.orzeczenieLekarskie = getBoolean(sheet, wiersz);
         this.orzeczenieLekarskieUwagi = getUwagi(sheet, wiersz);
         this.orzeczenieLekarskieData = getDate(sheet, wiersz);
+        if (this.orzeczenieLekarskieData != null) {
+            this.orzeczenieLekarskie = true;
+        }
 
         wiersz++;
         this.okresoweBadaniaBhp = getBoolean(sheet, wiersz);
@@ -996,14 +1003,7 @@ public class Praca {
     }
 
     private Date getDate(Sheet sheet, int wiersz) {
-        String text = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(Field.C.getValue()));
-        String[] dates = text.split("-");
-        if (dates.length == 3) {
-            int i = 0;
-            return new Date(Integer.parseInt(dates[i++].trim()) - 1900, Integer.parseInt(dates[i++].trim()),
-                    Integer.parseInt(dates[i].trim()));
-        }
-        return null;
+        return SheetHelper.getDate(sheet, wiersz, Field.C);
     }
 
     private boolean getBoolean(Sheet sheet, int wiersz) {

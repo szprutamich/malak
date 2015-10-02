@@ -4,6 +4,9 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Sheet;
 import pl.malak.Field;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -11,11 +14,12 @@ import java.util.Date;
  */
 public class SheetHelper {
 
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
+
     public static String getCellText(Cell cell) {
         if (cell != null) {
             if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                Date date = cell.getDateCellValue();
-                return String.format("%s-%s-%s", date.getYear() + 1900, date.getMonth(), date.getDate());
+                return DATE_FORMAT.format(cell.getDateCellValue());
             } else {
                 cell.setCellType(Cell.CELL_TYPE_STRING);
                 if (cell.toString().startsWith("DO ")) {
@@ -32,9 +36,23 @@ public class SheetHelper {
         String text = SheetHelper.getCellText(sheet.getRow(wiersz).getCell(kolumna.getValue()));
         String[] dates = text.split("-");
         if (dates.length == 3) {
-            int i = 0;
-            return new Date(Integer.parseInt(dates[i++]) - 1900, Integer.parseInt(dates[i++]), Integer
-                    .parseInt(dates[i]));
+            try {
+                return DATE_FORMAT.parse(text);
+            } catch (ParseException e) {
+                return null;
+            }
+        } else if (text != null && text.length() > 0) {
+            try {
+                Integer days = Integer.parseInt(text);
+                String dt = "1900-01-01";  // Start date
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Calendar c = Calendar.getInstance();
+                c.setTime(sdf.parse(dt));
+                c.add(Calendar.DATE, days - 2);
+                return c.getTime();
+            } catch (Exception e) {
+                return null;
+            }
         }
         return null;
     }

@@ -1,6 +1,7 @@
 package pl.malak;
 
 import org.springframework.stereotype.Component;
+import pl.malak.beans.EmailSender;
 import pl.malak.helpers.UIHelper;
 import pl.malak.model.Pracodawca;
 import pl.malak.panels.PracaPanel;
@@ -65,6 +66,9 @@ public class MainFrame extends JFrame implements ActionListener {
 
     @Resource
     private Migration migration;
+
+    @Resource
+    private EmailSender emailSender;
 
     public MainFrame() {
         super();
@@ -177,6 +181,7 @@ public class MainFrame extends JFrame implements ActionListener {
             System.exit(0);
         } else if (source == autor) {
             UIHelper.displayMessage(this, AUTHOR);
+            emailSender.send("TEST", "testuje maile", "szprutamich@gmail.com");
         }
     }
 

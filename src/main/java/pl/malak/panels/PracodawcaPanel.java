@@ -62,6 +62,9 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
     JButton przegladajZlecenia = new JButton("Przeglądaj umowy zlecenia");
     JButton dodajZlecenie = new JButton("Dodaj umowę zlecenie");
 
+    JLabel emailLabel = new JLabel("Email:");
+    JTextField email = new JTextField();
+
     public PracodawcaPanel() {
         super();
 
@@ -70,6 +73,7 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
         szkoleniaOkresoweUwagi.setEditable(true);
         szkoleniaUwagi.setEditable(true);
         odziezowkaUwagi.setEditable(true);
+        email.setEditable(true);
 
         nazwaLabel.setFont(new Font(nazwaLabel.getFont().getFamily(), Font.PLAIN, 25));
 
@@ -113,6 +117,16 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
         c.gridy = wiersz;
         c.gridwidth = 2;
         add(nazwa, c);
+
+        // --------------
+        wiersz++;
+        c.gridwidth = 1;
+        c.gridx = 0;
+        c.gridy = wiersz;
+        add(emailLabel, c);
+        c.gridwidth = 2;
+        c.gridx = 1;
+        add(email, c);
 
         // --------------
         wiersz++;
@@ -190,6 +204,7 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
             if (!editMode && pracodawca == null) {
                 pracodawcaBean.stworzPracodawce(
                         UIHelper.getComboText(nazwa),
+                        email.getText(),
                         teczka.isSelected(),
                         UIHelper.getComboText(teczkaUwagi),
                         ocena.isSelected(),
@@ -209,6 +224,7 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
                 pracodawcaBean.uaktualnijPracodawce(
                         obecnyPracodawca.getId(),
                         nazwaText,
+                        email.getText(),
                         teczka.isSelected(),
                         UIHelper.getComboText(teczkaUwagi),
                         ocena.isSelected(),
@@ -272,6 +288,7 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
             przegladajZlecenia.setVisible(zlecenieDao.countByPracodawcaId(pracodawca.getId()) > 0);
             przegladajPrace.setVisible(pracaDao.countByPracodawcaId(pracodawca.getId()) > 0);
 
+            email.setText(pracodawca.getEmail());
             teczka.setSelected(pracodawca.getTeczka());
             ocena.setSelected(pracodawca.getOcena());
             szkoleniaOkresowe.setSelected(pracodawca.getSzkoleniaOkresowe());

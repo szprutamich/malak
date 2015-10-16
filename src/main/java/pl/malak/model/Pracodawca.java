@@ -65,14 +65,18 @@ public class Pracodawca {
     @Column(name = "data_usuniecia")
     private Date dataUsuniecia;
 
+    @Column(name = "email")
+    private String email;
+
     public Pracodawca() {
     }
 
     public Pracodawca(
-            String nazwa, Boolean teczka, String teczkaUwagi, Boolean ocena, String ocenaUwagi,
+            String nazwa, String email, Boolean teczka, String teczkaUwagi, Boolean ocena, String ocenaUwagi,
             Boolean szkoleniaOkresowe, String szkoleniaOkresoweUwagi, Boolean szkoleniaPracodawcy,
             Date szkoleniaPracodawcyData, String szkoleniaPracodawcyUwagi, Boolean odziezowka, String odziezowkaUwagi) {
         this.nazwa = nazwa;
+        this.email = email;
         this.teczka = teczka;
         this.teczkaUwagi = teczkaUwagi;
         this.ocena = ocena;
@@ -104,6 +108,14 @@ public class Pracodawca {
 
     public void setNazwa(String nazwa) {
         this.nazwa = nazwa;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Boolean getTeczka() {

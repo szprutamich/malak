@@ -185,4 +185,14 @@
             <column name="druk_zwua_uwagi" type="VARCHAR(255)"/>
         </addColumn>
     </changeSet>
+    <changeSet author="szprutamich@gmail.com" id="6">
+        <sql>
+            ALTER TABLE pracodawcy ADD email VARCHAR(255) NULL;
+        </sql>
+        <rollback>
+            <sql>
+                ALTER TABLE pracodawcy DROP COLUMN email;
+            </sql>
+        </rollback>
+    </changeSet>
 </databaseChangeLog>

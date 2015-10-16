@@ -19,10 +19,10 @@ public class PracodawcaBean {
 
     @Transactional
     public Pracodawca stworzPracodawce(
-            String nazwa, Boolean teczka, String teczkaUwagi, Boolean ocena, String ocenaUwagi,
+            String nazwa, String email, Boolean teczka, String teczkaUwagi, Boolean ocena, String ocenaUwagi,
             Boolean szkoleniaOkresowe, String szkoleniaOkresoweUwagi, Boolean szkoleniaPracodawcy,
             Date szkoleniaPracodawcyData, String szkoleniaPracodawcyUwagi, Boolean odziezowka, String odziezowkaUwagi) {
-        Pracodawca pracodawca = new Pracodawca(nazwa, teczka, teczkaUwagi, ocena, ocenaUwagi, szkoleniaOkresowe,
+        Pracodawca pracodawca = new Pracodawca(nazwa, email, teczka, teczkaUwagi, ocena, ocenaUwagi, szkoleniaOkresowe,
                 szkoleniaOkresoweUwagi, szkoleniaPracodawcy, szkoleniaPracodawcyData, szkoleniaPracodawcyUwagi,
                 odziezowka, odziezowkaUwagi);
         pracodawcaDao.create(pracodawca);
@@ -32,12 +32,13 @@ public class PracodawcaBean {
 
     @Transactional
     public Pracodawca uaktualnijPracodawce(
-            Long id, String nazwa, Boolean teczka, String teczkaUwagi, Boolean ocena, String ocenaUwagi,
+            Long id, String nazwa, String email, Boolean teczka, String teczkaUwagi, Boolean ocena, String ocenaUwagi,
             Boolean szkoleniaOkresowe, String szkoleniaOkresoweUwagi, Boolean szkoleniaPracodawcy,
             Date szkoleniaPracodawcyData, String szkoleniaPracodawcyUwagi, Boolean odziezowka, String odziezowkaUwagi) {
         Pracodawca pracodawca = pracodawcaDao.load(id);
 
         pracodawca.setNazwa(nazwa);
+        pracodawca.setEmail(email);
         pracodawca.setTeczka(teczka);
         pracodawca.setTeczkaUwagi(teczkaUwagi);
         pracodawca.setOcena(ocena);

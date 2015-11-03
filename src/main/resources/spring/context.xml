@@ -64,6 +64,4 @@
 
     <bean id="mainFrame" class="pl.malak.MainFrame" init-method="initPrzegladaniePracodawcow"/>
 
-    <import resource="classpath:spring/emailConfig.xml" />
-
 </beans>

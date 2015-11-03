@@ -20,14 +20,14 @@
         <db.username>malak</db.username>
         <db.password>malak</db.password>
         <mysql.mysql-connector-java.version>5.1.10</mysql.mysql-connector-java.version>
-        <mail.sender.host>smtp.gmail.com</mail.sender.host>
+        <mail.sender.host>biuromagda.nazwa.pl</mail.sender.host>
         <mail.sender.port>587</mail.sender.port>
         <mail.sender.protocol>smtp</mail.sender.protocol>
         <mail.sender.auth>true</mail.sender.auth>
         <mail.sender.starttls>true</mail.sender.starttls>
         <mail.sender.username/>
         <mail.sender.pass/>
-        <mail.sender.from>Tomasz Malak &lt;t.malak@biuromagda.com.pl&gt;</mail.sender.from>
+        <mail.sender.from/>
     </properties>
     <build>
         <plugins>

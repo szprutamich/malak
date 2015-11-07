@@ -28,6 +28,7 @@
         <mail.sender.username/>
         <mail.sender.pass/>
         <mail.sender.from/>
+        <file.properties.name>malak.properties</file.properties.name>
     </properties>
     <build>
         <plugins>
@@ -215,6 +216,7 @@
         <profile>
             <id>POZNAN</id>
             <properties>
+                <file.properties.name>malak_poznan.properties</file.properties.name>
                 <db.connectionURL>
                     <![CDATA[jdbc:mysql://localhost:3306/malak_poznan?useUnicode=true&amp;autoReconnect=true&amp;characterEncoding=UTF-8]]></db.connectionURL>
             </properties>

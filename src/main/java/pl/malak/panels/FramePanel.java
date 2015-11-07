@@ -4,9 +4,6 @@ import pl.malak.MainFrame;
 
 import javax.swing.*;
 
-/**
- * @author Michał Szpruta - szprutamich@gmail.com
- */
 public abstract class FramePanel extends JPanel {
 
     private MainFrame mainFrame;

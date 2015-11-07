@@ -18,9 +18,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-/**
- * @author Michał Szpruta - szprutamich@gmail.com
- */
 @Service
 public class Migration {
 

@@ -1,6 +1,5 @@
 package pl.malak.helpers;
 
-
 import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -12,17 +11,10 @@ import java.awt.*;
 import java.util.Date;
 import java.util.Properties;
 
-/**
- * @author Michał Szpruta - szprutamich@gmail.com
- */
 public class UIHelper {
 
     public static void displayMessage(Component component, String text) {
         JOptionPane.showMessageDialog(component, text);
-    }
-
-    public static String displayInput(Component component, String text) {
-        return JOptionPane.showInputDialog(component, text);
     }
 
     public static String getComboText(JComboBox<String> comboBox) {
@@ -60,13 +52,5 @@ public class UIHelper {
         } else {
             datePicker.getModel().setSelected(false);
         }
-    }
-
-    public static int[] getScreenSize() {
-        GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-        return new int[]{
-                gd.getDisplayMode().getWidth(),
-                gd.getDisplayMode().getHeight()
-        };
     }
 }

@@ -19,9 +19,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Michał Szpruta - szprutamich@gmail.com
- */
 @org.springframework.stereotype.Component
 public class PracaPanel extends FramePanel implements ActionListener {
 

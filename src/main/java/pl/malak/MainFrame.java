@@ -1,9 +1,9 @@
 package pl.malak;
 
 import org.springframework.stereotype.Component;
-import pl.malak.beans.EmailSender;
 import pl.malak.helpers.UIHelper;
 import pl.malak.model.Pracodawca;
+import pl.malak.panels.EmailPanel;
 import pl.malak.panels.PracaPanel;
 import pl.malak.panels.PracodawcaPanel;
 import pl.malak.panels.ZleceniePanel;
@@ -16,16 +16,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * @author Michał Szpruta - szprutamich@gmail.com
- */
 @Component
 public class MainFrame extends JFrame implements ActionListener {
 
     private enum MinPanelSize {
-        PRACODAWCA(650, 450),
+        PRACODAWCA(650, 470),
         PRACA(1000, 750),
-        ZLECENIE(650, 650);
+        ZLECENIE(650, 650),
+        EMAIL(680, 600);
 
         private int minWidth;
         private int minHeight;
@@ -65,10 +63,10 @@ public class MainFrame extends JFrame implements ActionListener {
     private PracaPanel pracaPanel;
 
     @Resource
-    private Migration migration;
+    private EmailPanel emailPanel;
 
     @Resource
-    private EmailSender emailSender;
+    private Migration migration;
 
     public MainFrame() {
         super();
@@ -104,12 +102,14 @@ public class MainFrame extends JFrame implements ActionListener {
         pracodawcaPanel.setFrame(this);
         zleceniePanel.setFrame(this);
         pracaPanel.setFrame(this);
+        emailPanel.setFrame(this);
     }
 
     private void removeAllPanels() {
         remove(pracodawcaPanel);
         remove(zleceniePanel);
         remove(pracaPanel);
+        remove(emailPanel);
     }
 
     public void initPrzegladaniePracodawcow() {
@@ -158,6 +158,13 @@ public class MainFrame extends JFrame implements ActionListener {
         refreshView(MinPanelSize.PRACA);
     }
 
+    public void initGenerujEmail(Pracodawca obecnyPracodawca) {
+        removeAllPanels();
+        add(emailPanel);
+        emailPanel.init(obecnyPracodawca);
+        refreshView(MinPanelSize.EMAIL);
+    }
+
     public void actionPerformed(ActionEvent evt) {
         JMenuItem source = (JMenuItem) evt.getSource();
         if (source == importuj) {
@@ -181,7 +188,6 @@ public class MainFrame extends JFrame implements ActionListener {
             System.exit(0);
         } else if (source == autor) {
             UIHelper.displayMessage(this, AUTHOR);
-            emailSender.send("TEST", "testuje maile", "szprutamich@gmail.com");
         }
     }
 

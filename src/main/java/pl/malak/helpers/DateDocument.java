@@ -4,9 +4,6 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
-/**
- * @author Michał Szpruta - szprutamich@gmail.com
- */
 public class DateDocument extends PlainDocument {
 
     private static final long serialVersionUID = 1L;

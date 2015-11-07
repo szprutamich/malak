@@ -1,8 +1,5 @@
 package pl.malak;
 
-/**
- * @author Michał Szpruta <michal.szpruta@bitbar.com>
- */
 public enum Field {
     A(0),
     B(1),

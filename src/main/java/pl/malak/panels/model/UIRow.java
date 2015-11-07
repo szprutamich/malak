@@ -4,9 +4,6 @@ import org.jdatepicker.impl.JDatePickerImpl;
 
 import javax.swing.*;
 
-/**
- * @author Michał Szpruta - szprutamich@gmail.com
- */
 public class UIRow {
 
     private JCheckBox checkBox;

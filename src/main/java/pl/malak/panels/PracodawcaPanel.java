@@ -17,9 +17,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-/**
- * @author Michał Szpruta - szprutamich@gmail.com
- */
 @org.springframework.stereotype.Component
 public class PracodawcaPanel extends FramePanel implements ActionListener {
 
@@ -61,6 +58,7 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
     JButton dodajPrace = new JButton("Dodaj umowę o pracę");
     JButton przegladajZlecenia = new JButton("Przeglądaj umowy zlecenia");
     JButton dodajZlecenie = new JButton("Dodaj umowę zlecenie");
+    JButton generujEmail = new JButton("Generuj email");
 
     JLabel emailLabel = new JLabel("Email:");
     JTextField email = new JTextField();
@@ -96,6 +94,7 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
         przegladajZlecenia.addActionListener(this);
         dodajZlecenie.addActionListener(this);
         dodajPrace.addActionListener(this);
+        generujEmail.addActionListener(this);
     }
 
     private void layoutComponents() {
@@ -188,6 +187,13 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
         c.gridx = 2;
         c.gridy = wiersz;
         add(dodajZlecenie, c);
+
+        // --------------
+        wiersz++;
+        c.gridwidth = 3;
+        c.gridx = 0;
+        c.gridy = wiersz;
+        add(generujEmail, c);
     }
 
     @Override
@@ -249,6 +255,8 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
             getFrame().initDodajPrace(obecnyPracodawca);
         } else if (e.getSource() == dodajZlecenie) {
             getFrame().initDodajZlecenie(obecnyPracodawca);
+        } else if (e.getSource() == generujEmail) {
+            getFrame().initGenerujEmail(obecnyPracodawca);
         }
     }
 

@@ -7,9 +7,6 @@ import pl.malak.helpers.SheetHelper;
 import javax.persistence.*;
 import java.util.Date;
 
-/**
- * @author Michał Szpruta - szprutamich@gmail.com
- */
 @Entity
 @Table(name = "zlecenia")
 public class Zlecenie {

@@ -9,9 +9,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * @author Michał Szpruta - szprutamich@gmail.com
- */
 @Entity
 @Table(name = "pracodawcy")
 public class Pracodawca {

@@ -8,9 +8,6 @@ import javax.annotation.Resource;
 import javax.transaction.Transactional;
 import java.util.Date;
 
-/**
- * @author Michał Szpruta - szprutamich@gmail.com
- */
 @Service
 public class PracodawcaBean {
 

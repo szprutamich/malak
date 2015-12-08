@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>malak</artifactId>
     <groupId>pl.malak</groupId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <packaging>jar</packaging>
     <name>Malak</name>
     <properties>
@@ -28,6 +28,7 @@
         <mail.sender.username/>
         <mail.sender.pass/>
         <mail.sender.from/>
+        <koszt.teczka>100.00</koszt.teczka>
         <file.properties.name>malak.properties</file.properties.name>
     </properties>
     <build>
@@ -140,6 +141,12 @@
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
             <version>${poi.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
         </dependency>
 
         <dependency>

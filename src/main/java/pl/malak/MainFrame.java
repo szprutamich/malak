@@ -23,7 +23,7 @@ public class MainFrame extends JFrame implements ActionListener {
         PRACODAWCA(650, 470),
         PRACA(1000, 750),
         ZLECENIE(650, 650),
-        EMAIL(680, 600);
+        EMAIL(680, 650);
 
         private int minWidth;
         private int minHeight;

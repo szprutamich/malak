@@ -7,6 +7,7 @@ import pl.malak.beans.PracodawcaBean;
 import pl.malak.beans.dao.PracaDao;
 import pl.malak.beans.dao.PracodawcaDao;
 import pl.malak.beans.dao.ZlecenieDao;
+import pl.malak.helpers.UIHelper;
 import pl.malak.model.Pracodawca;
 
 import javax.annotation.Resource;
@@ -39,6 +40,12 @@ public class EmailPanel extends FramePanel implements ActionListener {
     @Value("${koszt.teczka}")
     private Double kosztTeczki;
 
+    @Value("${koszt.badania}")
+    private Double kosztBadania;
+
+    @Value("${email.stopka}")
+    private String emailStopka;
+
     private Pracodawca obecnyPracodawca;
 
     JLabel nazwaLabel = new JLabel();
@@ -48,6 +55,10 @@ public class EmailPanel extends FramePanel implements ActionListener {
     JScrollPane scrollPane = new JScrollPane(emailText);
     JButton wyslij = new JButton("Wyślij");
     JButton wroc = new JButton("Wróć");
+    JLabel czcionkaLabel = new JLabel("Czcionka:");
+    JComboBox<String> czcionka = new JComboBox<>(new String[]{
+            "10px", "12px", "14px", "16px", "18px", "20px"
+    });
 
     public EmailPanel() {
         super();
@@ -60,6 +71,7 @@ public class EmailPanel extends FramePanel implements ActionListener {
     private void addListeners() {
         wroc.addActionListener(this);
         wyslij.addActionListener(this);
+        czcionka.addActionListener(this);
     }
 
     private void layoutComponents() {
@@ -86,6 +98,15 @@ public class EmailPanel extends FramePanel implements ActionListener {
 
         y += height + yMargin;
         x = xMargin;
+        czcionkaLabel.setBounds(x, y, width / 4, height);
+        add(czcionkaLabel);
+
+        x += xMargin + width / 4;
+        czcionka.setBounds(x, y, width / 4, height);
+        add(czcionka);
+
+        y += height + yMargin;
+        x = xMargin;
         scrollPane.setBounds(x, y, doubleWidth, scrollPanelHeight);
         add(scrollPane);
 
@@ -101,12 +122,16 @@ public class EmailPanel extends FramePanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == wyslij) {
-            String tytul = "TEST";
+            String tytul = tytulText.getText();
             String tresc = emailText.getText();
             String email = obecnyPracodawca.getEmail();
-            emailSender.send(tytul, tresc, email);
+            String msg = emailSender.send(tytul, tresc, email);
+            UIHelper.displayMessage(this, msg);
         } else if (e.getSource() == wroc) {
             getFrame().initPrzegladaniePracodawcow(obecnyPracodawca);
+        } else if (e.getSource() == czcionka) {
+            Integer rozmiar = Integer.parseInt(UIHelper.getComboText(czcionka).replaceAll("px", ""));
+            emailText.setFont(new Font(emailText.getFont().getFamily(), Font.PLAIN, rozmiar));
         }
     }
 
@@ -155,7 +180,7 @@ public class EmailPanel extends FramePanel implements ActionListener {
             stringBuilder.append(" - koszt sporządzenia ");
             DecimalFormat df = new DecimalFormat("#.00");
             stringBuilder.append(df.format(kosztTeczki));
-            stringBuilder.append("zł netto/szt.");
+            stringBuilder.append("zł netto.");
             stringBuilder.append(System.lineSeparator());
         }
         stringBuilder.append(punkt++).append(". ");
@@ -182,10 +207,10 @@ public class EmailPanel extends FramePanel implements ActionListener {
         }
         stringBuilder.append(System.lineSeparator());
         stringBuilder.append(System.lineSeparator());
-        stringBuilder.append("Z poważaniem");
-        stringBuilder.append(System.lineSeparator());
-        stringBuilder.append("Tomasz Malak");
+        stringBuilder.append(emailStopka);
         this.emailText.setText(stringBuilder.toString());
+        this.tytulText.setText("Informacja o brakach w dokumentacji BHP");
+        czcionka.setSelectedItem("12px");
     }
 
     private String formatDate(Date date) {

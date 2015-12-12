@@ -55,7 +55,7 @@ public class EmailSender extends JavaMailSenderImpl {
         getJavaMailProperties().put("mail.smtp.auth", auth);
     }
 
-    public boolean send(String subject, String body, String email, BodyPart... attachments) {
+    public String send(String subject, String body, String email, BodyPart... attachments) {
         if (emailFrom != null) {
             try {
                 MimeMessage msg = createMimeMessage();
@@ -74,9 +74,9 @@ public class EmailSender extends JavaMailSenderImpl {
                 msg.setContent(multiPart);
                 send(msg);
             } catch (Exception ex) {
-                return false;
+                return ex.getMessage();
             }
         }
-        return true;
+        return String.format("Email został wysłany do %s", email);
     }
 }

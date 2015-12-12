@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>malak</artifactId>
     <groupId>pl.malak</groupId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
     <packaging>jar</packaging>
     <name>Malak</name>
     <properties>
@@ -29,6 +29,8 @@
         <mail.sender.pass/>
         <mail.sender.from/>
         <koszt.teczka>100.00</koszt.teczka>
+        <koszt.badania>50.00</koszt.badania>
+        <email.stopka/>
         <file.properties.name>malak.properties</file.properties.name>
     </properties>
     <build>

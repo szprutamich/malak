@@ -37,8 +37,20 @@ public class EmailPanel extends FramePanel implements ActionListener {
     @Resource
     private EmailSender emailSender;
 
-    @Value("${koszt.teczka}")
-    private Double kosztTeczki;
+    @Value("${koszt.teczka.ogolna}")
+    private Double kosztTeczkaOgolna;
+
+    @Value("${koszt.ocena.ryzyka}")
+    private Double kosztOcenaRyzyka;
+
+    @Value("${koszt.szkolenia.okresowe}")
+    private Double kosztSzkoleniaOkresowe;
+
+    @Value("${koszt.szkolenia.pracodawcy}")
+    private Double kosztSzkoleniaPracodawcy;
+
+    @Value("${koszt.odziezowka}")
+    private Double kosztOdziezowka;
 
     @Value("${koszt.badania}")
     private Double kosztBadania;
@@ -51,7 +63,7 @@ public class EmailPanel extends FramePanel implements ActionListener {
     JLabel nazwaLabel = new JLabel();
     JLabel tytulLabel = new JLabel("Tytuł:");
     JTextField tytulText = new JTextField();
-    JTextArea emailText = new JTextArea();
+    JEditorPane emailText = new JEditorPane();
     JScrollPane scrollPane = new JScrollPane(emailText);
     JButton wyslij = new JButton("Wyślij");
     JButton wroc = new JButton("Wróć");
@@ -63,6 +75,7 @@ public class EmailPanel extends FramePanel implements ActionListener {
     public EmailPanel() {
         super();
         nazwaLabel.setFont(new Font(nazwaLabel.getFont().getFamily(), Font.PLAIN, 20));
+        emailText.setContentType("text/html");
 
         layoutComponents();
         addListeners();
@@ -140,11 +153,18 @@ public class EmailPanel extends FramePanel implements ActionListener {
         this.nazwaLabel.setText(String.format("Email do: %s (%s)", pracodawca.getNazwa(), pracodawca.getEmail()));
         int punkt = 1;
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<html>");
+        stringBuilder.append("<head><title>");
+        stringBuilder.append(tytulText.getText());
+        stringBuilder.append("</title></head>");
+        stringBuilder.append("<body>");
         stringBuilder.append("Witam");
-        stringBuilder.append(System.lineSeparator());
-        stringBuilder.append(System.lineSeparator());
-        stringBuilder.append("Informujemy, że posiadają Państwo następujące braki w dokumentacji BHP:");
-        stringBuilder.append(System.lineSeparator());
+        stringBuilder.append("<br/>");
+        stringBuilder.append("<br/>");
+        stringBuilder.append("Informujemy, że posiadają Państwo następujące braki w dokumentacji BHP firmy ");
+        stringBuilder.append(obecnyPracodawca.getNazwa());
+        stringBuilder.append(":");
+        stringBuilder.append("<br/>");
         if (!pracodawca.getTeczka()) {
             stringBuilder.append(punkt++).append(". ");
             stringBuilder.append("Teczka ogólna - ");
@@ -152,8 +172,12 @@ public class EmailPanel extends FramePanel implements ActionListener {
                 stringBuilder.append(pracodawca.getTeczkaUwagi().toLowerCase());
             } else {
                 stringBuilder.append("brak");
+                stringBuilder.append(" - koszt sporządzenia ");
+                DecimalFormat df = new DecimalFormat("#.00");
+                stringBuilder.append(df.format(kosztTeczkaOgolna));
+                stringBuilder.append("zł netto.");
             }
-            stringBuilder.append(System.lineSeparator());
+            stringBuilder.append("<br/>");
         }
         if (!pracodawca.getOcena()) {
             stringBuilder.append(punkt++).append(". ");
@@ -166,8 +190,12 @@ public class EmailPanel extends FramePanel implements ActionListener {
                 }
             } else {
                 stringBuilder.append("brak");
+                stringBuilder.append(" - koszt sporządzenia ");
+                DecimalFormat df = new DecimalFormat("#.00");
+                stringBuilder.append(df.format(kosztOcenaRyzyka));
+                stringBuilder.append("zł netto.");
             }
-            stringBuilder.append(System.lineSeparator());
+            stringBuilder.append("<br/>");
         }
         if (!pracodawca.getSzkoleniaOkresowe()) {
             stringBuilder.append(punkt++).append(". ");
@@ -176,12 +204,12 @@ public class EmailPanel extends FramePanel implements ActionListener {
                 stringBuilder.append(pracodawca.getSzkoleniaOkresoweUwagi().toLowerCase());
             } else {
                 stringBuilder.append("brak");
+                stringBuilder.append(" - koszt sporządzenia ");
+                DecimalFormat df = new DecimalFormat("#.00");
+                stringBuilder.append(df.format(kosztSzkoleniaOkresowe));
+                stringBuilder.append("zł netto.");
             }
-            stringBuilder.append(" - koszt sporządzenia ");
-            DecimalFormat df = new DecimalFormat("#.00");
-            stringBuilder.append(df.format(kosztTeczki));
-            stringBuilder.append("zł netto.");
-            stringBuilder.append(System.lineSeparator());
+            stringBuilder.append("<br/>");
         }
         stringBuilder.append(punkt++).append(". ");
         stringBuilder.append("Szkolenia pracodawcy - ");
@@ -192,8 +220,12 @@ public class EmailPanel extends FramePanel implements ActionListener {
             stringBuilder.append(pracodawca.getSzkoleniaPracodawcyUwagi().toLowerCase());
         } else {
             stringBuilder.append("brak");
+            stringBuilder.append(" - koszt sporządzenia ");
+            DecimalFormat df = new DecimalFormat("#.00");
+            stringBuilder.append(df.format(kosztSzkoleniaPracodawcy));
+            stringBuilder.append("zł netto.");
         }
-        stringBuilder.append(System.lineSeparator());
+        stringBuilder.append("<br/>");
         if (!pracodawca.getOdziezowka() && !StringUtils.equalsIgnoreCase("nie dotyczy",
                 pracodawca.getOdziezowkaUwagi())) {
             stringBuilder.append(punkt).append(". ");
@@ -202,14 +234,21 @@ public class EmailPanel extends FramePanel implements ActionListener {
                 stringBuilder.append(pracodawca.getOdziezowkaUwagi().toLowerCase());
             } else {
                 stringBuilder.append("brak");
+                stringBuilder.append(" - koszt sporządzenia ");
+                DecimalFormat df = new DecimalFormat("#.00");
+                stringBuilder.append(df.format(kosztOdziezowka));
+                stringBuilder.append("zł netto.");
             }
-            stringBuilder.append(System.lineSeparator());
+            stringBuilder.append("<br/>");
         }
-        stringBuilder.append(System.lineSeparator());
-        stringBuilder.append(System.lineSeparator());
+        stringBuilder.append("<br/>");
+        stringBuilder.append("<br/>");
         stringBuilder.append(emailStopka);
+        stringBuilder.append("</body>");
+        stringBuilder.append("</html>");
         this.emailText.setText(stringBuilder.toString());
-        this.tytulText.setText("Informacja o brakach w dokumentacji BHP");
+        this.tytulText.setText(String.format("Informacja o brakach w dokumentacji BHP firmy %s",
+                obecnyPracodawca.getNazwa()));
         czcionka.setSelectedItem("12px");
     }
 

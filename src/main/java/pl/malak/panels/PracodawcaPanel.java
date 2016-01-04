@@ -304,6 +304,7 @@ public class PracodawcaPanel extends FramePanel implements ActionListener {
             odziezowka.setSelected(pracodawca.getOdziezowka());
             teczkaUwagi.setSelectedItem(pracodawca.getTeczkaUwagi());
             ocenaUwagi.setSelectedItem(pracodawca.getOcenaUwagi());
+            szkoleniaUwagi.setSelectedItem(pracodawca.getSzkoleniaPracodawcyUwagi());
             szkoleniaOkresoweUwagi.setSelectedItem(pracodawca.getSzkoleniaOkresoweUwagi());
             odziezowkaUwagi.setSelectedItem(pracodawca.getOdziezowkaUwagi());
 

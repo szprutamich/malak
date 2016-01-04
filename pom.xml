@@ -28,7 +28,11 @@
         <mail.sender.username/>
         <mail.sender.pass/>
         <mail.sender.from/>
-        <koszt.teczka>100.00</koszt.teczka>
+        <koszt.teczka.ogolna/>
+        <koszt.ocena.ryzyka/>
+        <koszt.szkolenia.okresowe/>
+        <koszt.szkolenia.pracodawcy/>
+        <koszt.odziezowka/>
         <koszt.badania>50.00</koszt.badania>
         <email.stopka/>
         <file.properties.name>malak.properties</file.properties.name>

@@ -58,4 +58,20 @@ public class PracaDao extends CRUDRepository<Praca> {
         List<Praca> result = typedQuery.getResultList();
         return result.isEmpty() ? null : result.get(0);
     }
+
+    public List<Praca> loadByPracodawcaId(Long pracodawcaId) {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Praca> query = builder.createQuery(Praca.class);
+        Root<Praca> praca = query.from(Praca.class);
+        query.select(praca);
+        ParameterExpression<Long> pracodawcaIdParam = builder.parameter(Long.class);
+        query.where(
+                builder.equal(praca.get(Praca_.pracodawca).get(Pracodawca_.id), pracodawcaIdParam),
+                builder.isNull(praca.get(Praca_.dataUsuniecia))
+        );
+        query.orderBy(builder.asc(praca.get(Praca_.nazwa)));
+        TypedQuery<Praca> typedQuery = entityManager.createQuery(query);
+        typedQuery.setParameter(pracodawcaIdParam, pracodawcaId);
+        return typedQuery.getResultList();
+    }
 }

@@ -5,8 +5,9 @@ public class Helper {
     public static String[] PREDEFINIOWANE_UWAGI = {
             "",
             "Wypisać",
-            "Dopisać",
             "Podpisać",
+            "Uzupełnić",
+            "Wypełnić",
             "Nie dotyczy"
     };
 }

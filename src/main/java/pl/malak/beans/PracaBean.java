@@ -91,8 +91,8 @@ public class PracaBean {
             Boolean drukZwua, String drukZwuaUwagi, String nazwa) {
         Praca praca = pracaDao.load(id);
 
-        praca.setKwsetionariuszOsobowyUbiegajacego(kwsetionariuszOsobowyUbiegajacego);
-        praca.setKwsetionariuszOsobowyUbiegajacegoUwagi(kwsetionariuszOsobowyUbiegajacegoUwagi);
+        praca.setKwestionariuszOsobowyUbiegajacego(kwsetionariuszOsobowyUbiegajacego);
+        praca.setKwestionariuszOsobowyUbiegajacegoUwagi(kwsetionariuszOsobowyUbiegajacegoUwagi);
         praca.setPodanieOPrace(podanieOPrace);
         praca.setPodanieOPraceUwagi(podanieOPraceUwagi);
         praca.setZyciorys(zyciorys);
@@ -110,8 +110,8 @@ public class PracaBean {
         praca.setOrzeczenieLekarskiePrzeciwskazaniaData(orzeczenieLekarskiePrzeciwskazaniaData);
         praca.setDowodOsobisty(dowodOsobisty);
         praca.setDowodOsobistyUwagi(dowodOsobistyUwagi);
-        praca.setKwsetionariuszOsobowyPracownika(kwsetionariuszOsobowyPracownika);
-        praca.setKwsetionariuszOsobowyPracownikaUwagi(kwsetionariuszOsobowyPracownikaUwagi);
+        praca.setKwestionariuszOsobowyPracownika(kwsetionariuszOsobowyPracownika);
+        praca.setKwestionariuszOsobowyPracownikaUwagi(kwsetionariuszOsobowyPracownikaUwagi);
         praca.setUmowaOPrace(umowaOPrace);
         praca.setUmowaOPraceUwagi(umowaOPraceUwagi);
         praca.setInformacjaOWarunkach(informacjaOWarunkach);

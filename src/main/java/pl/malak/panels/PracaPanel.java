@@ -497,7 +497,7 @@ public class PracaPanel extends FramePanel implements ActionListener {
         if (praca != null && editMode) {
             obecnaPraca = praca;
 
-            kwsetionariuszOsobowyUbiegajacego.setSelected(praca.getKwsetionariuszOsobowyUbiegajacego());
+            kwsetionariuszOsobowyUbiegajacego.setSelected(praca.getKwestionariuszOsobowyUbiegajacego());
             podanieOPrace.setSelected(praca.getPodanieOPrace());
             zyciorys.setSelected(praca.getZyciorys());
             swiadectwoPracy.setSelected(praca.getSwiadectwoPracy());
@@ -506,7 +506,7 @@ public class PracaPanel extends FramePanel implements ActionListener {
             podstawaUrlopu.setSelected(praca.getPodstawaUrlopu());
             orzeczenieLekarskiePrzeciwskazania.setSelected(praca.getOrzeczenieLekarskiePrzeciwskazania());
             dowodOsobisty.setSelected(praca.getDowodOsobisty());
-            kwsetionariuszOsobowyPracownika.setSelected(praca.getKwsetionariuszOsobowyPracownika());
+            kwsetionariuszOsobowyPracownika.setSelected(praca.getKwestionariuszOsobowyPracownika());
             umowaOPrace.setSelected(praca.getUmowaOPrace());
             informacjaOWarunkach.setSelected(praca.getInformacjaOWarunkach());
             oswiadczenieORyzyku.setSelected(praca.getOswiadczenieORyzyku());
@@ -527,7 +527,7 @@ public class PracaPanel extends FramePanel implements ActionListener {
             kopiaSwiadectwa.setSelected(praca.getKopiaSwiadectwa());
             drukZwua.setSelected(praca.getDrukZwua());
 
-            kwsetionariuszOsobowyUbiegajacegoUwagi.setSelectedItem(praca.getKwsetionariuszOsobowyUbiegajacegoUwagi());
+            kwsetionariuszOsobowyUbiegajacegoUwagi.setSelectedItem(praca.getKwestionariuszOsobowyUbiegajacegoUwagi());
             podanieOPraceUwagi.setSelectedItem(praca.getPodanieOPraceUwagi());
             zyciorysUwagi.setSelectedItem(praca.getZyciorysUwagi());
             swiadectwoPracyUwagi.setSelectedItem(praca.getSwiadectwoPracyUwagi());
@@ -536,7 +536,7 @@ public class PracaPanel extends FramePanel implements ActionListener {
             podstawaUrlopuUwagi.setSelectedItem(praca.getPodstawaUrlopuUwagi());
             orzeczenieLekarskiePrzeciwskazaniaUwagi.setSelectedItem(praca.getOrzeczenieLekarskiePrzeciwskazaniaUwagi());
             dowodOsobistyUwagi.setSelectedItem(praca.getDowodOsobistyUwagi());
-            kwsetionariuszOsobowyPracownikaUwagi.setSelectedItem(praca.getKwsetionariuszOsobowyPracownikaUwagi());
+            kwsetionariuszOsobowyPracownikaUwagi.setSelectedItem(praca.getKwestionariuszOsobowyPracownikaUwagi());
             umowaOPraceUwagi.setSelectedItem(praca.getUmowaOPraceUwagi());
             informacjaOWarunkachUwagi.setSelectedItem(praca.getInformacjaOWarunkachUwagi());
             oswiadczenieORyzykuUwagi.setSelectedItem(praca.getOswiadczenieORyzykuUwagi());

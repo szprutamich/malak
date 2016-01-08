@@ -201,14 +201,12 @@ public class EmailPanel extends FramePanel implements ActionListener {
             stringBuilder.append("Jednocześnie informujemy o obowiązku uzupełnienia dokumentów dotyczących umów " +
                     "o pracę:");
             stringBuilder.append("<br/>");
-            stringBuilder.append("<br/>");
             stringBuilder.append(prace);
         }
         if (StringUtils.isNotBlank(zlecenia)) {
             stringBuilder.append("<br/>");
             stringBuilder.append("Informujemy także o obowiązku uzupełnienia dokumentów dotyczących umów " +
                     "cywilnoprawnych:");
-            stringBuilder.append("<br/>");
             stringBuilder.append("<br/>");
             stringBuilder.append(zlecenia);
         }
@@ -297,7 +295,7 @@ public class EmailPanel extends FramePanel implements ActionListener {
         for (Praca praca : prace) {
             String text = oblugaPracownika(praca);
             if (StringUtils.isNotBlank(text)) {
-                stringBuilder.append("<br/>").append(punkt++).append(" - ")
+                stringBuilder.append("<br/>").append(punkt++).append(". ")
                         .append(praca.getNazwa()).append("<br/>").append(text);
             }
         }
@@ -311,7 +309,7 @@ public class EmailPanel extends FramePanel implements ActionListener {
         for (Zlecenie zlecenie : zlecenia) {
             String text = obslugaZlecenia(zlecenie);
             if (StringUtils.isNotBlank(text)) {
-                stringBuilder.append("<br/>").append(punkt++).append(" - ")
+                stringBuilder.append("<br/>").append(punkt++).append(". ")
                         .append(zlecenie.getNazwa()).append("<br/>").append(text);
             }
         }
@@ -320,15 +318,83 @@ public class EmailPanel extends FramePanel implements ActionListener {
 
     private String oblugaPracownika(Praca praca) {
         List<String> wiersze = new ArrayList<>();
-//        wiersze.add(obslugaWiersza("Kwestionariusz osobowy + oświadczenie zleceniobiorcy",
-//                praca.getKwestionariusz(), praca.getKwestionariuszUwagi(), null, Rodzaj.MESKI));
+        wiersze.add(obslugaWiersza("Wypełniony kwestionariusz osobowy dla osoby ubiegającej się o zatrudnienie",
+                praca.getKwestionariuszOsobowyUbiegajacego(), praca.getKwestionariuszOsobowyUbiegajacegoUwagi(),
+                null, Rodzaj.MESKI));
+        wiersze.add(obslugaWiersza("Podanie o pracę", praca.getPodanieOPrace(), praca
+                .getPodanieOPraceUwagi(), null, Rodzaj.NIJAKI));
+        wiersze.add(obslugaWiersza("Życiorys pracownika", praca.getZyciorys(), praca
+                .getZyciorysUwagi(), null, Rodzaj.MESKI));
+        wiersze.add(obslugaWiersza("Świadectwo pracy z poprzednich miejsc pracy lub inne dokumenty potwierdzające " +
+                "okresy zatrudnienia, w danym roku kalendarzowym", praca.getSwiadectwoPracy(), praca
+                .getSwiadectwoPracyUwagi(), null, Rodzaj.NIJAKI));
+        wiersze.add(obslugaWiersza("Dokumenty potwierdzające kwalifikacje zawodowe, " +
+                "wymagane do wykonywania oferowanej pracy", praca.getDokumentyPotwierdzajace(), praca
+                .getDokumentyPotwierdzajaceUwagi(), null, Rodzaj.LICZBA_MNOGA));
+        wiersze.add(obslugaWiersza("Świadectwo ukończenia gimnazjum w przypadku zatrudnienia w celu przygotowania " +
+                "zawodowego", praca.getSwiadectwoUkonczeniaGimnazjum(), praca
+                .getSwiadectwoUkonczeniaGimnazjumUwagi(), null, Rodzaj.NIJAKI));
+        wiersze.add(obslugaWiersza("Podstawa urlopu - DRUK", praca.getPodstawaUrlopu(), praca
+                .getPodstawaUrlopuUwagi(), null, Rodzaj.ZENSKI));
+        wiersze.add(obslugaWiersza("Orzeczenie lekarskie stwierdzające brak przeciwwskazań do pracy na określonym " +
+                "stanowisku", praca.getOrzeczenieLekarskiePrzeciwskazania(), praca
+                .getOrzeczenieLekarskiePrzeciwskazaniaUwagi(), praca
+                .getOrzeczenieLekarskiePrzeciwskazaniaData(), Rodzaj.NIJAKI));
+        wiersze.add(obslugaWiersza("Dowód osobisty", praca.getDowodOsobisty(), praca
+                .getDowodOsobistyUwagi(), null, Rodzaj.NIJAKI));
+
+        wiersze.add(obslugaWiersza("Kwestionariusz osobowy pracownika", praca.getKwestionariuszOsobowyPracownika(),
+                praca.getKwestionariuszOsobowyPracownikaUwagi(), null, Rodzaj.MESKI));
+        wiersze.add(obslugaWiersza("Umowa o pracę + Aneks", praca.getUmowaOPrace(), praca
+                .getUmowaOPraceUwagi(), null, Rodzaj.ZENSKI));
+        wiersze.add(obslugaWiersza("Informacja o warunkach zatrudnienia", praca.getInformacjaOWarunkach(), praca
+                .getInformacjaOWarunkachUwagi(), null, Rodzaj.ZENSKI));
+        wiersze.add(obslugaWiersza("Oświadczenie pracownika o zapoznaniu się z informacją o ryzyku zawodowym",
+                praca.getOswiadczenieORyzyku(), praca.getOswiadczenieORyzykuUwagi(), null, Rodzaj.NIJAKI));
+        wiersze.add(obslugaWiersza("Oświadczenie pracownika o zapoznaniu się z obowiązkowymi przepisami w zakresie " +
+                "równouprawnienia", praca.getOswiadczenieOPrzepisach(), praca
+                .getOswiadczenieOPrzepisachUwagi(), null, Rodzaj.NIJAKI));
+        wiersze.add(obslugaWiersza("Oświadczenie pracownika o zapoznaniu się z przepisami BHP", praca
+                .getOswiadczenieOBhp(), praca.getOswiadczenieOBhpUwagi(), praca
+                .getOswiadczenieOBhpData(), Rodzaj.NIJAKI));
+        wiersze.add(obslugaWiersza("Oświadczenie pracownika o zapoznaniu się przepisami przeciwpozarowymi", praca
+                .getOswiadczenieOPozarze(), praca.getOswiadczenieOPozarzeUwagi(), null, Rodzaj.NIJAKI));
+        wiersze.add(obslugaWiersza("Oświadczenie pracownika o zapoznaniu się z uprawnieniami rodzicielskimi itp.", praca
+                .getOswiadczenieOUprawnieniach(), praca.getOswiadczenieOUprawnieniachUwagi(), null, Rodzaj.NIJAKI));
+        wiersze.add(obslugaWiersza("PIT-2, czyli wyrażenie zgody pracownika na miesięczne potrącanie kwoty wolnej " +
+                "z zaliczek na podatek dochodowy", praca.getPit(), praca.getPitUwagi(), null, Rodzaj.NIJAKI));
+        wiersze.add(obslugaWiersza("Oświadczenie o podleganiu pod Urząd Skarbowy", praca
+                .getOswiadczenieUrzadSkarbowy(), praca.getOswiadczenieUrzadSkarbowyUwagi(), null, Rodzaj.NIJAKI));
+        wiersze.add(obslugaWiersza("Oświadczenie o podwyższonych kosztach uzyskania przychodów jeśli pracownik " +
+                "mieszka poza miejscowowścią, w której jest siedziba pracodawcy", praca
+                .getOswiadczenieOKosztach(), praca.getOswiadczenieOKosztachUwagi(), null, Rodzaj.NIJAKI));
+        wiersze.add(obslugaWiersza("Zgoda pracownika na wypłatę wynagrodzenia na konto bankowe",
+                praca.getZgodaPracownika(), praca.getZgodaPracownikaUwagi(), null, Rodzaj.ZENSKI));
+        wiersze.add(obslugaWiersza("Umowa o odpowiedzialności materialnej za powierzone mienie", praca
+                .getUmowaOdpowiedzialnosci(), praca.getUmowaOdpowiedzialnosciUwagi(), null, Rodzaj.ZENSKI));
+        wiersze.add(obslugaWiersza("Umowa o zakazie konkurencji", praca.getUmowaOZakazie(), praca
+                .getUmowaOZakazieUwagi(), null, Rodzaj.ZENSKI));
+        wiersze.add(obslugaWiersza("Orzeczenie lekarskie dotyczace badań okresowych", praca.getOrzeczenieLekarskie(),
+                praca.getOrzeczenieLekarskieUwagi(), praca.getOrzeczenieLekarskieData(), Rodzaj.NIJAKI));
+        wiersze.add(obslugaWiersza("Okresowe badania BHP", praca.getOkresoweBadaniaBhp(), praca
+                .getOkresoweBadaniaBhpUwagi(), praca.getOkresoweBadaniaBhpData(), Rodzaj.LICZBA_MNOGA));
+        wiersze.add(obslugaWiersza("DRUK ZUA+ZCNA", praca.getDrukZua(), praca
+                .getDrukZuaUwagi(), null, Rodzaj.MESKI));
+
+        wiersze.add(obslugaWiersza("Oświadczenie o wypowiedzeniu lub rozwiązaniu umowy o pracę, a także dokumenty " +
+                        "potwierdzające zaistnienie zdarzeń powodujących wygaśnięcie stosunku pracy",
+                praca.getOswiadczenieWypowiedzenie(), praca.getOswiadczenieWypowiedzenieUwagi(), null, Rodzaj.NIJAKI
+        ));
+        wiersze.add(obslugaWiersza("Kopia wydanego pracownikowi świadectwa pracy oraz ewentualny wniosek o " +
+                "sprostowanie świadectwa i korespondencja w tej sprawie", praca.getKopiaSwiadectwa(), praca
+                .getKopiaSwiadectwaUwagi(), null, Rodzaj.ZENSKI));
+        wiersze.add(obslugaWiersza("Druk ZWUA", praca.getDrukZwua(), praca.getDrukZwuaUwagi(), null, Rodzaj.MESKI));
 
         StringBuilder stringBuilder = new StringBuilder();
         for (String wiersz : wiersze) {
             stringBuilder.append(wiersz);
         }
         return stringBuilder.toString();
-
     }
 
     private String obslugaZlecenia(Zlecenie zlecenie) {

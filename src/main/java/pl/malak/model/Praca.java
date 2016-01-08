@@ -12,10 +12,10 @@ import java.util.Date;
 public class Praca {
 
     @Column(name = "kwestionariusz_osobowy_ubiegajacego")
-    private Boolean kwsetionariuszOsobowyUbiegajacego = false;
+    private Boolean kwestionariuszOsobowyUbiegajacego = false;
 
     @Column(name = "kwestionariusz_osobowy_ubiegajacego_uwagi")
-    private String kwsetionariuszOsobowyUbiegajacegoUwagi;
+    private String kwestionariuszOsobowyUbiegajacegoUwagi;
 
     @Column(name = "podanie_o_prace")
     private Boolean podanieOPrace = false;
@@ -69,10 +69,10 @@ public class Praca {
     private String dowodOsobistyUwagi;
 
     @Column(name = "kwestionariusz_osobowy_pracownika")
-    private Boolean kwsetionariuszOsobowyPracownika = false;
+    private Boolean kwestionariuszOsobowyPracownika = false;
 
     @Column(name = "kwestionariusz_osobowy_pracownika_uwagi")
-    private String kwsetionariuszOsobowyPracownikaUwagi;
+    private String kwestionariuszOsobowyPracownikaUwagi;
 
     @Column(name = "umowa_o_prace")
     private Boolean umowaOPrace = false;
@@ -221,14 +221,14 @@ public class Praca {
     }
 
     public Praca(
-            Boolean kwsetionariuszOsobowyUbiegajacego, String kwsetionariuszOsobowyUbiegajacegoUwagi,
+            Boolean kwestionariuszOsobowyUbiegajacego, String kwestionariuszOsobowyUbiegajacegoUwagi,
             Boolean podanieOPrace, String podanieOPraceUwagi, Boolean zyciorys, String zyciorysUwagi,
             Boolean swiadectwoPracy, String swiadectwoPracyUwagi, Boolean dokumentyPotwierdzajace,
             String dokumentyPotwierdzajaceUwagi, Boolean swiadectwoUkonczeniaGimnazjum,
             String swiadectwoUkonczeniaGimnazjumUwagi, Boolean podstawaUrlopu, String podstawaUrlopuUwagi,
             Boolean orzeczenieLekarskiePrzeciwskazania, String orzeczenieLekarskiePrzeciwskazaniaUwagi,
             Date orzeczenieLekarskiePrzeciwskazaniaData, Boolean dowodOsobisty, String dowodOsobistyUwagi,
-            Boolean kwsetionariuszOsobowyPracownika, String kwsetionariuszOsobowyPracownikaUwagi,
+            Boolean kwestionariuszOsobowyPracownika, String kwestionariuszOsobowyPracownikaUwagi,
             Boolean umowaOPrace, String umowaOPraceUwagi, Boolean informacjaOWarunkach,
             String informacjaOWarunkachUwagi, Boolean oswiadczenieORyzyku, String oswiadczenieORyzykuUwagi,
             Boolean oswiadczenieOPrzepisach, String oswiadczenieOPrzepisachUwagi, Boolean oswiadczenieOBhp,
@@ -243,8 +243,8 @@ public class Praca {
             String okresoweBadaniaBhpUwagi, Date okresoweBadaniaBhpData, Boolean drukZua, String drukZuaUwagi,
             Boolean oswiadczenieWypowiedzenie, String oswiadczenieWypowiedzenieUwagi, Boolean kopiaSwiadectwa,
             String kopiaSwiadectwaUwagi, Boolean drukZwua, String drukZwuaUwagi, String nazwa) {
-        this.kwsetionariuszOsobowyUbiegajacego = kwsetionariuszOsobowyUbiegajacego;
-        this.kwsetionariuszOsobowyUbiegajacegoUwagi = kwsetionariuszOsobowyUbiegajacegoUwagi;
+        this.kwestionariuszOsobowyUbiegajacego = kwestionariuszOsobowyUbiegajacego;
+        this.kwestionariuszOsobowyUbiegajacegoUwagi = kwestionariuszOsobowyUbiegajacegoUwagi;
         this.podanieOPrace = podanieOPrace;
         this.podanieOPraceUwagi = podanieOPraceUwagi;
         this.zyciorys = zyciorys;
@@ -262,8 +262,8 @@ public class Praca {
         this.orzeczenieLekarskiePrzeciwskazaniaData = orzeczenieLekarskiePrzeciwskazaniaData;
         this.dowodOsobisty = dowodOsobisty;
         this.dowodOsobistyUwagi = dowodOsobistyUwagi;
-        this.kwsetionariuszOsobowyPracownika = kwsetionariuszOsobowyPracownika;
-        this.kwsetionariuszOsobowyPracownikaUwagi = kwsetionariuszOsobowyPracownikaUwagi;
+        this.kwestionariuszOsobowyPracownika = kwestionariuszOsobowyPracownika;
+        this.kwestionariuszOsobowyPracownikaUwagi = kwestionariuszOsobowyPracownikaUwagi;
         this.umowaOPrace = umowaOPrace;
         this.umowaOPraceUwagi = umowaOPraceUwagi;
         this.informacjaOWarunkach = informacjaOWarunkach;
@@ -317,20 +317,20 @@ public class Praca {
         return id;
     }
 
-    public Boolean getKwsetionariuszOsobowyUbiegajacego() {
-        return kwsetionariuszOsobowyUbiegajacego;
+    public Boolean getKwestionariuszOsobowyUbiegajacego() {
+        return kwestionariuszOsobowyUbiegajacego;
     }
 
-    public void setKwsetionariuszOsobowyUbiegajacego(Boolean kwsetionariuszOsobowyUbiegajacego) {
-        this.kwsetionariuszOsobowyUbiegajacego = kwsetionariuszOsobowyUbiegajacego;
+    public void setKwestionariuszOsobowyUbiegajacego(Boolean kwsetionariuszOsobowyUbiegajacego) {
+        this.kwestionariuszOsobowyUbiegajacego = kwsetionariuszOsobowyUbiegajacego;
     }
 
-    public String getKwsetionariuszOsobowyUbiegajacegoUwagi() {
-        return kwsetionariuszOsobowyUbiegajacegoUwagi;
+    public String getKwestionariuszOsobowyUbiegajacegoUwagi() {
+        return kwestionariuszOsobowyUbiegajacegoUwagi;
     }
 
-    public void setKwsetionariuszOsobowyUbiegajacegoUwagi(String kwsetionariuszOsobowyUbiegajacegoUwagi) {
-        this.kwsetionariuszOsobowyUbiegajacegoUwagi = kwsetionariuszOsobowyUbiegajacegoUwagi;
+    public void setKwestionariuszOsobowyUbiegajacegoUwagi(String kwsetionariuszOsobowyUbiegajacegoUwagi) {
+        this.kwestionariuszOsobowyUbiegajacegoUwagi = kwsetionariuszOsobowyUbiegajacegoUwagi;
     }
 
     public Boolean getPodanieOPrace() {
@@ -469,20 +469,20 @@ public class Praca {
         this.dowodOsobistyUwagi = dowodOsobistyUwagi;
     }
 
-    public Boolean getKwsetionariuszOsobowyPracownika() {
-        return kwsetionariuszOsobowyPracownika;
+    public Boolean getKwestionariuszOsobowyPracownika() {
+        return kwestionariuszOsobowyPracownika;
     }
 
-    public void setKwsetionariuszOsobowyPracownika(Boolean kwsetionariuszOsobowyPracownika) {
-        this.kwsetionariuszOsobowyPracownika = kwsetionariuszOsobowyPracownika;
+    public void setKwestionariuszOsobowyPracownika(Boolean kwsetionariuszOsobowyPracownika) {
+        this.kwestionariuszOsobowyPracownika = kwsetionariuszOsobowyPracownika;
     }
 
-    public String getKwsetionariuszOsobowyPracownikaUwagi() {
-        return kwsetionariuszOsobowyPracownikaUwagi;
+    public String getKwestionariuszOsobowyPracownikaUwagi() {
+        return kwestionariuszOsobowyPracownikaUwagi;
     }
 
-    public void setKwsetionariuszOsobowyPracownikaUwagi(String kwsetionariuszOsobowyPracownikaUwagi) {
-        this.kwsetionariuszOsobowyPracownikaUwagi = kwsetionariuszOsobowyPracownikaUwagi;
+    public void setKwestionariuszOsobowyPracownikaUwagi(String kwsetionariuszOsobowyPracownikaUwagi) {
+        this.kwestionariuszOsobowyPracownikaUwagi = kwsetionariuszOsobowyPracownikaUwagi;
     }
 
     public Boolean getUmowaOPrace() {
@@ -860,8 +860,8 @@ public class Praca {
         //region Czesc A
 
         int wiersz = Field.W_4.getValue();
-        this.kwsetionariuszOsobowyUbiegajacego = getBoolean(sheet, wiersz);
-        this.kwsetionariuszOsobowyUbiegajacegoUwagi = getUwagi(sheet, wiersz);
+        this.kwestionariuszOsobowyUbiegajacego = getBoolean(sheet, wiersz);
+        this.kwestionariuszOsobowyUbiegajacegoUwagi = getUwagi(sheet, wiersz);
 
         wiersz++;
         this.podanieOPrace = getBoolean(sheet, wiersz);
@@ -902,8 +902,8 @@ public class Praca {
         //region Czesc B
 
         wiersz = Field.W_16.getValue();
-        this.kwsetionariuszOsobowyPracownika = getBoolean(sheet, wiersz);
-        this.kwsetionariuszOsobowyPracownikaUwagi = getUwagi(sheet, wiersz);
+        this.kwestionariuszOsobowyPracownika = getBoolean(sheet, wiersz);
+        this.kwestionariuszOsobowyPracownikaUwagi = getUwagi(sheet, wiersz);
 
         wiersz++;
         this.umowaOPrace = getBoolean(sheet, wiersz);

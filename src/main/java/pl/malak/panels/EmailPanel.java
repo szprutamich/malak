@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import pl.malak.beans.EmailSender;
 import pl.malak.beans.dao.PracaDao;
 import pl.malak.beans.dao.ZlecenieDao;
+import pl.malak.helpers.Helper;
+import pl.malak.helpers.MyTransferHandler;
 import pl.malak.helpers.UIHelper;
 import pl.malak.model.Praca;
 import pl.malak.model.Pracodawca;
@@ -17,7 +19,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,6 +81,7 @@ public class EmailPanel extends FramePanel implements ActionListener {
         super();
         nazwaLabel.setFont(new Font(nazwaLabel.getFont().getFamily(), Font.PLAIN, 20));
         emailText.setContentType("text/html");
+        emailText.setTransferHandler(new MyTransferHandler());
 
         layoutComponents();
         addListeners();
@@ -197,23 +199,27 @@ public class EmailPanel extends FramePanel implements ActionListener {
         String prace = obslugaPracownikow(pracodawca);
         String zlecenia = obslugaZlecen(pracodawca);
         if (StringUtils.isNotBlank(prace)) {
-            stringBuilder.append("<br/>");
+            stringBuilder.append(newLine());
             stringBuilder.append("Jednocześnie informujemy o obowiązku uzupełnienia dokumentów dotyczących umów " +
                     "o pracę:");
-            stringBuilder.append("<br/>");
+            stringBuilder.append(newLine());
             stringBuilder.append(prace);
         }
         if (StringUtils.isNotBlank(zlecenia)) {
-            stringBuilder.append("<br/>");
+            stringBuilder.append(newLine());
             stringBuilder.append("Informujemy także o obowiązku uzupełnienia dokumentów dotyczących umów " +
                     "cywilnoprawnych:");
-            stringBuilder.append("<br/>");
+            stringBuilder.append(newLine());
             stringBuilder.append(zlecenia);
         }
 
         zakonczenie(stringBuilder);
 
-        this.emailText.setText(stringBuilder.toString());
+        String finalText = stringBuilder.toString()
+                .replaceAll("podpisać", "prosimy o dostarczenie podpisanych dokumentów")
+                .replaceAll("wypisać", "prosimy o dostarczenie wypisanych dokumentów");
+
+        this.emailText.setText(finalText);
         this.tytulText.setText(String.format("Informacja o brakach w dokumentacji BHP firmy %s",
                 obecnyPracodawca.getNazwa()));
         czcionka.setSelectedItem("12px");
@@ -226,17 +232,17 @@ public class EmailPanel extends FramePanel implements ActionListener {
         stringBuilder.append("</title></head>");
         stringBuilder.append("<body>");
         stringBuilder.append("Witam");
-        stringBuilder.append("<br/>");
-        stringBuilder.append("<br/>");
+        stringBuilder.append(newLine());
+        stringBuilder.append(newLine());
         stringBuilder.append("Informujemy, że posiadają Państwo następujące braki w dokumentacji BHP firmy ");
         stringBuilder.append(obecnyPracodawca.getNazwa());
         stringBuilder.append(":");
-        stringBuilder.append("<br/>");
+        stringBuilder.append(newLine());
     }
 
     private void zakonczenie(StringBuilder stringBuilder) {
-        stringBuilder.append("<br/>");
-        stringBuilder.append("<br/>");
+        stringBuilder.append(newLine());
+        stringBuilder.append(newLine());
         stringBuilder.append(emailStopka);
         stringBuilder.append("</body>");
         stringBuilder.append("</html>");
@@ -260,29 +266,31 @@ public class EmailPanel extends FramePanel implements ActionListener {
                 stringBuilder.append(" - koszt sporządzenia ");
                 DecimalFormat df = new DecimalFormat("#.00");
                 stringBuilder.append(df.format(kosztTeczki));
-                stringBuilder.append("zł netto.");
+                stringBuilder.append("zł brutto.");
             }
             if (data != null) {
                 LocalDateTime now = LocalDateTime.now();
                 LocalDateTime dateTime = LocalDateTime.fromDateFields(data);
                 if (now.isAfter(dateTime)) {
-                    stringBuilder.append(" - straciły ważność - koszt odnowienia ");
-                    DecimalFormat df = new DecimalFormat("#.00");
-                    stringBuilder.append(df.format(kosztBadania));
-                    stringBuilder.append("zł netto.");
-                } else if (now.plusDays(60).isAfter(dateTime)) {
-                    stringBuilder.append(" - tracą ważność ważność dnia: ");
-                    stringBuilder.append(formatDate(data));
+                    stringBuilder.append(" - straciły ważność dnia: ");
+                    stringBuilder.append(Helper.formatDate(data));
                     stringBuilder.append(" - koszt odnowienia ");
                     DecimalFormat df = new DecimalFormat("#.00");
                     stringBuilder.append(df.format(kosztBadania));
-                    stringBuilder.append("zł netto.");
+                    stringBuilder.append("zł brutto.");
+                } else if (now.plusDays(60).isAfter(dateTime)) {
+                    stringBuilder.append(" - tracą ważność ważność dnia: ");
+                    stringBuilder.append(Helper.formatDate(data));
+                    stringBuilder.append(" - koszt odnowienia ");
+                    DecimalFormat df = new DecimalFormat("#.00");
+                    stringBuilder.append(df.format(kosztBadania));
+                    stringBuilder.append("zł brutto.");
                 } else {
                     stringBuilder.append(" - ważne są do dnia: ");
-                    stringBuilder.append(formatDate(data));
+                    stringBuilder.append(Helper.formatDate(data));
                 }
             }
-            stringBuilder.append("<br/>");
+            stringBuilder.append(newLine());
             return stringBuilder.toString();
         }
         return null;
@@ -295,8 +303,8 @@ public class EmailPanel extends FramePanel implements ActionListener {
         for (Praca praca : prace) {
             String text = oblugaPracownika(praca);
             if (StringUtils.isNotBlank(text)) {
-                stringBuilder.append("<br/>").append(punkt++).append(". ")
-                        .append(praca.getNazwa()).append("<br/>").append(text);
+                stringBuilder.append(newLine()).append(punkt++).append(". ")
+                        .append(praca.getNazwa()).append(newLine()).append(text);
             }
         }
         return stringBuilder.toString();
@@ -309,8 +317,8 @@ public class EmailPanel extends FramePanel implements ActionListener {
         for (Zlecenie zlecenie : zlecenia) {
             String text = obslugaZlecenia(zlecenie);
             if (StringUtils.isNotBlank(text)) {
-                stringBuilder.append("<br/>").append(punkt++).append(". ")
-                        .append(zlecenie.getNazwa()).append("<br/>").append(text);
+                stringBuilder.append(newLine()).append(punkt++).append(". ")
+                        .append(zlecenie.getNazwa()).append(newLine()).append(text);
             }
         }
         return stringBuilder.toString();
@@ -336,10 +344,10 @@ public class EmailPanel extends FramePanel implements ActionListener {
                 .getSwiadectwoUkonczeniaGimnazjumUwagi(), null, Rodzaj.NIJAKI));
         wiersze.add(obslugaWiersza("Podstawa urlopu - DRUK", praca.getPodstawaUrlopu(), praca
                 .getPodstawaUrlopuUwagi(), null, Rodzaj.ZENSKI));
-        wiersze.add(obslugaWiersza("Orzeczenie lekarskie stwierdzające brak przeciwwskazań do pracy na określonym " +
+        wiersze.add(obslugaWierszaProsta("Orzeczenie lekarskie stwierdzające brak przeciwwskazań do pracy na określonym " +
                 "stanowisku", praca.getOrzeczenieLekarskiePrzeciwskazania(), praca
                 .getOrzeczenieLekarskiePrzeciwskazaniaUwagi(), praca
-                .getOrzeczenieLekarskiePrzeciwskazaniaData(), Rodzaj.NIJAKI));
+                .getOrzeczenieLekarskiePrzeciwskazaniaData()));
         wiersze.add(obslugaWiersza("Dowód osobisty", praca.getDowodOsobisty(), praca
                 .getDowodOsobistyUwagi(), null, Rodzaj.NIJAKI));
 
@@ -354,9 +362,9 @@ public class EmailPanel extends FramePanel implements ActionListener {
         wiersze.add(obslugaWiersza("Oświadczenie pracownika o zapoznaniu się z obowiązkowymi przepisami w zakresie " +
                 "równouprawnienia", praca.getOswiadczenieOPrzepisach(), praca
                 .getOswiadczenieOPrzepisachUwagi(), null, Rodzaj.NIJAKI));
-        wiersze.add(obslugaWiersza("Oświadczenie pracownika o zapoznaniu się z przepisami BHP", praca
+        wiersze.add(obslugaWierszaProsta("Oświadczenie pracownika o zapoznaniu się z przepisami BHP", praca
                 .getOswiadczenieOBhp(), praca.getOswiadczenieOBhpUwagi(), praca
-                .getOswiadczenieOBhpData(), Rodzaj.NIJAKI));
+                .getOswiadczenieOBhpData()));
         wiersze.add(obslugaWiersza("Oświadczenie pracownika o zapoznaniu się przepisami przeciwpozarowymi", praca
                 .getOswiadczenieOPozarze(), praca.getOswiadczenieOPozarzeUwagi(), null, Rodzaj.NIJAKI));
         wiersze.add(obslugaWiersza("Oświadczenie pracownika o zapoznaniu się z uprawnieniami rodzicielskimi itp.", praca
@@ -444,6 +452,24 @@ public class EmailPanel extends FramePanel implements ActionListener {
         return stringBuilder.toString();
     }
 
+    private String obslugaWierszaProsta(String text, Boolean value, String uwagi, Date data) {
+        if (StringUtils.isNotBlank(uwagi) && (StringUtils.equalsIgnoreCase("nie dotyczy",
+                uwagi.trim()) || StringUtils.equalsIgnoreCase("n/d", uwagi.trim()))) {
+            return "";
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        if (StringUtils.isNotBlank(uwagi)) {
+            stringBuilder.append(" - ").append(text);
+            if (StringUtils.isNotBlank(uwagi)) {
+                stringBuilder.append(" - ").append(uwagi.toLowerCase());
+            }
+        }
+        if (!value && data == null) {
+            stringBuilder.append(" - brak");
+        }
+        return stringBuilder.toString();
+    }
+
     private String obslugaWiersza(String text, Boolean value, String uwagi, Date data, Rodzaj rodzaj) {
         if (StringUtils.isNotBlank(uwagi) && (StringUtils.equalsIgnoreCase("nie dotyczy",
                 uwagi.trim()) || StringUtils.equalsIgnoreCase("n/d", uwagi.trim()))) {
@@ -451,10 +477,9 @@ public class EmailPanel extends FramePanel implements ActionListener {
         }
         if (StringUtils.isNotBlank(uwagi) || !value || data != null) {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append("  - ").append(text);
+            stringBuilder.append(" - ").append(text);
             if (StringUtils.isNotBlank(uwagi)) {
-                stringBuilder.append(" - ").append(uwagi.toLowerCase()
-                        .replaceAll("podpisać", "prosimy o dostarczenie podpisanych dokumentów"));
+                stringBuilder.append(" - ").append(uwagi.toLowerCase());
             }
             if (!value) {
                 stringBuilder.append(" - brak");
@@ -465,21 +490,22 @@ public class EmailPanel extends FramePanel implements ActionListener {
                 if (now.isAfter(dateTime)) {
                     switch (rodzaj) {
                         case MESKI:
-                            stringBuilder.append(" - stracił ważność - koszt odnowienia ");
+                            stringBuilder.append(" - stracił ważność dnia: ");
                             break;
                         case NIJAKI:
-                            stringBuilder.append(" - straciło ważność - koszt odnowienia ");
+                            stringBuilder.append(" - straciło ważność dnia: ");
                             break;
                         case ZENSKI:
-                            stringBuilder.append(" - straciła ważność - koszt odnowienia ");
+                            stringBuilder.append(" - straciła ważność dnia: ");
                             break;
                         case LICZBA_MNOGA:
-                            stringBuilder.append(" - straciły ważność - koszt odnowienia ");
+                            stringBuilder.append(" - straciły ważność dnia: ");
                             break;
                     }
+                    stringBuilder.append(Helper.formatDate(data)).append(" - koszt odnowienia ");
                     DecimalFormat df = new DecimalFormat("#.00");
                     stringBuilder.append(df.format(kosztBadania));
-                    stringBuilder.append("zł netto.");
+                    stringBuilder.append("zł brutto.");
                 } else if (now.plusDays(60).isAfter(dateTime)) {
                     switch (rodzaj) {
                         case MESKI:
@@ -491,11 +517,11 @@ public class EmailPanel extends FramePanel implements ActionListener {
                             stringBuilder.append(" - tracą ważność ważność dnia: ");
                             break;
                     }
-                    stringBuilder.append(formatDate(data));
+                    stringBuilder.append(Helper.formatDate(data));
                     stringBuilder.append(" - koszt odnowienia ");
                     DecimalFormat df = new DecimalFormat("#.00");
                     stringBuilder.append(df.format(kosztBadania));
-                    stringBuilder.append("zł netto.");
+                    stringBuilder.append("zł brutto.");
                 } else {
                     switch (rodzaj) {
                         case MESKI:
@@ -511,16 +537,16 @@ public class EmailPanel extends FramePanel implements ActionListener {
                             stringBuilder.append(" - ważne są do dnia: ");
                             break;
                     }
-                    stringBuilder.append(formatDate(data));
+                    stringBuilder.append(Helper.formatDate(data));
                 }
             }
-            stringBuilder.append("<br/>");
+            stringBuilder.append(newLine());
             return stringBuilder.toString();
         }
         return "";
     }
 
-    private String formatDate(Date date) {
-        return new SimpleDateFormat("yyyy-MM-dd").format(date);
+    private String newLine() {
+        return "<br/>";
     }
 }

@@ -1,6 +1,7 @@
 package pl.malak;
 
 import org.springframework.stereotype.Component;
+import pl.malak.beans.ReportBean;
 import pl.malak.helpers.UIHelper;
 import pl.malak.model.Pracodawca;
 import pl.malak.panels.EmailPanel;
@@ -15,6 +16,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 @Component
 public class MainFrame extends JFrame implements ActionListener {
@@ -47,11 +51,11 @@ public class MainFrame extends JFrame implements ActionListener {
     private JMenuItem importuj = new JMenuItem("Importuj z excela");
     private JMenuItem przegladaj = new JMenuItem("Przeglądaj pracodawców");
     private JMenuItem dodaj = new JMenuItem("Dodaj pracodawcę");
+    private JMenuItem generuj = new JMenuItem("Generuj raport");
     private JMenuItem zakoncz = new JMenuItem("Zakończ");
 
     private JMenuItem autor = new JMenuItem("Autor");
-
-    private JFileChooser fileChooser = new JFileChooser("");
+    private JFileChooser fileChooser;
 
     @Resource
     private PracodawcaPanel pracodawcaPanel;
@@ -68,8 +72,17 @@ public class MainFrame extends JFrame implements ActionListener {
     @Resource
     private Migration migration;
 
+    @Resource
+    private ReportBean reportBean;
+
     public MainFrame() {
         super();
+        try {
+            fileChooser = new JFileChooser(MainFrame.class.getProtectionDomain().getCodeSource()
+                    .getLocation().toURI().getPath());
+        } catch (URISyntaxException e) {
+            fileChooser = new JFileChooser("");
+        }
         setLayout(new BorderLayout());
         setTitle("Malak");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -83,6 +96,7 @@ public class MainFrame extends JFrame implements ActionListener {
         program.add(importuj);
         program.add(przegladaj);
         program.add(dodaj);
+        program.add(generuj);
         program.add(zakoncz);
 
 
@@ -184,6 +198,20 @@ public class MainFrame extends JFrame implements ActionListener {
             initPrzegladaniePracodawcow(null);
         } else if (source == dodaj) {
             initDodajPracodawce();
+        } else if (source == generuj) {
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Csv Files", "csv");
+            fileChooser.setFileFilter(filter);
+            int returnVal = fileChooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                try (FileWriter fw = new FileWriter(fileChooser.getSelectedFile())) {
+                    String report = reportBean.generateReport();
+                    fw.write(report);
+                    UIHelper.displayMessage(this, "Raport został wygenerowany pomyślnie");
+                } catch (IOException e) {
+                    UIHelper.displayMessage(this, String.format("Nie udało się wygenerować raportu: %s",
+                            e.getMessage()));
+                }
+            }
         } else if (source == zakoncz) {
             System.exit(0);
         } else if (source == autor) {
@@ -195,6 +223,7 @@ public class MainFrame extends JFrame implements ActionListener {
         importuj.addActionListener(this);
         przegladaj.addActionListener(this);
         dodaj.addActionListener(this);
+        generuj.addActionListener(this);
         zakoncz.addActionListener(this);
         autor.addActionListener(this);
     }

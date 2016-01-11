@@ -1,9 +1,7 @@
 package pl.malak.beans.dao;
 
 import org.springframework.stereotype.Repository;
-import pl.malak.model.Pracodawca_;
-import pl.malak.model.Zlecenie;
-import pl.malak.model.Zlecenie_;
+import pl.malak.model.*;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -72,6 +70,24 @@ public class ZlecenieDao extends CRUDRepository<Zlecenie> {
         query.orderBy(builder.asc(zlecenie.get(Zlecenie_.nazwa)));
         TypedQuery<Zlecenie> typedQuery = entityManager.createQuery(query);
         typedQuery.setParameter(pracodawcaIdParam, pracodawcaId);
+        return typedQuery.getResultList();
+    }
+
+    public List<ReportRow> generateReport() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ReportRow> query = builder.createQuery(ReportRow.class);
+        Root<Zlecenie> zlecenie = query.from(Zlecenie.class);
+        query.multiselect(
+                zlecenie.get(Zlecenie_.pracodawca).get(Pracodawca_.nazwa),
+                zlecenie.get(Zlecenie_.nazwa),
+                zlecenie.get(Zlecenie_.szkolenieBhpData),
+                zlecenie.get(Zlecenie_.badaniaData)
+        );
+        query.orderBy(
+                builder.asc(zlecenie.get(Zlecenie_.pracodawca).get(Pracodawca_.nazwa)),
+                builder.asc(zlecenie.get(Zlecenie_.nazwa))
+        );
+        TypedQuery<ReportRow> typedQuery = entityManager.createQuery(query);
         return typedQuery.getResultList();
     }
 }

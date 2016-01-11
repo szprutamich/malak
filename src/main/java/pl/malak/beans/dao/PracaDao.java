@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import pl.malak.model.Praca;
 import pl.malak.model.Praca_;
 import pl.malak.model.Pracodawca_;
+import pl.malak.model.ReportRow;
 
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -72,6 +73,24 @@ public class PracaDao extends CRUDRepository<Praca> {
         query.orderBy(builder.asc(praca.get(Praca_.nazwa)));
         TypedQuery<Praca> typedQuery = entityManager.createQuery(query);
         typedQuery.setParameter(pracodawcaIdParam, pracodawcaId);
+        return typedQuery.getResultList();
+    }
+
+    public List<ReportRow> generateReport() {
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<ReportRow> query = builder.createQuery(ReportRow.class);
+        Root<Praca> zlecenie = query.from(Praca.class);
+        query.multiselect(
+                zlecenie.get(Praca_.pracodawca).get(Pracodawca_.nazwa),
+                zlecenie.get(Praca_.nazwa),
+                zlecenie.get(Praca_.okresoweBadaniaBhpData),
+                zlecenie.get(Praca_.orzeczenieLekarskieData)
+        );
+        query.orderBy(
+                builder.asc(zlecenie.get(Praca_.pracodawca).get(Pracodawca_.nazwa)),
+                builder.asc(zlecenie.get(Praca_.nazwa))
+        );
+        TypedQuery<ReportRow> typedQuery = entityManager.createQuery(query);
         return typedQuery.getResultList();
     }
 }

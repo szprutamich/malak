@@ -1,5 +1,7 @@
 package pl.malak;
 
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import pl.malak.beans.ReportBean;
 import pl.malak.helpers.UIHelper;
@@ -16,9 +18,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
+import java.nio.charset.Charset;
 
 @Component
 public class MainFrame extends JFrame implements ActionListener {
@@ -203,9 +205,18 @@ public class MainFrame extends JFrame implements ActionListener {
             fileChooser.setFileFilter(filter);
             int returnVal = fileChooser.showOpenDialog(this);
             if (returnVal == JFileChooser.APPROVE_OPTION) {
-                try (FileWriter fw = new FileWriter(fileChooser.getSelectedFile())) {
+                File file = fileChooser.getSelectedFile();
+                String extension = FilenameUtils.getExtension(file.getName());
+                if (StringUtils.isBlank(extension)) {
+                    file = new File(file.getAbsolutePath() + ".csv");
+                } else {
+                    file = new File(file.getAbsolutePath().replace(extension, "csv"));
+                }
+                try (Writer writer = new OutputStreamWriter(new FileOutputStream(file),
+                        Charset.forName("UTF-8").newEncoder() )) {
                     String report = reportBean.generateReport();
-                    fw.write(report);
+                    writer.write("\ufeff");
+                    writer.write(report);
                     UIHelper.displayMessage(this, "Raport został wygenerowany pomyślnie");
                 } catch (IOException e) {
                     UIHelper.displayMessage(this, String.format("Nie udało się wygenerować raportu: %s",

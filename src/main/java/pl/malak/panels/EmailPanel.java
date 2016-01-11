@@ -1,5 +1,6 @@
 package pl.malak.panels;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,14 +14,20 @@ import pl.malak.model.Praca;
 import pl.malak.model.Pracodawca;
 import pl.malak.model.Zlecenie;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
 import javax.annotation.Resource;
+import javax.mail.BodyPart;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeBodyPart;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URISyntaxException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
 
 @org.springframework.stereotype.Component
@@ -65,20 +72,33 @@ public class EmailPanel extends FramePanel implements ActionListener {
 
     private Pracodawca obecnyPracodawca;
 
-    JLabel nazwaLabel = new JLabel();
-    JLabel tytulLabel = new JLabel("Tytuł:");
-    JTextField tytulText = new JTextField();
-    JEditorPane emailText = new JEditorPane();
-    JScrollPane scrollPane = new JScrollPane(emailText);
-    JButton wyslij = new JButton("Wyślij");
-    JButton wroc = new JButton("Wróć");
-    JLabel czcionkaLabel = new JLabel("Czcionka:");
-    JComboBox<String> czcionka = new JComboBox<>(new String[]{
+    private Map<String, BodyPart> zalaczonePliki;
+    private List<JButton> zalaczoneButtony;
+
+    private int plikiY;
+
+    private JFileChooser fileChooser;
+    private JLabel nazwaLabel = new JLabel();
+    private JLabel tytulLabel = new JLabel("Tytuł:");
+    private JTextField tytulText = new JTextField();
+    private JEditorPane emailText = new JEditorPane();
+    private JScrollPane scrollPane = new JScrollPane(emailText);
+    private JButton wyslij = new JButton("Wyślij");
+    private JButton wroc = new JButton("Wróć");
+    private JButton zalaczPlik = new JButton("Załącz plik");
+    private JLabel czcionkaLabel = new JLabel("Czcionka:");
+    private JComboBox<String> czcionka = new JComboBox<>(new String[]{
             "10px", "12px", "14px", "16px", "18px", "20px"
     });
 
     public EmailPanel() {
         super();
+        try {
+            fileChooser = new JFileChooser(EmailPanel.class.getProtectionDomain().getCodeSource()
+                    .getLocation().toURI().getPath());
+        } catch (URISyntaxException e) {
+            fileChooser = new JFileChooser("");
+        }
         nazwaLabel.setFont(new Font(nazwaLabel.getFont().getFamily(), Font.PLAIN, 20));
         emailText.setContentType("text/html");
         emailText.setTransferHandler(new MyTransferHandler());
@@ -90,6 +110,7 @@ public class EmailPanel extends FramePanel implements ActionListener {
     private void addListeners() {
         wroc.addActionListener(this);
         wyslij.addActionListener(this);
+        zalaczPlik.addActionListener(this);
         czcionka.addActionListener(this);
     }
 
@@ -136,6 +157,24 @@ public class EmailPanel extends FramePanel implements ActionListener {
         x += xMargin + width;
         wroc.setBounds(x, y, width, height);
         add(wroc);
+
+        x = xMargin + xMargin + width;
+        y += height + yMargin / 4;
+        zalaczPlik.setBounds(x, y, width, height);
+        add(zalaczPlik);
+
+        plikiY = y;
+    }
+
+    private void layoutFileButtons() {
+        int y = plikiY;
+        for (JButton button : zalaczoneButtony) {
+            button.setBounds(20, y, 300, 20);
+            y += 25;
+            add(button);
+        }
+        revalidate();
+        repaint();
     }
 
     @Override
@@ -144,10 +183,36 @@ public class EmailPanel extends FramePanel implements ActionListener {
             String tytul = tytulText.getText();
             String tresc = emailText.getText();
             String email = obecnyPracodawca.getEmail();
-            String msg = emailSender.send(tytul, tresc, email);
+            String msg = emailSender.send(tytul, tresc, email, zalaczonePliki.values()
+                    .toArray(new BodyPart[zalaczonePliki.size()]));
             UIHelper.displayMessage(this, msg);
         } else if (e.getSource() == wroc) {
             getFrame().initPrzegladaniePracodawcow(obecnyPracodawca);
+        } else if (e.getSource() == zalaczPlik) {
+            int returnVal = fileChooser.showOpenDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                String path = fileChooser.getSelectedFile().getAbsolutePath();
+                final String name = FilenameUtils.getName(path);
+                try {
+                    zalaczonePliki.put(name, createBodyPartFromFile(path));
+                    final JButton button = new JButton(String.format("Usuń %s", name));
+                    zalaczoneButtony.add(button);
+                    layoutFileButtons();
+                    button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            for (JButton zalaczony : zalaczoneButtony) {
+                                remove(zalaczony);
+                            }
+                            zalaczonePliki.remove(name);
+                            zalaczoneButtony.remove(button);
+                            layoutFileButtons();
+                        }
+                    });
+                } catch (MessagingException exc) {
+                    UIHelper.displayMessage(this, String.format("Nie udało się załączyć pliku %s", name));
+                }
+            }
         } else if (e.getSource() == czcionka) {
             Integer rozmiar = Integer.parseInt(UIHelper.getComboText(czcionka).replaceAll("px", ""));
             emailText.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
@@ -157,6 +222,8 @@ public class EmailPanel extends FramePanel implements ActionListener {
 
     public void init(Pracodawca pracodawca) {
         this.obecnyPracodawca = pracodawca;
+        zalaczonePliki = new HashMap<>();
+        zalaczoneButtony = new ArrayList<>();
         this.nazwaLabel.setText(String.format("Email do: %s (%s)", pracodawca.getNazwa(), pracodawca.getEmail()));
         int punkt = 1;
         StringBuilder stringBuilder = new StringBuilder();
@@ -548,5 +615,14 @@ public class EmailPanel extends FramePanel implements ActionListener {
 
     private String newLine() {
         return "<br/>";
+    }
+
+    private BodyPart createBodyPartFromFile(String filePath) throws MessagingException {
+        BodyPart bodyPart = new MimeBodyPart();
+        DataSource fds = new FileDataSource(filePath);
+        bodyPart.setDataHandler(new DataHandler(fds));
+        bodyPart.setDescription("attachment");
+        bodyPart.setFileName(FilenameUtils.getName(filePath));
+        return bodyPart;
     }
 }

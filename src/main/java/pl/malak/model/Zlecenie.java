@@ -80,9 +80,6 @@ public class Zlecenie {
     @Column(name = "odbior_odziezy_uwagi")
     private String odbiorOdziezyUwagi;
 
-    @Column(name = "odbior_odziezy_data")
-    private Date odbiorOdziezyData;
-
     @Column(name = "zua")
     private Boolean zua = false;
 
@@ -162,7 +159,7 @@ public class Zlecenie {
             Boolean instruktaz, String instruktazUwagi, Boolean ryzyko, String ryzykoUwagi, Boolean instrukcjeBhp,
             String instrukcjeBhpUwagi, Boolean szkolenieBhp, String szkolenieBhpUwagi, Date szkolenieBhpData,
             Boolean rachunki, String rachunkiUwagi, Boolean umowa, String umowaUwagi, Date umowaData,
-            Boolean odbiorOdziezy, String odbiorOdziezyUwagi, Date odbiorOdziezyData, Boolean zua,
+            Boolean odbiorOdziezy, String odbiorOdziezyUwagi, Boolean zua,
             String zuaUwagi, Boolean zza, String zzaUwagi, Boolean zwua, String zwuaUwagi, String nazwa,
             Boolean badania, String badaniaUwagi, Date badaniaData, Boolean dowod, String dowodUwagi, Boolean zyciorys,
             String zyciorysUwagi, Boolean zaswiadczenieStudent, String zaswiadczenieStudentUwagi) {
@@ -189,7 +186,6 @@ public class Zlecenie {
         this.umowaData = umowaData;
         this.odbiorOdziezy = odbiorOdziezy;
         this.odbiorOdziezyUwagi = odbiorOdziezyUwagi;
-        this.odbiorOdziezyData = odbiorOdziezyData;
         this.zua = zua;
         this.zuaUwagi = zuaUwagi;
         this.zza = zza;
@@ -480,14 +476,6 @@ public class Zlecenie {
         this.odbiorOdziezyUwagi = odbiorOdziezyUwagi;
     }
 
-    public Date getOdbiorOdziezyData() {
-        return odbiorOdziezyData;
-    }
-
-    public void setOdbiorOdziezyData(Date odbiorOdziezyData) {
-        this.odbiorOdziezyData = odbiorOdziezyData;
-    }
-
     public Boolean getZua() {
         return zua;
     }
@@ -639,7 +627,6 @@ public class Zlecenie {
                     case "ODBIÓR ODZIEŻY":
                         this.odbiorOdziezy = SheetHelper.getBoolean(sheet, wiersz);
                         this.odbiorOdziezyUwagi = SheetHelper.getTextOrNull(sheet, wiersz, Field.E);
-                        this.odbiorOdziezyData = SheetHelper.getDate(sheet, wiersz, Field.F);
                         break;
                     default:
                 }

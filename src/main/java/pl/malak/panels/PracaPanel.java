@@ -341,7 +341,7 @@ public class PracaPanel extends FramePanel implements ActionListener {
                 UIHelper.displayMessage(this, "Nazwa nie może być pusta!");
                 return;
             }
-            Praca praca = pracaDao.loadByName(pracaNazwa);
+            Praca praca = pracaDao.loadByName(pracaNazwa, obecnyPracodawca.getId());
             if (!editMode && praca == null) {
                 pracaBean.stworzPrace(
                         kwsetionariuszOsobowyUbiegajacego.isSelected(),
@@ -493,7 +493,7 @@ public class PracaPanel extends FramePanel implements ActionListener {
         obecnyPracodawca = pracodawca;
         pracodawcaNazwaLabel.setText("Pracodawca: " + pracodawca.getNazwa());
         String zlecenieNazwa = UIHelper.getComboText(nazwa);
-        Praca praca = pracaDao.loadByName(zlecenieNazwa);
+        Praca praca = pracaDao.loadByName(zlecenieNazwa, obecnyPracodawca.getId());
         if (praca != null && editMode) {
             obecnaPraca = praca;
 

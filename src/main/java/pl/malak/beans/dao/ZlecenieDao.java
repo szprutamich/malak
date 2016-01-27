@@ -44,15 +44,20 @@ public class ZlecenieDao extends CRUDRepository<Zlecenie> {
         return typedQuery.getResultList();
     }
 
-    public Zlecenie loadByName(String nazwa) {
+    public Zlecenie loadByName(String nazwa, Long pracodawcaId) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Zlecenie> query = builder.createQuery(Zlecenie.class);
         Root<Zlecenie> pracodawcaRoot = query.from(Zlecenie.class);
         query.select(pracodawcaRoot);
         ParameterExpression<String> nazwaParam = builder.parameter(String.class);
-        query.where(builder.equal(pracodawcaRoot.get(Zlecenie_.nazwa), nazwaParam));
+        ParameterExpression<Long> pracodawcaIdParam = builder.parameter(Long.class);
+        query.where(
+                builder.equal(pracodawcaRoot.get(Zlecenie_.nazwa), nazwaParam),
+                builder.equal(pracodawcaRoot.get(Zlecenie_.pracodawca).get(Pracodawca_.id), pracodawcaIdParam)
+        );
         TypedQuery<Zlecenie> typedQuery = entityManager.createQuery(query);
         typedQuery.setParameter(nazwaParam, nazwa);
+        typedQuery.setParameter(pracodawcaIdParam, pracodawcaId);
         List<Zlecenie> result = typedQuery.getResultList();
         return result.isEmpty() ? null : result.get(0);
     }

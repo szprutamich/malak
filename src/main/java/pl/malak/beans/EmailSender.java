@@ -60,9 +60,8 @@ public class EmailSender extends JavaMailSenderImpl {
             try {
                 MimeMessage msg = createMimeMessage();
                 msg.setSubject(subject, DEFAULT_ENCODING);
-                // TODO change after tests
-//                msg.addRecipient(RecipientType.TO, new InternetAddress(email));
-                msg.addRecipient(RecipientType.TO, new InternetAddress(emailFrom));
+                msg.addRecipient(RecipientType.TO, new InternetAddress(email));
+                msg.addRecipient(RecipientType.BCC, new InternetAddress(emailFrom));
                 msg.setFrom(new InternetAddress(emailFrom));
                 MimeMultipart multiPart = new MimeMultipart();
                 BodyPart bodyPart = new MimeBodyPart();

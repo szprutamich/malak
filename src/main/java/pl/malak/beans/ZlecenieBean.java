@@ -32,7 +32,7 @@ public class ZlecenieBean {
         Zlecenie zlecenie = new Zlecenie(kwestionariusz, kwestionariuszUwagi, kartaSzkolenia, kartaSzkoleniaUwagi,
                 kartaSzkoleniaData, szkolenie, szkolenieUwagi, instruktaz, instruktazUwagi, ryzyko, ryzykoUwagi,
                 instrukcjeBhp, instrukcjeBhpUwagi, szkolenieBhp, szkolenieBhpUwagi, szkolenieBhpData, rachunki,
-                rachunkiUwagi, umowa, umowaUwagi, umowaData, odbiorOdziezy, odbiorOdziezyUwagi, odbiorOdziezyData, zua,
+                rachunkiUwagi, umowa, umowaUwagi, umowaData, odbiorOdziezy, odbiorOdziezyUwagi, zua,
                 zuaUwagi, zza, zzaUwagi, zwua, zwuaUwagi, nazwa, badania, badaniaUwagi,
                 badaniaData, dowod, dowodUwagi, zyciorys, zyciorysUwagi,
                 zaswiadczenieStudent, zaswiadczenieStudentUwagi
@@ -50,7 +50,7 @@ public class ZlecenieBean {
             Boolean instruktaz, String instruktazUwagi, Boolean ryzyko, String ryzykoUwagi, Boolean instrukcjeBhp,
             String instrukcjeBhpUwagi, Boolean szkolenieBhp, String szkolenieBhpUwagi, Date szkolenieBhpData,
             Boolean rachunki, String rachunkiUwagi, Boolean umowa, String umowaUwagi, Date umowaData,
-            Boolean odbiorOdziezy, String odbiorOdziezyUwagi, Date odbiorOdziezyData, Boolean zua,
+            Boolean odbiorOdziezy, String odbiorOdziezyUwagi, Boolean zua,
             String zuaUwagi, Boolean zza, String zzaUwagi, Boolean zwua, String zwuaUwagi, String nazwa,
             Boolean badania, String badaniaUwagi, Date badaniaData, Boolean dowod, String dowodUwagi, Boolean zyciorys,
             String zyciorysUwagi, Boolean zaswiadczenieStudent, String zaswiadczenieStudentUwagi) {
@@ -80,7 +80,6 @@ public class ZlecenieBean {
         zlecenie.setUmowaData(umowaData);
         zlecenie.setOdbiorOdziezy(odbiorOdziezy);
         zlecenie.setOdbiorOdziezyUwagi(odbiorOdziezyUwagi);
-        zlecenie.setOdbiorOdziezyData(odbiorOdziezyData);
         zlecenie.setZua(zua);
         zlecenie.setZuaUwagi(zuaUwagi);
         zlecenie.setZwua(zwua);

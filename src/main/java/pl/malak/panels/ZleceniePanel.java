@@ -233,7 +233,7 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
                 UIHelper.displayMessage(this, "Nazwa nie może być pusta!");
                 return;
             }
-            Zlecenie zlecenie = zlecenieDao.loadByName(zlecenieNazwa);
+            Zlecenie zlecenie = zlecenieDao.loadByName(zlecenieNazwa, obecnyPracodawca.getId());
             if (!editMode && zlecenie == null) {
                 zlecenieBean.stworzZlecenie(
                         kwestionariusz.isSelected(),
@@ -308,7 +308,6 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
                         UIHelper.datePickerGetDate(umowaDatePicker),
                         odbior.isSelected(),
                         UIHelper.getComboText(odbiorUwagi),
-                        UIHelper.datePickerGetDate(odbiorDatePicker),
                         zua.isSelected(),
                         UIHelper.getComboText(zuaUwagi),
                         zza.isSelected(),
@@ -338,7 +337,7 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
         obecnyPracodawca = pracodawca;
         pracodawcaNazwaLabel.setText("Pracodawca: " + pracodawca.getNazwa());
         String zlecenieNazwa = UIHelper.getComboText(nazwa);
-        Zlecenie zlecenie = zlecenieDao.loadByName(zlecenieNazwa);
+        Zlecenie zlecenie = zlecenieDao.loadByName(zlecenieNazwa, obecnyPracodawca.getId());
         if (zlecenie != null && editMode) {
             obecneZlecenie = zlecenie;
 
@@ -379,7 +378,6 @@ public class ZleceniePanel extends FramePanel implements ActionListener {
             zaswiadczenieStudentUwagi.setSelectedItem(zlecenie.getZaswiadczenieStudentUwagi());
 
             UIHelper.initDate(badaniaDatePicker, zlecenie.getBadaniaData());
-            UIHelper.initDate(odbiorDatePicker, zlecenie.getOdbiorOdziezyData());
             UIHelper.initDate(umowaDatePicker, zlecenie.getUmowaData());
             UIHelper.initDate(szkolenieOkresoweDatePicker, zlecenie.getSzkolenieBhpData());
             UIHelper.initDate(kartaSzkoleniaDatePicker, zlecenie.getKartaSzkoleniaData());

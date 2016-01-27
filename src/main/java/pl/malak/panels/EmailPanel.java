@@ -476,9 +476,8 @@ public class EmailPanel extends FramePanel implements ActionListener {
         List<String> wiersze = new ArrayList<>();
         wiersze.add(obslugaWiersza("Kwestionariusz osobowy + oświadczenie zleceniobiorcy",
                 zlecenie.getKwestionariusz(), zlecenie.getKwestionariuszUwagi(), null, Rodzaj.MESKI));
-        wiersze.add(obslugaWiersza("Karta szkolenia wstępnego",
-                zlecenie.getKartaSzkolenia(), zlecenie.getKartaSzkoleniaUwagi(), zlecenie
-                        .getKartaSzkoleniaData(), Rodzaj.ZENSKI));
+        wiersze.add(obslugaWierszaProsta("Karta szkolenia wstępnego",
+                false, zlecenie.getKartaSzkoleniaUwagi(), zlecenie.getKartaSzkoleniaData()));
         wiersze.add(obslugaWiersza("Szkolenie ogólne",
                 zlecenie.getSzkolenie(), zlecenie.getSzkolenieUwagi(), null, Rodzaj.MESKI));
         wiersze.add(obslugaWiersza("Instruktaż stanowiskowy",
@@ -497,18 +496,13 @@ public class EmailPanel extends FramePanel implements ActionListener {
         wiersze.add(obslugaWiersza("Badania lekarskie",
                 zlecenie.getBadania(), zlecenie.getBadaniaUwagi(), zlecenie.getBadaniaData(), Rodzaj.LICZBA_MNOGA));
         wiersze.add(obslugaWiersza("Odbiór odzieży",
-                zlecenie.getOdbiorOdziezy(), zlecenie.getOdbiorOdziezyUwagi(), zlecenie
-                .getOdbiorOdziezyData(), Rodzaj.MESKI));
+                zlecenie.getOdbiorOdziezy(), zlecenie.getOdbiorOdziezyUwagi(), null, Rodzaj.MESKI));
         wiersze.add(obslugaWiersza("Zua",
                 zlecenie.getZua(), zlecenie.getZuaUwagi(), null, Rodzaj.MESKI));
         wiersze.add(obslugaWiersza("Zza",
                 zlecenie.getZza(), zlecenie.getZzaUwagi(), null, Rodzaj.MESKI));
         wiersze.add(obslugaWiersza("Zwua",
                 zlecenie.getZwua(), zlecenie.getZwuaUwagi(), null, Rodzaj.MESKI));
-        wiersze.add(obslugaWiersza("Dowód osobisty",
-                zlecenie.getDowod(), zlecenie.getDowodUwagi(), null, Rodzaj.MESKI));
-        wiersze.add(obslugaWiersza("Życiorys",
-                zlecenie.getZyciorys(), zlecenie.getZyciorysUwagi(), null, Rodzaj.MESKI));
         wiersze.add(obslugaWiersza("Zaświadczenie - student",
                 zlecenie.getZaswiadczenieStudent(), zlecenie.getZaswiadczenieStudentUwagi(), null, Rodzaj.NIJAKI));
 

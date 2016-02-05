@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>malak</artifactId>
     <groupId>pl.malak</groupId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <packaging>jar</packaging>
     <name>Malak</name>
     <properties>
@@ -35,6 +35,7 @@
         <koszt.odziezowka/>
         <koszt.badania>50.00</koszt.badania>
         <email.stopka/>
+        <email.konto/>
         <import.enabled>false</import.enabled>
         <file.properties.name>malak.properties</file.properties.name>
     </properties>

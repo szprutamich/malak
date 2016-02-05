@@ -2,7 +2,8 @@ package pl.malak;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import pl.malak.beans.ReportBean;
 import pl.malak.helpers.UIHelper;
 import pl.malak.model.Pracodawca;
@@ -22,7 +23,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 
-@Component
+@Service
 public class MainFrame extends JFrame implements ActionListener {
 
     private enum MinPanelSize {
@@ -50,6 +51,7 @@ public class MainFrame extends JFrame implements ActionListener {
 
     private static final String AUTHOR = "Autor: Michał Szpruta";
 
+    JMenu program = new JMenu("Program");
     private JMenuItem importuj = new JMenuItem("Importuj z excela");
     private JMenuItem przegladaj = new JMenuItem("Przeglądaj pracodawców");
     private JMenuItem dodaj = new JMenuItem("Dodaj pracodawcę");
@@ -77,6 +79,9 @@ public class MainFrame extends JFrame implements ActionListener {
     @Resource
     private ReportBean reportBean;
 
+    @Value("${import.enabled}")
+    private Boolean importEnabled;
+
     public MainFrame() {
         super();
         try {
@@ -92,7 +97,6 @@ public class MainFrame extends JFrame implements ActionListener {
 
         JMenuBar menuBar = new JMenuBar();
 
-        JMenu program = new JMenu("Program");
         menuBar.add(program);
 
         program.add(importuj);
@@ -119,6 +123,9 @@ public class MainFrame extends JFrame implements ActionListener {
         zleceniePanel.setFrame(this);
         pracaPanel.setFrame(this);
         emailPanel.setFrame(this);
+        if (!importEnabled) {
+            program.remove(importuj);
+        }
     }
 
     private void removeAllPanels() {

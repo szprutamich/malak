@@ -35,6 +35,7 @@
         <koszt.odziezowka/>
         <koszt.badania>50.00</koszt.badania>
         <email.stopka/>
+        <import.enabled>false</import.enabled>
         <file.properties.name>malak.properties</file.properties.name>
     </properties>
     <build>

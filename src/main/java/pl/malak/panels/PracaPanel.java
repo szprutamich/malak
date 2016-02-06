@@ -106,7 +106,7 @@ public class PracaPanel extends FramePanel implements ActionListener {
     JComboBox<String> oswiadczenieUrzadSkarbowyUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox oswiadczenieOKosztach = new JCheckBox(
             "<html>Oświadczenie o podwyższonych kosztach uzyskania przychodów <br>jeśli pracownik mieszka " +
-                    "poza miejscowowścią, w której jest siedziba pracodawcy</html>"
+                    "poza miejscowością, w której jest siedziba pracodawcy</html>"
     );
     JComboBox<String> oswiadczenieOKosztachUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox zgodaPracownika = new JCheckBox("Zgoda pracownika na wypłatę wynagrodzenia na konto bankowe");
@@ -115,7 +115,7 @@ public class PracaPanel extends FramePanel implements ActionListener {
     JComboBox<String> umowaOdpowiedzialnosciUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JCheckBox umowaOZakazie = new JCheckBox("Umowa o zakazie konkurencji");
     JComboBox<String> umowaOZakazieUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
-    JCheckBox orzeczenieLekarskie = new JCheckBox("Orzeczenie lekarskie dotyczace badań okresowych");
+    JCheckBox orzeczenieLekarskie = new JCheckBox("Orzeczenie lekarskie dotyczące badań okresowych");
     JComboBox<String> orzeczenieLekarskieUwagi = new JComboBox<>(Helper.PREDEFINIOWANE_UWAGI);
     JDatePickerImpl orzeczenieLekarskieData = UIHelper.getJDatePicker();
     JCheckBox okresoweBadaniaBhp = new JCheckBox("Okresowe badania BHP");

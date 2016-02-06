@@ -141,11 +141,11 @@ public class EmailGenerator {
     private void zakonczenie(StringBuilder stringBuilder, String pracodawcaNazwa) {
         String text = stringBuilder.toString();
         Double kosztCalkowity = 0.00d;
-        Pattern pattern = Pattern.compile("\\d+\\.\\d+zł");
+        Pattern pattern = Pattern.compile("\\d+[\\.|,]\\d+zł");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
             String kwota = matcher.group(0);
-            kosztCalkowity += Double.parseDouble(kwota.substring(0, kwota.length() - 2));
+            kosztCalkowity += Double.parseDouble(kwota.substring(0, kwota.length() - 2).replaceAll(",", "."));
         }
         stringBuilder.append(newLine());
         stringBuilder.append(newLine());
@@ -305,7 +305,7 @@ public class EmailGenerator {
         wiersze.add(obslugaWiersza("Oświadczenie o podleganiu pod Urząd Skarbowy", praca
                 .getOswiadczenieUrzadSkarbowy(), praca.getOswiadczenieUrzadSkarbowyUwagi(), null, Rodzaj.NIJAKI));
         wiersze.add(obslugaWiersza("Oświadczenie o podwyższonych kosztach uzyskania przychodów jeśli pracownik " +
-                "mieszka poza miejscowowścią, w której jest siedziba pracodawcy", praca
+                "mieszka poza miejscowością, w której jest siedziba pracodawcy", praca
                 .getOswiadczenieOKosztach(), praca.getOswiadczenieOKosztachUwagi(), null, Rodzaj.NIJAKI));
         wiersze.add(obslugaWiersza("Zgoda pracownika na wypłatę wynagrodzenia na konto bankowe",
                 praca.getZgodaPracownika(), praca.getZgodaPracownikaUwagi(), null, Rodzaj.ZENSKI));
@@ -313,7 +313,7 @@ public class EmailGenerator {
                 .getUmowaOdpowiedzialnosci(), praca.getUmowaOdpowiedzialnosciUwagi(), null, Rodzaj.ZENSKI));
         wiersze.add(obslugaWiersza("Umowa o zakazie konkurencji", praca.getUmowaOZakazie(), praca
                 .getUmowaOZakazieUwagi(), null, Rodzaj.ZENSKI));
-        wiersze.add(obslugaWiersza("Orzeczenie lekarskie dotyczace badań okresowych", praca.getOrzeczenieLekarskie(),
+        wiersze.add(obslugaWiersza("Orzeczenie lekarskie dotyczące badań okresowych", praca.getOrzeczenieLekarskie(),
                 praca.getOrzeczenieLekarskieUwagi(), praca.getOrzeczenieLekarskieData(), Rodzaj.NIJAKI));
         wiersze.add(obslugaWiersza("Okresowe badania BHP", praca.getOkresoweBadaniaBhp(), praca
                 .getOkresoweBadaniaBhpUwagi(), praca.getOkresoweBadaniaBhpData(), Rodzaj.LICZBA_MNOGA));
